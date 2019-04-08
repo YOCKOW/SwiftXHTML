@@ -6,6 +6,7 @@
  ************************************************************************************************ */
 
 import Foundation
+import yExtensions
 
 extension Element {
   fileprivate func _trimTexts() -> Void {
@@ -20,6 +21,17 @@ extension Element {
       }
     }
   }
+}
+
+/// The workaround for [SR-10157](https://bugs.swift.org/browse/SR-10157)
+private func _swapElementName(_ name:String) -> String {
+  #if os(Linux)
+  let splitted = name.splitOnce(separator:":")
+  if let originalPrefix = splitted.1 {
+    return "\(originalPrefix):\(splitted.0)"
+  }
+  #endif
+  return name
 }
 
 open class Parser: NSObject, XMLParserDelegate {
@@ -122,6 +134,7 @@ open class Parser: NSObject, XMLParserDelegate {
                      qualifiedName qName: String?,
                      attributes attributeDict: [String : String] = [:])
   {
+    let elementName = _swapElementName(elementName)
     guard let tagName = QualifiedName(elementName) else {
       self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
       return
@@ -152,6 +165,7 @@ open class Parser: NSObject, XMLParserDelegate {
               namespaceURI: String?,
               qualifiedName qName: String?)
   {
+    let elementName = _swapElementName(elementName)
     guard let tagName = QualifiedName(elementName) else {
       self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
       return
