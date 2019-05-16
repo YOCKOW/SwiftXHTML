@@ -98,7 +98,21 @@ open class Parser: NSObject, XMLParserDelegate {
   ///// As `XMLParserDelegate` /////
   
   /// The parser encounters a fatal error.
-  public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+  public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Swift.Error) {
+    #if canImport(ObjectiveC)
+    let maybeNSError: NSError? = parseError as NSError
+    #else
+    let maybeNSError: NSError? = parseError as? NSError
+    #endif
+    
+    var parseError = parseError
+    
+    if let error = maybeNSError, error.domain == XMLParser.errorDomain {
+      if error.code == XMLParser.ErrorCode.delegateAbortedParseError.rawValue {
+        return
+      }
+      parseError = Error.xmlError(XMLParser.ErrorCode(rawValue:error.code)!)
+    }
     self._error = parseError
     parser.abortParsing()
   }
