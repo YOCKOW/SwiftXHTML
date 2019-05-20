@@ -17,6 +17,14 @@ final class Node_XMLNodeTests: XCTestCase {
     XCTAssertNotNil(comment)
     XCTAssertEqual(comment?.text, "comment")
   }
+  
+  func test_processingInstruction() {
+    let piXMLNode = XMLNode.processingInstruction(withName: "name", stringValue: "value") as! XMLNode
+    let pi = ProcessingInstruction(piXMLNode)
+    XCTAssertNotNil(pi)
+    XCTAssertEqual(pi?.target, "name")
+    XCTAssertEqual(pi?.content, "value")
+  }
 }
 
 
