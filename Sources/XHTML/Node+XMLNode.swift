@@ -16,15 +16,19 @@ extension Attributes {
       case .attribute:
         if let name = attribute.name.flatMap(AttributeName.init) {
           self[name] = attribute.stringValue
+        } else {
+          return nil
         }
       case .namespace:
         if attribute.name?.isEmpty == true {
           self[.defaultNamespace] = attribute.stringValue
         } else if let name = attribute.name.flatMap(NoncolonizedName.init(_:)) {
           self[.userDefinedNamespace(name)] = attribute.stringValue
+        } else {
+          return nil
         }
       default:
-        break
+        return nil
       }
     }
   }
