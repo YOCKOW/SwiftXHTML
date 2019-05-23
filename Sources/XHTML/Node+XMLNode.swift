@@ -7,6 +7,36 @@
 
 import Foundation
 
+extension Attributes {
+  public init?<S>(_ xmlNodes: S) where S: Sequence, S.Element: XMLNode {
+    self.init()
+    for attribute in xmlNodes {
+      let kind = attribute.kind
+      switch kind {
+      case .attribute:
+        if let name = attribute.name.flatMap(AttributeName.init) {
+          self[name] = attribute.stringValue
+        }
+      case .namespace:
+        if attribute.name?.isEmpty == true {
+          self[.defaultNamespace] = attribute.stringValue
+        } else if let name = attribute.name.flatMap(NoncolonizedName.init(_:)) {
+          self[.userDefinedNamespace(name)] = attribute.stringValue
+        }
+      default:
+        break
+      }
+    }
+  }
+  
+  public init?(attributesOf xmlElement: XMLElement) {
+    var nodes: [XMLNode] = []
+    if let attributes = xmlElement.attributes { nodes.append(contentsOf: attributes) }
+    if let namespaces = xmlElement.namespaces { nodes.append(contentsOf: namespaces) }
+    self.init(nodes)
+  }
+}
+
 extension Comment {
   public convenience init?(_ xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
