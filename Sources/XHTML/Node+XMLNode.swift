@@ -20,7 +20,13 @@ extension Attributes {
           return nil
         }
       case .namespace:
-        if attribute.name?.isEmpty == true {
+        // Workaround for [SR-10764](https://bugs.swift.org/browse/SR-10764)
+        #if canImport(ObjectiveC)
+        let isDefault: Bool = attribute.name?.isEmpty == true
+        #else
+        let isDefault: Bool = attribute.name == nil
+        #endif
+        if isDefault {
           self[.defaultNamespace] = attribute.stringValue
         } else if let name = attribute.name.flatMap(NoncolonizedName.init(_:)) {
           self[.userDefinedNamespace(name)] = attribute.stringValue
