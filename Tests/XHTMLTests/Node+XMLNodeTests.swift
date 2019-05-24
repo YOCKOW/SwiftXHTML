@@ -41,6 +41,13 @@ final class Node_XMLNodeTests: XCTestCase {
     XCTAssertEqual(pi?.target, "name")
     XCTAssertEqual(pi?.content, "value")
   }
+  
+  func test_text() {
+    let textXMLNode = XMLNode.text(withStringValue: "<my text>") as! XMLNode
+    let text = Text(textXMLNode)
+    XCTAssertNotNil(text)
+    XCTAssertEqual(text?.text, "<my text>")
+  }
 }
 
 

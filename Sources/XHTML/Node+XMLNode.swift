@@ -90,3 +90,19 @@ extension ProcessingInstruction {
     #endif
   }
 }
+
+extension Text {
+  public convenience init?(_ xmlNode: XMLNode) {
+    // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
+    #if os(macOS) || swift(>=5.1)
+    guard xmlNode.kind == .text, let text = xmlNode.stringValue else { return nil }
+    self.init(text)
+    #else
+    // FIXME
+    // I don't know how to determine if it's text or not...
+    // There is also a bug [SR-10759](https://bugs.swift.org/browse/SR-10759).
+    self.init(xmlNode.stringValue ?? "")
+    #endif
+  }
+}
+

@@ -64,6 +64,7 @@ extension Node_XMLNodeTests {
         ("test_attributes", test_attributes),
         ("test_comment", test_comment),
         ("test_processingInstruction", test_processingInstruction),
+        ("test_text", test_text),
     ]
 }
 
