@@ -63,6 +63,7 @@ extension Node_XMLNodeTests {
     static let __allTests__Node_XMLNodeTests = [
         ("test_attributes", test_attributes),
         ("test_comment", test_comment),
+        ("test_node", test_node),
         ("test_processingInstruction", test_processingInstruction),
         ("test_text", test_text),
     ]

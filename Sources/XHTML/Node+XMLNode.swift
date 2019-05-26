@@ -48,9 +48,9 @@ extension Attributes {
 }
 
 extension Comment {
-  public convenience init?(_ xmlNode: XMLNode) {
+  internal convenience init?(_xmlNode xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
-    #if os(macOS) || swift(>=5.1)
+    #if canImport(ObjectiveC) || swift(>=5.1)
     guard xmlNode.kind == .comment else { return nil }
     self.init(xmlNode.stringValue!)
     #else
@@ -64,9 +64,9 @@ extension Comment {
 }
 
 extension ProcessingInstruction {
-  public convenience init?(_ xmlNode: XMLNode) {
+  internal convenience init?(_xmlNode xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
-    #if os(macOS) || swift(>=5.1)
+    #if canImport(ObjectiveC) || swift(>=5.1)
     guard
       xmlNode.kind == .processingInstruction,
       let target = xmlNode.name.flatMap(NoncolonizedName.init(_:))
@@ -76,7 +76,7 @@ extension ProcessingInstruction {
     self.init(target: target, content: xmlNode.stringValue)
     #else
     class _Delegate: NSObject, XMLParserDelegate {
-      var pi: ProcessingInstruction!
+      var pi: ProcessingInstruction? = nil
       public func parser(_ parser: XMLParser,
                          foundProcessingInstructionWithTarget target: String,
                          data: String?)
@@ -91,24 +91,74 @@ extension ProcessingInstruction {
     let parser = XMLParser(data: xmlNode.xmlString.data(using: .utf8)!)
     let delegate = _Delegate()
     parser.delegate = delegate
-    parser.parse()
-    self.init(target: delegate.pi.target, content: delegate.pi.content)
+    _ = parser.parse()
+    guard let pi = delegate.pi else { return nil }
+    self.init(target: pi.target, content: pi.content)
     #endif
   }
 }
 
 extension Text {
-  public convenience init?(_ xmlNode: XMLNode) {
+  internal convenience init?(_xmlNode xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
-    #if os(macOS) || swift(>=5.1)
+    #if canImport(ObjectiveC) || swift(>=5.1)
     guard xmlNode.kind == .text, let text = xmlNode.stringValue else { return nil }
     self.init(text)
     #else
     // FIXME
     // I don't know how to determine if it's text or not...
     // There is also a bug [SR-10759](https://bugs.swift.org/browse/SR-10759).
-    self.init(xmlNode.stringValue ?? "")
+    guard xmlNode.name == nil, xmlNode.children == nil else { return nil }
+    guard Comment(_xmlNode: xmlNode) == nil else { return nil }
+    guard let text = xmlNode.stringValue else { return nil }
+    self.init(text)
     #endif
   }
 }
 
+
+private protocol _Node_XMLNode {}
+extension Node: _Node_XMLNode {}
+extension _Node_XMLNode {
+  fileprivate init?(_xmlNode: XMLNode, xhtmlPrefix: NoncolonizedName? = nil) {
+    // Comment
+    if let comment = Comment(_xmlNode: _xmlNode) {
+      self = comment as! Self
+      return
+    }
+    
+    // ProcessingInstruction
+    if let pi = ProcessingInstruction(_xmlNode: _xmlNode) {
+      self = pi as! Self
+      return
+    }
+    
+    // Text
+    if let text = Text(_xmlNode: _xmlNode) {
+      self = text as! Self
+      return
+    }
+    
+    guard
+      case let xmlElement as XMLElement = _xmlNode,
+      let name = xmlElement.name.flatMap(QualifiedName.init),
+      let attributes = Attributes(attributesOf: xmlElement)
+      else { return nil }
+    
+    let element = Element(name: name, attributes: attributes, xhtmlPrefix: xhtmlPrefix)
+    if let children = xmlElement.children {
+      for child in children {
+        guard let node = Node(child, xhtmlPrefix: xhtmlPrefix) else { return nil }
+        element.append(node)
+      }
+    }
+    self = element as! Self
+  }
+}
+extension Node {
+  /// Initialize with an instance of `XMLNode`.
+  /// You can specify the prefix of XHTML by passing `xhtmlPrefix`.
+  public convenience init?(_ xmlNode: XMLNode, xhtmlPrefix: NoncolonizedName? = nil) {
+    self.init(_xmlNode: xmlNode, xhtmlPrefix: xhtmlPrefix)
+  }
+}

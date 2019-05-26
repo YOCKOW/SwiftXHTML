@@ -14,6 +14,7 @@ extension Element {
     public static let `default`: ClassSelector = .init()
     
     private var _list:[NoncolonizedName:Element.Type] = [
+      "a":AnchorElement.self,
       "body":BodyElement.self,
       "br":LineBreakElement.self,
       "form":FormElement.self,
