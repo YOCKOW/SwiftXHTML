@@ -106,7 +106,18 @@ extension Document {
     }
     set {
       let newTitle = newValue ?? ""
-      self.rootElement.head?.title?.title = newTitle
+      
+      func prefix() -> NoncolonizedName? { return self.rootElement.name.prefix }
+      if self.rootElement.head == nil {
+        let head = HeadElement(name: QualifiedName(prefix: prefix(), localName: "head"))
+        self.rootElement.append(head)
+      }
+      if self.rootElement.head!.title == nil {
+        let title = TitleElement(name: QualifiedName(prefix: prefix(), localName: "title"))
+        self.rootElement.head!.append(title)
+      }
+      
+      self.rootElement.head!.title!.title = newTitle
     }
   }
 }

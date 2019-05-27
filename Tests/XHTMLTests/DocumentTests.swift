@@ -52,5 +52,13 @@ final class DocumentTests: XCTestCase {
     
     XCTAssertEqual(document.title, "My XHTML.")
   }
+  
+  func test_title() {
+    let document = Document(rootElement: .init(name:"html"))
+    XCTAssertNil(document.title)
+    
+    document.title = "title"
+    XCTAssertEqual(document.title, "title")
+  }
 }
 
