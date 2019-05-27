@@ -107,8 +107,9 @@ extension Text {
     #else
     // FIXME
     // I don't know how to determine if it's text or not...
-    // There is also a bug [SR-10759](https://bugs.swift.org/browse/SR-10759).
-    guard xmlNode.name == nil, xmlNode.children == nil else { return nil }
+    // There are also bugs: [SR-10759](https://bugs.swift.org/browse/SR-10759),
+    // and [SR-10764](https://bugs.swift.org/browse/SR-10764).
+    guard xmlNode.name == "text", xmlNode.children == nil else { return nil }
     guard Comment(_xmlNode: xmlNode) == nil else { return nil }
     guard let text = xmlNode.stringValue else { return nil }
     self.init(text)
