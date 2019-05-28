@@ -60,5 +60,25 @@ final class DocumentTests: XCTestCase {
     document.title = "title"
     XCTAssertEqual(document.title, "title")
   }
+  
+  func test_template() {
+    let template = Document.template(
+      author: "It's me.",
+      description: "My page.",
+      keywords: ["I", "my", "me"],
+      title: "My first XHTML5."
+    )
+    
+    let head = template.rootElement.head
+    XCTAssertNotNil(head)
+    XCTAssertEqual(head?.author, "It's me.")
+    XCTAssertEqual(head?.description, "My page.")
+    XCTAssertEqual(head?.keywords, ["I", "my", "me"])
+    XCTAssertEqual(template.title, "My first XHTML5.")
+    
+    let body = template.rootElement.body
+    XCTAssertNotNil(body)
+    XCTAssertTrue(body?.children.isEmpty == true)
+  }
 }
 

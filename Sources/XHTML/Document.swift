@@ -90,6 +90,32 @@ open class Document {
 }
 
 extension Document {
+  public static func template(
+    xmlVersion: String = "1.0",
+    stringEncoding: String.Encoding = .utf8,
+    version: Version = .latest,
+    author: String? = nil,
+    description: String? = nil,
+    keywords: [String]? = nil,
+    title: String
+    ) -> Document
+  {
+    let head = HeadElement(name: "head")
+    let body = BodyElement(name: "body")
+    let html = HTMLElement(name: "html", attributes: [:], children: [head, body])
+    let document = Document(xmlVersion: xmlVersion,
+                            stringEncoding: stringEncoding,
+                            version: version,
+                            rootElement: html)
+    head.author = author
+    head.description = description
+    head.keywords = keywords
+    document.title = title
+    return document
+  }
+}
+
+extension Document {
   public var xhtmlString: String {
     return self.prolog.xhtmlString + self.rootElement.xhtmlString + self.miscellanies.xhtmlString
   }

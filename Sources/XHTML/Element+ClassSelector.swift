@@ -20,6 +20,7 @@ extension Element {
       "form":FormElement.self,
       "head":HeadElement.self,
       "input":InputElement.self,
+      "meta":MetaElement.self,
       "title":TitleElement.self,
     ]
     
