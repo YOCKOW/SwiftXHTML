@@ -95,6 +95,10 @@ open class Element: Node {
     self._children.append(child)
   }
   
+  public func firstIndex(of child: Node) -> Int? {
+    return self._children.firstIndex(of: child)
+  }
+  
   public func insert(_ child:Node, at index:Int) {
     child.parent = self
     self._children.insert(child, at:index)
@@ -103,6 +107,12 @@ open class Element: Node {
   public func removeChild(at index:Int) {
     let child = self._children.remove(at:index)
     child.parent = nil
+  }
+  
+  public func remove(_ child: Node) {
+    if let index = self.firstIndex(of: child) {
+      self.removeChild(at: index)
+    }
   }
 }
 

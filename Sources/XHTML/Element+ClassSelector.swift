@@ -14,11 +14,13 @@ extension Element {
     public static let `default`: ClassSelector = .init()
     
     private var _list:[NoncolonizedName:Element.Type] = [
+      "a":AnchorElement.self,
       "body":BodyElement.self,
       "br":LineBreakElement.self,
       "form":FormElement.self,
       "head":HeadElement.self,
       "input":InputElement.self,
+      "meta":MetaElement.self,
       "title":TitleElement.self,
     ]
     
@@ -36,11 +38,22 @@ extension Element {
 internal protocol _ElementClassSelector {}
 extension Element: _ElementClassSelector {}
 extension _ElementClassSelector {
+  private static func _canBeRootElement(name: QualifiedName, attributes: Attributes) -> Bool {
+    return name.localName == "html" && attributes._namespace(for:name)?._isXHTMLNamespace == true
+  }
+  
+  private static func _forceGenerateElement(name: QualifiedName, attributes: Attributes) -> Self? {
+    if let cls = Element.ClassSelector.default._class(for:name.localName) {
+      return (cls.init(name:name, attributes:attributes) as! Self)
+    }
+    return nil
+  }
+  
   internal init(name:QualifiedName,
                 attributes:Attributes,
                 parent:Element?)
   {
-    if name.localName == "html" && attributes._namespace(for:name)?._isXHTMLNamespace == true {
+    if Self._canBeRootElement(name: name, attributes: attributes) {
       self = HTMLElement(name:name, attributes:attributes) as! Self
       return
     }
@@ -56,12 +69,30 @@ extension _ElementClassSelector {
     })()
     
     if namespaceIsXHTML {
-      if let cls = Element.ClassSelector.default._class(for:name.localName) {
-        self = cls.init(name:name, attributes:attributes) as! Self
+      if let instance = Self._forceGenerateElement(name: name, attributes: attributes) {
+        self = instance
         return
       }
     }
   
+    self = Element(name:name, attributes:attributes) as! Self
+  }
+  
+  internal init(name: QualifiedName,
+                attributes: Attributes,
+                xhtmlPrefix: NoncolonizedName?) {
+    if Self._canBeRootElement(name: name, attributes: attributes) {
+      self = HTMLElement(name:name, attributes:attributes) as! Self
+      return
+    }
+    
+    if name.prefix == xhtmlPrefix {
+      if let instance = Self._forceGenerateElement(name: name, attributes: attributes) {
+        self = instance
+        return
+      }
+    }
+    
     self = Element(name:name, attributes:attributes) as! Self
   }
 }

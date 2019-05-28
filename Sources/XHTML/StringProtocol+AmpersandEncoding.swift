@@ -21,8 +21,15 @@ private let _table: [UnicodeScalar:String.UnicodeScalarView] = [
 ]
 
 extension StringProtocol {
-  public func
-    addingAmpersandEncoding(withAllowedUnicodeScalars allowedScalars:UnicodeScalarSet) -> String
+  /// Returns a new string made from the receiver by replacing all scalars not in the specified set
+  /// with ampersand-encoded characters.
+  ///
+  /// - parameter allowedScalars: The scalars not replaced in the string.
+  ///                             `<`, `>`, `&`, `"`, and `'` are always encoded
+  ///                             even if the set contains them.
+  public func addingAmpersandEncoding(
+    withAllowedUnicodeScalars allowedScalars: UnicodeScalarSet
+  ) -> String
   {
     var resultScalars = String.UnicodeScalarView()
     for scalar in self.unicodeScalars {

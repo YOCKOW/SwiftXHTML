@@ -67,17 +67,15 @@ open class Parser: NSObject, XMLParserDelegate {
     let xmlParser = XMLParser(data:data)
     let delegate = Parser(data)
     xmlParser.delegate = delegate
-    if !xmlParser.parse() {
+    
+    func _throw() throws -> Never {
       if let error = delegate._error { throw error }
       if let error = xmlParser.parserError { throw error }
       throw Error.unexpectedError
     }
-    guard let document = delegate._document else {
-      if let error = delegate._error {
-        throw error
-      }
-      throw Error.unexpectedError
-    }
+    if !xmlParser.parse() { try _throw() }
+    guard let document = delegate._document else { try _throw() }
+    
     document.rootElement._trimTexts()
     return document
   }
@@ -98,8 +96,16 @@ open class Parser: NSObject, XMLParserDelegate {
   ///// As `XMLParserDelegate` /////
   
   /// The parser encounters a fatal error.
-  public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-    self._error = parseError
+  public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Swift.Error) {
+    let error = parseError as NSError
+    if error.domain == XMLParser.errorDomain {
+      if error.code == XMLParser.ErrorCode.delegateAbortedParseError.rawValue {
+        return
+      }
+      self._error = Error.xmlError(XMLParser.ErrorCode(rawValue:error.code)!)
+    } else {
+      self._error = parseError
+    }
     parser.abortParsing()
   }
   

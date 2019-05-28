@@ -19,9 +19,13 @@ final class ElementTests: XCTestCase {
   }
   
   func test_classSelector() {
-    let element =
-      Element(name:"title", attributes:["xmlns":"http://www.w3.org/1999/xhtml"], parent:nil)
-    XCTAssertTrue(element is TitleElement)
+    let title = Element(name:"title",
+                        attributes:["xmlns":"http://www.w3.org/1999/xhtml"],
+                        parent:nil)
+    XCTAssertTrue(title is TitleElement)
+    
+    let head = Element(name: "xhtml:head", attributes: [:], xhtmlPrefix: "xhtml")
+    XCTAssertTrue(head is HeadElement)
   }
   
   func test_equatable() {

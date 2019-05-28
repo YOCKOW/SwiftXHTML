@@ -23,7 +23,18 @@ and is intended to be used by it.
 ```Swift
 import XHTML
 
-// Now printing...
+let page = Document.template(title: "Title")
+page.rootElement.body!.append(.text("It's my page."))
+print(page.xhtmlString)
+
+/*
+-- OUTPUT --
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Title</title></head><body>It&apos;s my page.</body></html>
+
+*/
 ```
 
 

@@ -90,6 +90,32 @@ open class Document {
 }
 
 extension Document {
+  public static func template(
+    xmlVersion: String = "1.0",
+    stringEncoding: String.Encoding = .utf8,
+    version: Version = .latest,
+    author: String? = nil,
+    description: String? = nil,
+    keywords: [String]? = nil,
+    title: String
+    ) -> Document
+  {
+    let head = HeadElement(name: "head")
+    let body = BodyElement(name: "body")
+    let html = HTMLElement(name: "html", attributes: [:], children: [head, body])
+    let document = Document(xmlVersion: xmlVersion,
+                            stringEncoding: stringEncoding,
+                            version: version,
+                            rootElement: html)
+    head.author = author
+    head.description = description
+    head.keywords = keywords
+    document.title = title
+    return document
+  }
+}
+
+extension Document {
   public var xhtmlString: String {
     return self.prolog.xhtmlString + self.rootElement.xhtmlString + self.miscellanies.xhtmlString
   }
@@ -106,7 +132,18 @@ extension Document {
     }
     set {
       let newTitle = newValue ?? ""
-      self.rootElement.head?.title?.title = newTitle
+      
+      func prefix() -> NoncolonizedName? { return self.rootElement.name.prefix }
+      if self.rootElement.head == nil {
+        let head = HeadElement(name: QualifiedName(prefix: prefix(), localName: "head"))
+        self.rootElement.append(head)
+      }
+      if self.rootElement.head!.title == nil {
+        let title = TitleElement(name: QualifiedName(prefix: prefix(), localName: "title"))
+        self.rootElement.head!.append(title)
+      }
+      
+      self.rootElement.head!.title!.title = newTitle
     }
   }
 }
