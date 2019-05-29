@@ -27,9 +27,9 @@ extension Attributes {
         let isDefault: Bool = attribute.name == nil
         #endif
         if isDefault {
-          self[.defaultNamespace] = attribute.stringValue
+          self[.namespaceDeclaration(.default)] = attribute.stringValue
         } else if let name = attribute.name.flatMap(NoncolonizedName.init(_:)) {
-          self[.userDefinedNamespace(name)] = attribute.stringValue
+          self[.namespaceDeclaration(.namespace(name))] = attribute.stringValue
         } else {
           return nil
         }
@@ -121,7 +121,7 @@ extension Text {
 private protocol _Node_XMLNode {}
 extension Node: _Node_XMLNode {}
 extension _Node_XMLNode {
-  fileprivate init?(_xmlNode: XMLNode, xhtmlPrefix: NoncolonizedName? = nil) {
+  fileprivate init?(_xmlNode: XMLNode, xhtmlPrefix: QualifiedName.Prefix) {
     // Comment
     if let comment = Comment(_xmlNode: _xmlNode) {
       self = comment as! Self
@@ -159,7 +159,7 @@ extension _Node_XMLNode {
 extension Node {
   /// Initialize with an instance of `XMLNode`.
   /// You can specify the prefix of XHTML by passing `xhtmlPrefix`.
-  public convenience init?(_ xmlNode: XMLNode, xhtmlPrefix: NoncolonizedName? = nil) {
+  public convenience init?(_ xmlNode: XMLNode, xhtmlPrefix: QualifiedName.Prefix = .none) {
     self.init(_xmlNode: xmlNode, xhtmlPrefix: xhtmlPrefix)
   }
 }

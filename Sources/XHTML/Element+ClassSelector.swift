@@ -80,7 +80,7 @@ extension _ElementClassSelector {
   
   internal init(name: QualifiedName,
                 attributes: Attributes,
-                xhtmlPrefix: NoncolonizedName?) {
+                xhtmlPrefix: QualifiedName.Prefix) {
     if Self._canBeRootElement(name: name, attributes: attributes) {
       self = HTMLElement(name:name, attributes:attributes) as! Self
       return
