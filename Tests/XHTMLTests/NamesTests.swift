@@ -17,13 +17,13 @@ final class NamesTests: XCTestCase {
   
   func test_QName() {
     let qName: QualifiedName = "接頭辞:名前"
-    XCTAssertEqual(qName.prefix, "接頭辞")
+    XCTAssertEqual(qName.prefix, .namespace("接頭辞"))
     XCTAssertEqual(qName.localName, "名前")
   }
   
   func test_attributeName() {
-    XCTAssertEqual(AttributeName("xmlns"), .defaultNamespace)
-    XCTAssertEqual(AttributeName("xmlns:mine"), .userDefinedNamespace("mine"))
+    XCTAssertEqual(AttributeName("xmlns"), .namespaceDeclaration(.default))
+    XCTAssertEqual(AttributeName("xmlns:mine"), .namespaceDeclaration(.namespace("mine")))
     XCTAssertEqual(AttributeName("p:n"), .attributeName("p:n"))
   }
 }

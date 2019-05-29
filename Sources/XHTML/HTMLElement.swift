@@ -35,9 +35,7 @@ open class HTMLElement: SpecifiedElement {
   public required init(name:QualifiedName, attributes:Attributes) {
     var attrs = attributes
     if attrs._namespace(for:name) == nil {
-      let attrName: AttributeName =
-        (name.prefix == nil) ? .defaultNamespace : .userDefinedNamespace(name.prefix!)
-      attrs[attrName] = String._xhtmlNamespace
+      attrs[.namespaceDeclaration(name.prefix)] = String._xhtmlNamespace
     }
     super.init(name:name)
     self.attributes = attrs

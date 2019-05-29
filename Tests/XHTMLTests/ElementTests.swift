@@ -24,7 +24,7 @@ final class ElementTests: XCTestCase {
                         parent:nil)
     XCTAssertTrue(title is TitleElement)
     
-    let head = Element(name: "xhtml:head", attributes: [:], xhtmlPrefix: "xhtml")
+    let head = Element(name: "xhtml:head", attributes: [:], xhtmlPrefix: .namespace("xhtml"))
     XCTAssertTrue(head is HeadElement)
   }
   
@@ -40,25 +40,23 @@ final class ElementTests: XCTestCase {
     let child = Element(name:"child", attributes:["xmlns:myns":"http://my/ns"], children:[grandchild])
     let root = Element(name:"root", attributes:["xmlns":"http://default/ns"], children:[child])
     
-    XCTAssertEqual(grandchild.namespace(for:nil), "http://default/ns")
-    XCTAssertEqual(grandchild.namespace(for:NoncolonizedName("myns")), "http://my/ns")
-    XCTAssertEqual(grandchild.prefix(for:"http://my/ns"), "myns")
-    XCTAssertEqual(grandchild.prefix(for:"http://default/ns"), Optional<NoncolonizedName>.none)
-    XCTAssertEqual(grandchild.prefix(for:"http://invalid/ns"),
-                   Optional<Optional<NoncolonizedName>>.none)
+    XCTAssertEqual(grandchild.namespace(for: .default), "http://default/ns")
+    XCTAssertEqual(grandchild.namespace(for: .namespace("myns")), "http://my/ns")
+    XCTAssertEqual(grandchild.prefix(for: "http://my/ns"), .namespace("myns"))
+    XCTAssertEqual(grandchild.prefix(for: "http://default/ns"), .default)
+    XCTAssertEqual(grandchild.prefix(for: "http://invalid/ns"), nil)
     
-    XCTAssertEqual(child.namespace(for:nil), "http://default/ns")
-    XCTAssertEqual(child.namespace(for:NoncolonizedName("myns")), "http://my/ns")
-    XCTAssertEqual(child.prefix(for:"http://my/ns"), "myns")
-    XCTAssertEqual(child.prefix(for:"http://default/ns"), Optional<NoncolonizedName>.none)
-    XCTAssertEqual(child.prefix(for:"http://invalid/ns"),
-                   Optional<Optional<NoncolonizedName>>.none)
+    XCTAssertEqual(child.namespace(for: .default), "http://default/ns")
+    XCTAssertEqual(child.namespace(for: .namespace("myns")), "http://my/ns")
+    XCTAssertEqual(child.prefix(for: "http://my/ns"), .namespace("myns"))
+    XCTAssertEqual(child.prefix(for: "http://default/ns"), .default)
+    XCTAssertEqual(child.prefix(for:"http://invalid/ns"), nil)
     
-    XCTAssertEqual(root.namespace(for:nil), "http://default/ns")
-    XCTAssertEqual(root.namespace(for:NoncolonizedName("myns")), nil)
-    XCTAssertEqual(root.prefix(for:"http://my/ns"), Optional<Optional<NoncolonizedName>>.none)
-    XCTAssertEqual(root.prefix(for:"http://default/ns"), Optional<NoncolonizedName>.none)
-    XCTAssertEqual(root.prefix(for:"http://invalid/ns"), Optional<Optional<NoncolonizedName>>.none)
+    XCTAssertEqual(root.namespace(for: .default), "http://default/ns")
+    XCTAssertEqual(root.namespace(for: .namespace("myns")), nil)
+    XCTAssertEqual(root.prefix(for: "http://my/ns"), nil)
+    XCTAssertEqual(root.prefix(for: "http://default/ns"), .default)
+    XCTAssertEqual(root.prefix(for: "http://invalid/ns"), nil)
     
     XCTAssertEqual(grandchild.attributes[localName:"name", uri:nil], "value")
     XCTAssertEqual(grandchild.attributes[localName:"name", uri:"http://default/ns"], "value")

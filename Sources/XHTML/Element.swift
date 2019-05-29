@@ -118,7 +118,7 @@ open class Element: Node {
 
 extension Element {
   /// Returns URI that specifies namespace for `prefix`.
-  public func namespace(for prefix:NoncolonizedName?) -> String? {
+  public func namespace(for prefix: QualifiedName.Prefix) -> String? {
     // Don't call `Attributes.namespace(for:)`, or induce infinite loop.
     if let namespace = self._attributes._namespace(for:prefix) {
       return namespace
@@ -133,13 +133,11 @@ extension Element {
   }
   
   /// Returns prefix for namespace specified by `uri`.
-  /// Returns `Optional<NoncolonizedName>.none` if the namespace is default.
-  /// Returns `Optional<Optional<NoncolonizedName>>.none` if there is no namespace specified by `uri`.
-  public func prefix(for uri:String) -> NoncolonizedName?? {
+  public func prefix(for uri: String) -> QualifiedName.Prefix? {
     if let prefix = self._attributes._prefix(for:uri) {
       return prefix
     }
-    guard let parent = self.parent else { return Optional<Optional<NoncolonizedName>>.none }
+    guard let parent = self.parent else { return nil }
     return parent.prefix(for:uri)
   }
 }

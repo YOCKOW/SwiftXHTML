@@ -21,8 +21,8 @@ final class Node_XMLNodeTests: XCTestCase {
       """#
     )
     let attributes = Attributes(attributesOf:xmlElement)
-    XCTAssertEqual(attributes?[.defaultNamespace], "http://default/ns")
-    XCTAssertEqual(attributes?[.userDefinedNamespace("prefix")], "http://prefix/ns")
+    XCTAssertEqual(attributes?[.namespaceDeclaration(.default)], "http://default/ns")
+    XCTAssertEqual(attributes?[.namespaceDeclaration(.namespace("prefix"))], "http://prefix/ns")
     XCTAssertEqual(attributes?[.attributeName("prefix:local")], "value")
     XCTAssertEqual(attributes?[.attributeName("noPrefix")], "")
   }

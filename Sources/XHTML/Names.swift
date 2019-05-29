@@ -50,17 +50,39 @@ public struct NoncolonizedName: CustomStringConvertible,
 public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral {
   public typealias StringLiteralType = String
   
-  public var prefix: NoncolonizedName?
+  public enum Prefix: Hashable {
+    case none
+    case namespace(NoncolonizedName)
+    public static let `default`: Prefix = .none
+    
+    fileprivate init?(_ string: String) {
+      if string.isEmpty {
+        self = .none
+      } else if let name = NoncolonizedName(string) {
+        self = .namespace(name)
+      } else {
+        return nil
+      }
+    }
+    
+    fileprivate init(_ ncName: NoncolonizedName) {
+      self = .namespace(ncName)
+    }
+  }
+  
+  public var prefix: Prefix
   public var localName: NoncolonizedName
   
   public var description: String {
-    var desc = ""
-    if let prefix = self.prefix { desc += prefix.description + ":" }
-    desc += self.localName.description
-    return desc
+    switch self.prefix {
+    case .none:
+      return self.localName.description
+    case .namespace(let prefix):
+      return prefix.description + ":" + self.localName.description
+    }
   }
   
-  public init(prefix:NoncolonizedName? = nil, localName:NoncolonizedName) {
+  public init(prefix: Prefix = .none, localName: NoncolonizedName) {
     self.prefix = prefix
     self.localName = localName
   }
@@ -69,12 +91,12 @@ public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStr
     let splittedByColon = string.splitOnce(separator:":")
     
     if let localPartSource = splittedByColon.1 {
-      guard let prefix = NoncolonizedName(String(splittedByColon.0)) else { return nil }
+      guard let prefix = Prefix(String(splittedByColon.0)) else { return nil }
       guard let localPart = NoncolonizedName(String(localPartSource)) else { return nil }
       self.init(prefix:prefix, localName:localPart)
     } else {
       guard let localPart = NoncolonizedName(String(splittedByColon.0)) else { return nil }
-      self.init(prefix:nil, localName:localPart)
+      self.init(prefix:.none, localName:localPart)
     }
   }
   
@@ -89,21 +111,21 @@ public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStr
 
 /// Represents the name of [Attribute](https://www.w3.org/TR/REC-xml-names/#NT-Attribute).
 public enum AttributeName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral {
-  /// Default namespace
-  case defaultNamespace
-  
-  /// Namespace declaration; "prefix" is the associated value.
-  case userDefinedNamespace(NoncolonizedName)
+  /// Namespace attribute
+  case namespaceDeclaration(QualifiedName.Prefix)
   
   /// Ordinary attribute
   case attributeName(QualifiedName)
   
   public var description: String {
     switch self {
-    case .defaultNamespace:
-      return "xmlns"
-    case .userDefinedNamespace(let ncName):
-      return "xmlns:\(ncName.description)"
+    case .namespaceDeclaration(let prefix):
+      switch prefix {
+      case .none:
+        return "xmlns"
+      case .namespace(let ncName):
+        return "xmlns:\(ncName.description)"
+      }
     case .attributeName(let qName):
       return qName.description
     }
@@ -111,11 +133,14 @@ public enum AttributeName: CustomStringConvertible, Hashable, ExpressibleByStrin
   
   public init?(_ string:String) {
     if string == "xmlns" {
-      self = .defaultNamespace
+      self = .namespaceDeclaration(.default)
     } else if let qName = QualifiedName(string) {
-      if let prefix = qName.prefix, prefix == "xmlns" {
-        self = .userDefinedNamespace(qName.localName)
-      } else {
+      switch qName.prefix {
+      case .namespace(let ncName) where ncName == "xmlns":
+        self = .namespaceDeclaration(QualifiedName.Prefix(qName.localName))
+      case .namespace:
+        fallthrough
+      case .none:
         self = .attributeName(qName)
       }
     } else {
