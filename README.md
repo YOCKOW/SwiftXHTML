@@ -24,8 +24,8 @@ and is intended to be used by it.
 ```Swift
 import XHTML
 
-let page = Document.template(title: "Title")
-page.rootElement.body!.append(.text("It's my page."))
+let page = Document.template(title: "Title",
+                             contents:[.text("It's my page.")])
 print(page.xhtmlString)
 
 /*

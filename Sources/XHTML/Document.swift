@@ -104,7 +104,8 @@ extension Document {
     author: String? = nil,
     description: String? = nil,
     keywords: [String]? = nil,
-    title: String
+    title: String,
+    contents: [Node]
     ) -> Document
   {
     let head = HeadElement(name: "head")
@@ -117,6 +118,7 @@ extension Document {
     head.author = author
     head.description = description
     head.keywords = keywords
+    body.children = contents
     document.title = title
     return document
   }
