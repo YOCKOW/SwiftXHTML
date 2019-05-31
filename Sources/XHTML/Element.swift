@@ -67,26 +67,64 @@ open class Element: Node {
     self.children = children
   }
   
-  open override var xhtmlString: String {
+  internal var _startTag: String {
     var result = "<\(self.name.description)"
-    
     if !self.attributes.isEmpty {
       result += " " +
         self.attributes.map { (name:AttributeName, value:String) -> String in
           return "\(name.description)=\"\(value._addingAmpersandEncoding())\""
         }.joined(separator:" ")
     }
-    
     if self.isEmpty {
       result += " />"
     } else {
       result += ">"
-      for child in self.children {
-        result += child.xhtmlString
-      }
-      result += "</\(self.name.description)>"
+    }
+    return result
+  }
+  
+  internal var _contentXHTMLString: String {
+    return self.children.map { $0.xhtmlString }.joined()
+  }
+  
+  internal var _endTag: String {
+    return "</\(self.name.description)>"
+  }
+  
+  open override var xhtmlString: String {
+    var result = self._startTag
+    if !self.isEmpty { result += self._contentXHTMLString + self._endTag }
+    return result
+  }
+  
+  internal override var _prettyXHTMLStringLines: [String] {
+    if self.isEmpty {
+      return [self._startTag]
     }
     
+    let childrenLines: [[String]] = self.children.map{ $0._prettyXHTMLStringLines }
+    let numberOfChildren = self.children.count
+    let numberOfLines = childrenLines.reduce(0){ $0 + $1.count }
+    
+    if numberOfLines == 0 || (numberOfLines == 1 && childrenLines.last?.last?._endsWithNewline != true) {
+      return [self.xhtmlString]
+    }
+    
+    var result: [String] = [self._startTag + "\n"]
+    for ii in 0..<numberOfChildren {
+      let lines = childrenLines[ii]
+      let nn = lines.count
+      for jj in 0..<nn {
+        let line = lines[jj]
+        if jj < nn - 1 || line._endsWithNewline {
+          // not the last line or ends with newline.
+          result.append(_indent + line)
+        } else {
+          result.append(_indent + line + "\n")
+        }
+      }
+    }
+    result.append(self._endTag)
     return result
   }
   

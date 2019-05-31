@@ -9,4 +9,8 @@
 open class LineBreakElement: SpecifiedElement {
   open override class var localName: NoncolonizedName { return "br" }
   open override var isEmpty: Bool { return true }
+  
+  internal override var _prettyXHTMLStringLines: [String] {
+    return ["<br />\n"]
+  }
 }

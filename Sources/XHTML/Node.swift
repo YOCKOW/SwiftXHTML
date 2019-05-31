@@ -5,11 +5,21 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
+internal let _indentWidth = 4
+internal let _indent: String = Array<String>(repeating: " ", count: _indentWidth).joined()
+
 /// The nodes in the abstract, logical tree structure
 /// that represents an XHTML document like `XMLNode`.
 open class Node: Equatable {
   /// The string representation as it would appear in an XHTML document.
   open var xhtmlString: String { return "<!-- `var xhtmlString: String` must be overridden. -->" }
+  
+  /// Splitted string by newline characters
+  /// remaining newlines.
+  internal var _prettyXHTMLStringLines: [String] { return self.xhtmlString._splittedByNewlines }
+  
+  /// Prettified XHTML String.
+  open var prettyXHTMLString: String { return self._prettyXHTMLStringLines.joined() }
   
   /// The parent node.
   public internal(set) var parent: Element? = nil

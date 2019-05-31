@@ -20,4 +20,8 @@ open class Text: Node {
   open override var xhtmlString: String {
     return self.text._addingAmpersandEncoding()
   }
+  
+  internal override var _prettyXHTMLStringLines: [String] {
+    return self.text._splittedByNewlines.map{ $0._addingAmpersandEncoding() }
+  }
 }

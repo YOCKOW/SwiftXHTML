@@ -17,6 +17,7 @@ extension CommentTests {
     // to regenerate.
     static let __allTests__CommentTests = [
         ("test_comment", test_comment),
+        ("test_prettyXHTMLString", test_prettyXHTMLString),
     ]
 }
 
@@ -43,6 +44,7 @@ extension ElementTests {
         ("test_globalAttributes", test_globalAttributes),
         ("test_id", test_id),
         ("test_namespace", test_namespace),
+        ("test_prettyXHTMLString", test_prettyXHTMLString),
         ("test_xhtmlString", test_xhtmlString),
     ]
 }

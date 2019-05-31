@@ -66,7 +66,8 @@ final class DocumentTests: XCTestCase {
       author: "It's me.",
       description: "My page.",
       keywords: ["I", "my", "me"],
-      title: "My first XHTML5."
+      title: "My first XHTML5.",
+      contents: []
     )
     
     let head = template.rootElement.head

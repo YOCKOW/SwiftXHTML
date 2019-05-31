@@ -42,19 +42,26 @@ open class Document {
       self.miscellanies = miscellanies
     }
     
-    public var xhtmlString: String {
+    private var _xmlDeclaration: String {
       guard let charset = self.stringEncoding.ianaCharacterSetName else {
         fatalError("Unsupported String Encoding.")
       }
+      return "<?xml version=\"\(self.xmlVersion)\" encoding=\"\(charset)\"?>"
+    }
+    
+    private var _documentType: String {
       guard let doctype = self.version._documentType else {
         fatalError("The version of XHTML must be specified.")
       }
-      
-      return """
-        <?xml version="\(self.xmlVersion)" encoding="\(charset)"?>
-        \(doctype)
-        \(self.miscellanies.xhtmlString)
-        """
+      return doctype
+    }
+    
+    public var xhtmlString: String {
+      return "\(self._xmlDeclaration)\n\(self._documentType)\n\(self.miscellanies.xhtmlString)"
+    }
+    
+    public var prettyXHTMLString: String {
+      return "\(self._xmlDeclaration)\n\(self._documentType)\n\(self.miscellanies.prettyXHTMLString)"
     }
   }
   
@@ -97,7 +104,8 @@ extension Document {
     author: String? = nil,
     description: String? = nil,
     keywords: [String]? = nil,
-    title: String
+    title: String,
+    contents: [Node]
     ) -> Document
   {
     let head = HeadElement(name: "head")
@@ -110,6 +118,7 @@ extension Document {
     head.author = author
     head.description = description
     head.keywords = keywords
+    body.children = contents
     document.title = title
     return document
   }
@@ -122,6 +131,14 @@ extension Document {
   
   public var xhtmlData: Data? {
     return self.xhtmlString.data(using:self.prolog.stringEncoding)
+  }
+  
+  public var prettyXHTMLString: String {
+    return self.prolog.prettyXHTMLString + self.rootElement.prettyXHTMLString + self.miscellanies.prettyXHTMLString
+  }
+  
+  public var prettyXHTMLData: Data? {
+    return self.prettyXHTMLString.data(using:self.prolog.stringEncoding)
   }
 }
 
