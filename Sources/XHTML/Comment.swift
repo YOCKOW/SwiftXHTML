@@ -57,4 +57,21 @@ public final class Comment: Node {
   public override var xhtmlString:String {
     return "<!--\(self.text)-->"
   }
+  
+  public override var _prettyXHTMLStringLines: [String] {
+    let lines = self.text._splittedByNewlines
+    switch lines.count {
+    case 0:
+      fallthrough
+    case 1 where !lines[0]._endsWithNewline:
+      return [self.xhtmlString]
+    default:
+      let start: String = "<!--\n"
+      let end: String = lines.last!._endsWithNewline ? "-->" : "\n-->"
+      var indentedLines = lines.map { _indent + $0 }
+      indentedLines.insert(start, at: 0)
+      indentedLines.append(end)
+      return indentedLines
+    }
+  }
 }

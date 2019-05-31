@@ -158,6 +158,40 @@ final class ElementTests: XCTestCase {
     }
     XCTAssertEqual(text.text, "The identifier of this element is \"My ID\"")
   }
+  
+  func test_prettyXHTMLString() {
+    let parent = Element(name:"parent")
+    XCTAssertEqual(parent.prettyXHTMLString, "<parent />")
+    
+    let child = Element(name:"child")
+    parent.append(child)
+    XCTAssertEqual(parent.prettyXHTMLString, "<parent><child /></parent>")
+    
+    let grandchild = Element(name:"grandchild")
+    child.append(grandchild)
+    XCTAssertEqual(parent.prettyXHTMLString, "<parent><child><grandchild /></child></parent>")
+    
+    let grandchild2 = Element(name:"grandchild2")
+    child.append(grandchild2)
+    
+    XCTAssertEqual(child.prettyXHTMLString, """
+      <child>
+      \(_indent)<grandchild />
+      \(_indent)<grandchild2 />
+      </child>
+      """
+    )
+    
+    XCTAssertEqual(parent.prettyXHTMLString, """
+      <parent>
+      \(_indent)<child>
+      \(_indent)\(_indent)<grandchild />
+      \(_indent)\(_indent)<grandchild2 />
+      \(_indent)</child>
+      </parent>
+      """
+    )
+  }
 }
 
 

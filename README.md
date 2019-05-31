@@ -15,6 +15,7 @@ and is intended to be used by it.
 * [SwiftBonaFideCharacterSet](https://github.com/YOCKOW/SwiftBonaFideCharacterSet)
 * [SwiftExtensions](https://github.com/YOCKOW/SwiftExtensions)
 * [SwiftNetworkGear](https://github.com/YOCKOW/SwiftNetworkGear)
+* [SwiftPredicate](https://github.com/YOCKOW/SwiftPredicate)
 * [SwiftRanges](https://github.com/YOCKOW/SwiftRanges)
 
 
@@ -29,12 +30,29 @@ print(page.xhtmlString)
 
 /*
 -- OUTPUT --
-
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"><head><title>Title</title></head><body>It&apos;s my page.</body></html>
 
 */
+
+page.rootElement.body!.append(.comment("This is a comment."))
+print(page.prettyXHTMLString)
+
+/*
+-- OUTPUT --
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head><title>Title</title></head>
+    <body>
+        It&apos;s my page.
+        <!--This is a comment.-->
+    </body>
+</html>
+
+*/
+
 ```
 
 

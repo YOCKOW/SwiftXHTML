@@ -21,6 +21,13 @@ public final class Miscellany: Node {
     }
   }
   
+  internal override var _prettyXHTMLStringLines: [String] {
+    switch self._node {
+    case .comment(let comment): return comment._prettyXHTMLStringLines
+    case .processingInstruction(let pi): return pi._prettyXHTMLStringLines
+    }
+  }
+  
   public init?(_ node:Node) {
     if case let misc as Miscellany = node {
       self._node = misc._node
@@ -36,6 +43,23 @@ public final class Miscellany: Node {
 
 extension Sequence where Self.Element == Miscellany {
   public var xhtmlString: String {
-    return self.map { $0.xhtmlString + "\n" }.joined()
+    return self.map { $0.xhtmlString }.joined()
+  }
+  
+  internal var _prettyXHTMLStringLines: [String] {
+    var lines: [String] = []
+    for misc in self {
+      var miscLines = misc._prettyXHTMLStringLines
+      if let lastLine = miscLines.last, !lastLine._endsWithNewline {
+        miscLines.removeLast()
+        miscLines.append(lastLine + "\n")
+      }
+      lines.append(contentsOf: miscLines)
+    }
+    return lines
+  }
+  
+  public var prettyXHTMLString: String {
+    return self._prettyXHTMLStringLines.joined()
   }
 }
