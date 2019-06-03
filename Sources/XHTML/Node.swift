@@ -66,6 +66,102 @@ extension Node {
     return FormElement(name:name, attributes:attributes, children:children)
   }
   
+  /// Create an \<h1> element with specifide child-nodes.
+  public static func h1(name: QualifiedName = "h1",
+                        attributes: Attributes = [:],
+                        children: [Node]) -> Node
+  {
+    return H1Element(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<h1> element with specifide text.
+  public static func h1(name: QualifiedName = "h1",
+                        attributes: Attributes = [:],
+                        text: String) -> Node
+  {
+    return h1(name: name, attributes: attributes, children: [.text(text)])
+  }
+  
+  /// Create an \<h2> element with specifide child-nodes.
+  public static func h2(name: QualifiedName = "h2",
+                        attributes: Attributes = [:],
+                        children: [Node]) -> Node
+  {
+    return H2Element(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<h2> element with specifide text.
+  public static func h2(name: QualifiedName = "h2",
+                        attributes: Attributes = [:],
+                        text: String) -> Node
+  {
+    return h2(name: name, attributes: attributes, children: [.text(text)])
+  }
+  
+  /// Create an \<h3> element with specifide child-nodes.
+  public static func h3(name: QualifiedName = "h3",
+                        attributes: Attributes = [:],
+                        children: [Node]) -> Node
+  {
+    return H3Element(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<h3> element with specifide text.
+  public static func h3(name: QualifiedName = "h3",
+                        attributes: Attributes = [:],
+                        text: String) -> Node
+  {
+    return h3(name: name, attributes: attributes, children: [.text(text)])
+  }
+  
+  /// Create an \<h4> element with specifide child-nodes.
+  public static func h4(name: QualifiedName = "h4",
+                        attributes: Attributes = [:],
+                        children: [Node]) -> Node
+  {
+    return H4Element(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<h4> element with specifide text.
+  public static func h4(name: QualifiedName = "h4",
+                        attributes: Attributes = [:],
+                        text: String) -> Node
+  {
+    return h4(name: name, attributes: attributes, children: [.text(text)])
+  }
+  
+  /// Create an \<h5> element with specifide child-nodes.
+  public static func h5(name: QualifiedName = "h5",
+                        attributes: Attributes = [:],
+                        children: [Node]) -> Node
+  {
+    return H5Element(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<h5> element with specifide text.
+  public static func h5(name: QualifiedName = "h5",
+                        attributes: Attributes = [:],
+                        text: String) -> Node
+  {
+    return h5(name: name, attributes: attributes, children: [.text(text)])
+  }
+  
+  /// Create an \<h6> element with specifide child-nodes.
+  public static func h6(name: QualifiedName = "h6",
+                        attributes: Attributes = [:],
+                        children: [Node]) -> Node
+  {
+    return H6Element(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<h6> element with specifide text.
+  public static func h6(name: QualifiedName = "h6",
+                        attributes: Attributes = [:],
+                        text: String) -> Node
+  {
+    return h6(name: name, attributes: attributes, children: [.text(text)])
+  }
+  
   /// Create an \<head\> element.
   public static func head(name:QualifiedName = "head",
                           attributes:Attributes = [:],

@@ -42,6 +42,7 @@ extension ElementTests {
         ("test_classSelector", test_classSelector),
         ("test_equatable", test_equatable),
         ("test_globalAttributes", test_globalAttributes),
+        ("test_headingElements", test_headingElements),
         ("test_id", test_id),
         ("test_namespace", test_namespace),
         ("test_prettyXHTMLString", test_prettyXHTMLString),
