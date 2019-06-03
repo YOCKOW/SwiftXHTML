@@ -31,13 +31,14 @@ extension Element {
       "title":TitleElement.self,
     ]
     
-    /// Register `class` for the element whose local name is `localName`.
-    public func register(_ class:Element.Type, for localName:NoncolonizedName) {
-      self._list[localName] = `class`
-    }
-    
-    internal func _class(for localName:NoncolonizedName) -> Element.Type? {
-      return self._list[localName]
+    /// The type for `localName` that the parser uses when create an element instance.
+    public subscript(_ localName: NoncolonizedName) -> Element.Type? {
+      get {
+        return self._list[localName]
+      }
+      set {
+        self._list[localName] = newValue
+      }
     }
   }
 }
@@ -50,7 +51,7 @@ extension _ElementClassSelector {
   }
   
   private static func _forceGenerateElement(name: QualifiedName, attributes: Attributes) -> Self? {
-    if let cls = Element.ClassSelector.default._class(for:name.localName) {
+    if let cls = Element.ClassSelector.default[name.localName] {
       return (cls.init(name:name, attributes:attributes) as! Self)
     }
     return nil
