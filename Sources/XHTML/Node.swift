@@ -178,6 +178,11 @@ extension Node {
     return HTMLElement(name:name, attributes:attributes, children:children)
   }
   
+  /// Create a \<hr /> element.
+  public static func hr(name:QualifiedName = "hr", attributes:Attributes = [:]) -> Node {
+    return HorizontalRuleElement(name: name, attributes: attributes)
+  }
+  
   /// Create an \<input\> element.
   public static func input(name:QualifiedName = "input",
                            type:InputElement.TypeValue,
