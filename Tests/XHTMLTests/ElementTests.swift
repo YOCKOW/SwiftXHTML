@@ -192,8 +192,22 @@ final class ElementTests: XCTestCase {
       """
     )
   }
+  
+  func test_headingElements() {
+    let headings: [Node] = [
+      .h1(text:"h1"),
+      .h2(text:"h2"),
+      .h3(text:"h3"),
+      .h4(text:"h4"),
+      .h5(text:"h5"),
+      .h6(text:"h6"),
+    ]
+    
+    for ii in 0..<6 {
+      let heading = headings[ii] as? Element
+      XCTAssertEqual(heading?.name, QualifiedName("h\(ii + 1)"))
+      XCTAssertEqual(heading?.children.count, 1)
+      XCTAssertEqual((heading?.children.first as? Text)?.text, "h\(ii + 1)")
+    }
+  }
 }
-
-
-
-
