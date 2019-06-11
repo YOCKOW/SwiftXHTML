@@ -27,4 +27,22 @@ open class SpecifiedElement: Element {
     super.init(name:name)
     self.name = name
   }
+  
+  public required convenience init(name: QualifiedName, attributes: Attributes) {
+    self.init(name: name)
+    self.attributes = attributes
+  }
+  
+  public convenience init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    self.init(name: name, attributes: attributes)
+    self.children = children
+  }
+  
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
+                          attributes: Attributes = [:],
+                          children: [Node] = []) {
+    self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
+              attributes: attributes,
+              children: children)
+  }
 }
