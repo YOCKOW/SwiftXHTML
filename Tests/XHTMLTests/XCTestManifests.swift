@@ -46,6 +46,7 @@ extension ElementTests {
         ("test_id", test_id),
         ("test_namespace", test_namespace),
         ("test_prettyXHTMLString", test_prettyXHTMLString),
+        ("test_table", test_table),
         ("test_xhtmlString", test_xhtmlString),
     ]
 }
