@@ -52,6 +52,14 @@ extension Node {
     return LineBreakElement(name: name, attributes: attributes)
   }
   
+  /// Create a \<caption> element.
+  public static func caption(name: QualifiedName = "caption",
+                             attributes: Attributes = [:],
+                             children: [Node] = []) -> Node
+  {
+    return TableCaptionElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an XHTML comment node.
   /// Fatal error will occur if `text` is invalid for XML comment.
   public static func comment(_ text:String) -> Node {
@@ -195,9 +203,57 @@ extension Node {
                         attributes:attributes)
   }
   
+  /// Create an \<table> element.
+  public static func table(name: QualifiedName = "table",
+                           attributes: Attributes = [:],
+                           children: [Node] = []) -> Node
+  {
+    return TableElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<tbody> element.
+  public static func tbody(name: QualifiedName = "tbody",
+                           attributes: Attributes = [:],
+                           children: [Node] = []) -> Node
+  {
+    return TableBodyElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<td> element.
+  public static func td(name: QualifiedName = "td",
+                        attributes: Attributes = [:],
+                        children: [Node] = []) -> Node
+  {
+    return TableDataCellElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an XHTML text node.
   public static func text(_ text:String) -> Node {
     return Text(text)
+  }
+  
+  /// Create an \<tfoot> element.
+  public static func tfoot(name: QualifiedName = "tfoot",
+                           attributes: Attributes = [:],
+                           children: [Node] = []) -> Node
+  {
+    return TableFooterElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<th> element.
+  public static func th(name: QualifiedName = "th",
+                        attributes: Attributes = [:],
+                        children: [Node] = []) -> Node
+  {
+    return TableHeaderCellElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<thead> element.
+  public static func thead(name: QualifiedName = "thead",
+                           attributes: Attributes = [:],
+                           children: [Node] = []) -> Node
+  {
+    return TableHeaderElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create an \<title\> element.
@@ -208,5 +264,13 @@ extension Node {
     let titleElement = TitleElement(name:name, attributes:attributes)
     titleElement.title = title
     return titleElement
+  }
+  
+  /// Create an \<tr> element.
+  public static func tr(name: QualifiedName = "tr",
+                        attributes: Attributes = [:],
+                        children: [Node] = []) -> Node
+  {
+    return TableRowElement(name: name, attributes: attributes, children: children)
   }
 }
