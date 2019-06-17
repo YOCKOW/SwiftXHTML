@@ -210,4 +210,34 @@ final class ElementTests: XCTestCase {
       XCTAssertEqual((heading?.children.first as? Text)?.text, "h\(ii + 1)")
     }
   }
+  
+  func test_table() {
+    let table = TableElement(caption: [.text("CAPTION")],
+                             numberOfHeaderRows: 1,
+                             numberOfHeaderColumns: 1,
+                             numberOfRows: 2,
+                             numberOfColumns: 1,
+                             numberOfFooterRows: 1)
+    
+    table.header?[0][0].append(.text("NAME"))
+    table.header?[0][1].append(.text("AGE"))
+    
+    table.body?[0][0].append(.text("桃太郎"))
+    table.body?[0][1].append(.text("18"))
+    
+    table.body?[1][0].append(.text("金太郎"))
+    table.body?[1][1].append(.text("20"))
+    
+    table.footer?[0][0].append(.text("平均"))
+    table.footer?[0][1].append(.text("19"))
+    
+    XCTAssertEqual(
+      table.xhtmlString,
+      "<table><caption>CAPTION</caption>" +
+      #"<thead><tr><th scope="row">NAME</th><th scope="col">AGE</th></tr></thead>"# +
+      #"<tbody><tr><th scope="row">桃太郎</th><td>18</td></tr><tr><th scope="row">金太郎</th><td>20</td></tr></tbody>"# +
+      #"<tfoot><tr><th scope="row">平均</th><td>19</td></tr></tfoot>"# +
+      "</table>"
+    )
+  }
 }
