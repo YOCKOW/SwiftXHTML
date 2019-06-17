@@ -17,6 +17,7 @@ extension Element {
       "a":AnchorElement.self,
       "body":BodyElement.self,
       "br":LineBreakElement.self,
+      "caption":TableCaptionElement.self,
       "form":FormElement.self,
       "h1":H1Element.self,
       "h2":H2Element.self,
@@ -28,7 +29,14 @@ extension Element {
       "hr":HorizontalRuleElement.self,
       "input":InputElement.self,
       "meta":MetaElement.self,
+      "table":TableElement.self,
+      "tbody":TableBodyElement.self,
+      "td":TableDataCellElement.self,
+      "tfoot":TableFooterElement.self,
+      "th":TableHeaderCellElement.self,
+      "thead":TableHeaderElement.self,
       "title":TitleElement.self,
+      "tr":TableRowElement.self,
     ]
     
     /// The type for `localName` that the parser uses when create an element instance.
