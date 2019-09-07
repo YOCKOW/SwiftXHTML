@@ -2,4 +2,5 @@
 /.build
 /Packages
 /Package.resolved
+/.swiftpm
 /*.xcodeproj
