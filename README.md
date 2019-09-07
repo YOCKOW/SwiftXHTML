@@ -13,10 +13,10 @@ and is intended to be used by it.
 ## Dependencies
 
 * [SwiftBonaFideCharacterSet](https://github.com/YOCKOW/SwiftBonaFideCharacterSet)
-* [SwiftExtensions](https://github.com/YOCKOW/SwiftExtensions)
 * [SwiftNetworkGear](https://github.com/YOCKOW/SwiftNetworkGear)
 * [SwiftPredicate](https://github.com/YOCKOW/SwiftPredicate)
 * [SwiftRanges](https://github.com/YOCKOW/SwiftRanges)
+* [ySwiftExtensions](https://github.com/YOCKOW/ySwiftExtensions)
 
 
 # Usage
