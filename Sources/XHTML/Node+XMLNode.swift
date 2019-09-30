@@ -6,6 +6,9 @@
  ************************************************************************************************ */
 
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 
 extension Attributes {
   public init?<S>(_ xmlNodes: S) where S: Sequence, S.Element: XMLNode {
@@ -21,7 +24,7 @@ extension Attributes {
         }
       case .namespace:
         // Workaround for [SR-10764](https://bugs.swift.org/browse/SR-10764)
-        #if canImport(ObjectiveC)
+        #if canImport(ObjectiveC) || compiler(>=5.1)
         let isDefault: Bool = attribute.name?.isEmpty == true
         #else
         let isDefault: Bool = attribute.name == nil
