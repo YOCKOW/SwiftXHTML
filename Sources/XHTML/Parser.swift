@@ -28,7 +28,7 @@ extension Element {
 
 /// The workaround for [SR-10157](https://bugs.swift.org/browse/SR-10157)
 private func _swapElementName(_ name:String) -> String {
-  #if os(Linux)
+  #if os(Linux) && compiler(<5.1)
   let splitted = name.splitOnce(separator:":")
   if let originalPrefix = splitted.1 {
     return "\(originalPrefix):\(splitted.0)"

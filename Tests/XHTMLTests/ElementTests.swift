@@ -145,9 +145,8 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(element.attributes["data-abc-def"], "another data")
   }
   
-  func test_id() {
-    let document =
-      try! Parser.parse(TestResources.shared.data(for:"XHTML/XHTML5ForVariousTests.xhtml")!)
+  func test_id() throws {
+    let document = try Parser.parse(TestResources.shared.data(for:"XHTML/XHTML5ForVariousTests.xhtml")!)
     
     let element = document.element(for:"My ID")
     XCTAssertNotNil(element)
