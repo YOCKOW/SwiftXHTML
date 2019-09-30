@@ -9,6 +9,9 @@ import XCTest
 @testable import XHTML
 
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 
 final class Node_XMLNodeTests: XCTestCase {
   func test_attributes() {

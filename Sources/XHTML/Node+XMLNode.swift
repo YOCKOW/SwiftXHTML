@@ -6,6 +6,9 @@
  ************************************************************************************************ */
 
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 
 extension Attributes {
   public init?<S>(_ xmlNodes: S) where S: Sequence, S.Element: XMLNode {
