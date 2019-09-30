@@ -6,6 +6,9 @@
  ************************************************************************************************ */
 
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 import HTTP
 
 /// Represents the processing instruction.

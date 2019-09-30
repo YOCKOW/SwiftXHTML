@@ -7,6 +7,9 @@
 
 import BonaFideCharacterSet
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 import yExtensions
 
 // "Prolog" consists of only ASCII characters (except contents of comments).
