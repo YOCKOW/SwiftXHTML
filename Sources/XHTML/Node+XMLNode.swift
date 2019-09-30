@@ -24,7 +24,7 @@ extension Attributes {
         }
       case .namespace:
         // Workaround for [SR-10764](https://bugs.swift.org/browse/SR-10764)
-        #if canImport(ObjectiveC)
+        #if canImport(ObjectiveC) || compiler(>=5.1)
         let isDefault: Bool = attribute.name?.isEmpty == true
         #else
         let isDefault: Bool = attribute.name == nil
