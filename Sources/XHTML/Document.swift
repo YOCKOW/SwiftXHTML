@@ -8,6 +8,7 @@
 import Foundation
 
 import BonaFideCharacterSet
+import StringComposition
 import yExtensions
 
 private func _validateXMLVersion(_ string:String) -> Bool {
@@ -60,8 +61,21 @@ open class Document {
       return "\(self._xmlDeclaration)\n\(self._documentType)\n\(self.miscellanies.xhtmlString)"
     }
     
-    public var prettyXHTMLString: String {
-      return "\(self._xmlDeclaration)\n\(self._documentType)\n\(self.miscellanies.prettyXHTMLString)"
+    public var prettyXHTMLLines: StringLines {
+      var result = StringLines([
+        "\(self._xmlDeclaration)",
+        "\(self._documentType)",
+      ])
+      result.append(contentsOf: self.miscellanies.prettyXHTMLLines)
+      return result
+    }
+    
+    public func prettyXHTMLString(indent: String.Indent = .default,
+                                  newline: Character.Newline = .lineFeed) -> String  {
+      var lines = self.prettyXHTMLLines
+      lines.indent = indent
+      lines.newline = newline
+      return lines.description
     }
   }
   
@@ -133,12 +147,20 @@ extension Document {
     return self.xhtmlString.data(using:self.prolog.stringEncoding)
   }
   
-  public var prettyXHTMLString: String {
-    return self.prolog.prettyXHTMLString + self.rootElement.prettyXHTMLString + self.miscellanies.prettyXHTMLString
+  public var prettyXHTMLLines: StringLines {
+    var result = self.prolog.prettyXHTMLLines
+    result.append(contentsOf: self.rootElement.prettyXHTMLLines)
+    result.append(contentsOf: self.miscellanies.prettyXHTMLLines)
+    return result
+  }
+  
+  public func prettyXHTMLString(indent: String.Indent = .default,
+                                newline: Character.Newline = .lineFeed) -> String {
+    return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
   
   public var prettyXHTMLData: Data? {
-    return self.prettyXHTMLString.data(using:self.prolog.stringEncoding)
+    return self.prettyXHTMLLines.data(using: self.prolog.stringEncoding)
   }
 }
 

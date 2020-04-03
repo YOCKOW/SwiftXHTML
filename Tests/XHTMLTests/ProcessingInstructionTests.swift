@@ -8,7 +8,7 @@
 import XCTest
 @testable import XHTML
 
-import HTTP
+import NetworkGear
 
 final class ProcessingInstructionTests: XCTestCase {
   func test_XMLStyleSheet() {

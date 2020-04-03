@@ -5,6 +5,8 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
+import StringComposition
+
 /// Represents attributes of XHTML Element.
 public struct Attributes: Equatable {
   private var _attributes:[AttributeName:String]
@@ -24,6 +26,45 @@ public struct Attributes: Equatable {
   
   public var isEmpty: Bool {
     return self._attributes.isEmpty
+  }
+}
+
+extension Attributes {
+  private func _pairDescription(name: AttributeName, value: String) -> String {
+    return "\(name.description)=\"\(value._addingAmpersandEncoding())\""
+  }
+  
+  public var xhtmlString: String {
+    return self._attributes.map({ _pairDescription(name: $0, value: $1) }).joined(separator: " ")
+  }
+  
+  /// Lines containing attributes represented by XHTML.
+  /// The result is empty when the instance is empty.
+  public var prettyXHTMLLines: StringLines {
+    var result = StringLines()
+    var buffer = ""
+    
+    func _flush() {
+      result.append(String.Line(buffer)!)
+      buffer = ""
+    }
+    
+    for (name, value) in self._attributes {
+      let pairDescription = _pairDescription(name: name, value: value)
+      if buffer.estimatedWidth + pairDescription.estimatedWidth > 100 {
+        _flush()
+      }
+      buffer += buffer.isEmpty ? pairDescription : " \(pairDescription)"
+    }
+    
+    if !buffer.isEmpty { _flush() }
+    
+    return result
+  }
+  
+  public func prettyXHTMLString(indent: String.Indent = .default,
+                                newline: Character.Newline = .lineFeed) -> String {
+    return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
 }
 

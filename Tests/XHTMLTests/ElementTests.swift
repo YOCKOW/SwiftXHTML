@@ -8,6 +8,7 @@
 import XCTest
 @testable import XHTML
 
+import StringComposition
 import TestResources
 
 final class ElementTests: XCTestCase {
@@ -159,35 +160,39 @@ final class ElementTests: XCTestCase {
   }
   
   func test_prettyXHTMLString() {
+    let indent = String.Indent.spaces(count: 2)
+    
     let parent = Element(name:"parent")
-    XCTAssertEqual(parent.prettyXHTMLString, "<parent />")
+    XCTAssertEqual(parent.prettyXHTMLString(indent: indent), "<parent />\n")
     
     let child = Element(name:"child")
     parent.append(child)
-    XCTAssertEqual(parent.prettyXHTMLString, "<parent><child /></parent>")
+    XCTAssertEqual(parent.prettyXHTMLString(indent: indent), "<parent><child /></parent>\n")
     
     let grandchild = Element(name:"grandchild")
     child.append(grandchild)
-    XCTAssertEqual(parent.prettyXHTMLString, "<parent><child><grandchild /></child></parent>")
+    XCTAssertEqual(parent.prettyXHTMLString(indent: indent), "<parent><child><grandchild /></child></parent>\n")
     
     let grandchild2 = Element(name:"grandchild2")
     child.append(grandchild2)
     
-    XCTAssertEqual(child.prettyXHTMLString, """
+    XCTAssertEqual(child.prettyXHTMLString(indent: indent), """
       <child>
-      \(_indent)<grandchild />
-      \(_indent)<grandchild2 />
+      \(indent)<grandchild />
+      \(indent)<grandchild2 />
       </child>
+      
       """
     )
     
-    XCTAssertEqual(parent.prettyXHTMLString, """
+    XCTAssertEqual(parent.prettyXHTMLString(indent: indent), """
       <parent>
-      \(_indent)<child>
-      \(_indent)\(_indent)<grandchild />
-      \(_indent)\(_indent)<grandchild2 />
-      \(_indent)</child>
+      \(indent)<child>
+      \(indent)\(indent)<grandchild />
+      \(indent)\(indent)<grandchild2 />
+      \(indent)</child>
       </parent>
+      
       """
     )
   }

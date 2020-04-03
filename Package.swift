@@ -11,11 +11,12 @@ let package = Package(
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
-    .package(url:"https://github.com/YOCKOW/SwiftBonaFideCharacterSet.git", from:"1.6.0"),
-    .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", from:"0.10.1"),
-    .package(url:"https://github.com/YOCKOW/SwiftPredicate.git", from:"1.2.0"),
-    .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.0.0"),
-    .package(url:"https://github.com/YOCKOW/ySwiftExtensions.git", from:"0.4.0"),
+    .package(url:"https://github.com/YOCKOW/SwiftBonaFideCharacterSet.git", from: "1.6.2"),
+    .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", "0.11.1"..<"2.0.0"),
+    .package(url:"https://github.com/YOCKOW/SwiftPredicate.git", from: "1.2.1"),
+    .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.1.1"),
+    .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "1.2.0"),
+    .package(url:"https://github.com/YOCKOW/ySwiftExtensions.git", from:"0.9.1"),
   ],
   targets: [
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -26,6 +27,7 @@ let package = Package(
               "SwiftNetworkGear",
               "SwiftPredicate",
               "SwiftRanges",
+              "SwiftStringComposition",
               "ySwiftExtensions",
             ]),
     .target(name: "TestResources", dependencies: [], path: "Tests/TestResources"),
@@ -34,3 +36,13 @@ let package = Package(
   swiftLanguageVersions: [.v4, .v4_2, .v5]
 )
 
+
+import Foundation
+if ProcessInfo.processInfo.environment["YOCKOW_USE_LOCAL_PACKAGES"] != nil {
+  func localPath(with url: String) -> String {
+    guard let url = URL(string: url) else { fatalError("Unexpected URL.") }
+    let dirName = url.deletingPathExtension().lastPathComponent
+    return "../\(dirName)"
+  }
+  package.dependencies = package.dependencies.map { .package(path: localPath(with: $0.url)) }
+}
