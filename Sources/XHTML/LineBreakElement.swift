@@ -5,12 +5,14 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
+import StringComposition
+
 /// Represents \<br />
 open class LineBreakElement: SpecifiedElement {
   open override class var localName: NoncolonizedName { return "br" }
   open override var isEmpty: Bool { return true }
   
-  internal override var _prettyXHTMLStringLines: [String] {
-    return ["<br />\n"]
+  open override var prettyXHTMLLines: StringLines {
+    return StringLines("<br />\n", detectIndent: false)
   }
 }

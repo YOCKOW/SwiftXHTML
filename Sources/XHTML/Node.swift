@@ -5,8 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-internal let _indentWidth = 4
-internal let _indent: String = Array<String>(repeating: " ", count: _indentWidth).joined()
+import StringComposition
 
 /// The nodes in the abstract, logical tree structure
 /// that represents an XHTML document like `XMLNode`.
@@ -14,12 +13,21 @@ open class Node: Equatable {
   /// The string representation as it would appear in an XHTML document.
   open var xhtmlString: String { return "<!-- `var xhtmlString: String` must be overridden. -->" }
   
-  /// Splitted string by newline characters
-  /// remaining newlines.
-  internal var _prettyXHTMLStringLines: [String] { return self.xhtmlString._splittedByNewlines }
+  /// An instance of `StringLines` (a.k.a. `String.Composition`) that represents a prettified
+  /// XHTML String.
+  /// This property is expected to be overridden by subclasses.
+  open var prettyXHTMLLines: StringLines {
+    return .init("<!-- `var prettyXHTMLLines: StringLines` must be overridden. -->", detectIndent: false)
+  }
   
-  /// Prettified XHTML String.
-  open var prettyXHTMLString: String { return self._prettyXHTMLStringLines.joined() }
+  
+  /// Returns prettified XHTML String.
+  ///
+  /// This method cannot be overridden, therefore you have to override `var prettyXHTMLLines: StringLines { get }`.
+  public final func prettyXHTMLString(indent: String.Indent = .default,
+                                      newline: Character.Newline = .lineFeed) -> String {
+    return self.prettyXHTMLLines._description(indent: indent, newline: newline)
+  }
   
   /// The parent node.
   public internal(set) var parent: Element? = nil

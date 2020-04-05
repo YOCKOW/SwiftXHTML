@@ -5,6 +5,8 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
+import StringComposition
+
 /// Represents text.
 open class Text: Node {
   open var text: String
@@ -21,7 +23,9 @@ open class Text: Node {
     return self.text._addingAmpersandEncoding()
   }
   
-  internal override var _prettyXHTMLStringLines: [String] {
-    return self.text._splittedByNewlines.map{ $0._addingAmpersandEncoding() }
+  open override var prettyXHTMLLines: StringLines {
+    let rawLines = self.text.split(omittingEmptySubsequences: false, whereSeparator: { $0.isNewline })
+    let escaped = rawLines.map({ $0._addingAmpersandEncoding() })
+    return StringLines(escaped.map({ String.Line($0, indentLevel: 0)! }))
   }
 }

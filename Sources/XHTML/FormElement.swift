@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-import HTTP
+import NetworkGear
 import yExtensions
 
 open class FormElement: SpecifiedElement {
@@ -41,9 +41,9 @@ open class FormElement: SpecifiedElement {
   }
   
   /// The HTTP method used when submitting the form
-  open var method: HTTP.Method? {
+  open var method: HTTPMethod? {
     get {
-      return self.attributes["method"].flatMap(Method.init(rawValue:))
+      return self.attributes["method"].flatMap(HTTPMethod.init(rawValue:))
     }
     set {
       self.attributes["method"] = newValue?.rawValue

@@ -9,7 +9,8 @@ import Foundation
 #if canImport(FoundationXML)
 import FoundationXML
 #endif
-import HTTP
+import NetworkGear
+import StringComposition
 
 /// Represents the processing instruction.
 /// Reference: [XML 1.0 (Fifth Edition) #2.6](https://www.w3.org/TR/REC-xml/#sec-pi)
@@ -24,6 +25,10 @@ open class ProcessingInstruction: Node {
   
   open override var xhtmlString: String {
     return "<?\(self.target.description) \(self.content ?? "")?>"
+  }
+  
+  open override var prettyXHTMLLines: StringLines {
+    return StringLines(self.xhtmlString, detectIndent: false)
   }
 }
 

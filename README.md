@@ -16,6 +16,7 @@ and is intended to be used by it.
 * [SwiftNetworkGear](https://github.com/YOCKOW/SwiftNetworkGear)
 * [SwiftPredicate](https://github.com/YOCKOW/SwiftPredicate)
 * [SwiftRanges](https://github.com/YOCKOW/SwiftRanges)
+* [SwiftStringComposition](https://github.com/YOCKOW/SwiftStringComposition)
 * [ySwiftExtensions](https://github.com/YOCKOW/ySwiftExtensions)
 
 

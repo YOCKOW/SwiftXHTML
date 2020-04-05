@@ -5,6 +5,8 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
+import StringComposition
+
 /// Represents List of [Misc.](https://www.w3.org/TR/REC-xml/#NT-Misc)
 public final class Miscellany: Node {
   private enum _Node {
@@ -21,10 +23,10 @@ public final class Miscellany: Node {
     }
   }
   
-  internal override var _prettyXHTMLStringLines: [String] {
+  public override var prettyXHTMLLines: StringLines {
     switch self._node {
-    case .comment(let comment): return comment._prettyXHTMLStringLines
-    case .processingInstruction(let pi): return pi._prettyXHTMLStringLines
+    case .comment(let comment): return comment.prettyXHTMLLines
+    case .processingInstruction(let pi): return pi.prettyXHTMLLines
     }
   }
   
@@ -46,20 +48,12 @@ extension Sequence where Self.Element == Miscellany {
     return self.map { $0.xhtmlString }.joined()
   }
   
-  internal var _prettyXHTMLStringLines: [String] {
-    var lines: [String] = []
-    for misc in self {
-      var miscLines = misc._prettyXHTMLStringLines
-      if let lastLine = miscLines.last, !lastLine._endsWithNewline {
-        miscLines.removeLast()
-        miscLines.append(lastLine + "\n")
-      }
-      lines.append(contentsOf: miscLines)
-    }
-    return lines
+  public var prettyXHTMLLines: StringLines {
+    return StringLines(self.flatMap({ $0.prettyXHTMLLines }))
   }
   
-  public var prettyXHTMLString: String {
-    return self._prettyXHTMLStringLines.joined()
+  public func prettyXHTMLString(indent: String.Indent = .default,
+                                newline: Character.Newline = .lineFeed) -> String {
+    return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
 }

@@ -6,6 +6,7 @@
  ************************************************************************************************ */
 
 import BonaFideCharacterSet
+import StringComposition
 
 /// Validate the text.
 /// Reference: https://www.w3.org/TR/REC-xml/#sec-comments
@@ -58,20 +59,19 @@ public final class Comment: Node {
     return "<!--\(self.text)-->"
   }
   
-  public override var _prettyXHTMLStringLines: [String] {
-    let lines = self.text._splittedByNewlines
-    switch lines.count {
-    case 0:
-      fallthrough
-    case 1 where !lines[0]._endsWithNewline:
-      return [self.xhtmlString]
-    default:
-      let start: String = "<!--\n"
-      let end: String = lines.last!._endsWithNewline ? "-->" : "\n-->"
-      var indentedLines = lines.map { _indent + $0 }
-      indentedLines.insert(start, at: 0)
-      indentedLines.append(end)
-      return indentedLines
+  public override var prettyXHTMLLines: StringLines {
+    var commentLines = StringLines(self.text, detectIndent: false)
+    if commentLines.count <= 1 && !commentLines.hasLastNewline {
+      return StringLines("<!--\(self.text)-->")
+    } else {
+      commentLines.shiftRight()
+      commentLines.insert("<!--", at: 0)
+      if commentLines.hasLastNewline {
+        commentLines.append("-->")
+      } else {
+        commentLines[commentLines.endIndex - 1].payload += "-->"
+      }
+      return commentLines
     }
   }
 }
