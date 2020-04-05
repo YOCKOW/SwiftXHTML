@@ -53,7 +53,7 @@ extension Attributes {
 extension Comment {
   internal convenience init?(_xmlNode xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
-    #if canImport(ObjectiveC) || swift(>=5.1)
+    #if canImport(ObjectiveC) || compiler(>=5.1)
     guard xmlNode.kind == .comment else { return nil }
     self.init(xmlNode.stringValue!)
     #else
@@ -69,7 +69,7 @@ extension Comment {
 extension ProcessingInstruction {
   internal convenience init?(_xmlNode xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
-    #if canImport(ObjectiveC) || swift(>=5.1)
+    #if canImport(ObjectiveC) || compiler(>=5.1)
     guard
       xmlNode.kind == .processingInstruction,
       let target = xmlNode.name.flatMap(NoncolonizedName.init(_:))
@@ -104,7 +104,7 @@ extension ProcessingInstruction {
 extension Text {
   internal convenience init?(_xmlNode xmlNode: XMLNode) {
     // Requires a workaround for [SR-10717](https://bugs.swift.org/browse/SR-10717)
-    #if canImport(ObjectiveC) || swift(>=5.1)
+    #if canImport(ObjectiveC) || compiler(>=5.1)
     guard xmlNode.kind == .text, let text = xmlNode.stringValue else { return nil }
     self.init(text)
     #else
