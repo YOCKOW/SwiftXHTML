@@ -38,6 +38,8 @@ open class Node: Equatable {
   }
 }
 
+// MARK: - Specific elements
+
 extension Node {
   /// Create an \<a\> element.
   public static func a(name:QualifiedName = "a",
@@ -73,6 +75,11 @@ extension Node {
   public static func comment(_ text:String) -> Node {
     guard let comment = Comment(text) else { fatalError("Invalid text for comment.") }
     return comment
+  }
+  
+  /// Create a \<div>\</div> node.
+  public static func div(name: QualifiedName = "div", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DivisionElement(name: name, attributes: attributes, children: children)
   }
   
   public static func form(name:QualifiedName = "form",
