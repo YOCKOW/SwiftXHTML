@@ -55,7 +55,7 @@ extension Node {
   }
   
   /// Create an \<aside>\</aside> element.
-  public static func aside(name: QualifiedName = "article", attributes: Attributes = [:], children: [Node]) -> Node {
+  public static func aside(name: QualifiedName = "aside", attributes: Attributes = [:], children: [Node]) -> Node {
     return AsideElement(name: name, attributes: attributes, children: children)
   }
   
