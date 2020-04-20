@@ -6,6 +6,6 @@
  ************************************************************************************************ */
  
 open class HorizontalRuleElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "hr" }
-  open override var isEmpty: Bool { return true }
+  public override class final var localName: NoncolonizedName { return "hr" }
+  public override final var isEmpty: Bool { return true }
 }

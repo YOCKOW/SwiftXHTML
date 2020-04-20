@@ -7,8 +7,8 @@
 
 /// Represents \<a> element.
 open class AnchorElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "a" }
-  open override var isEmpty: Bool { return false }
+  public override class final var localName: NoncolonizedName { return "a" }
+  public override final var isEmpty: Bool { return false }
   
   open var hypertextReference: String? {
     get {

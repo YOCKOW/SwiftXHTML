@@ -9,8 +9,8 @@ import StringComposition
 
 /// Represents \<br />
 open class LineBreakElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "br" }
-  open override var isEmpty: Bool { return true }
+  public override class final var localName: NoncolonizedName { return "br" }
+  public override final var isEmpty: Bool { return true }
   
   open override var prettyXHTMLLines: StringLines {
     return StringLines("<br />\n", detectIndent: false)

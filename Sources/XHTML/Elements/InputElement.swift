@@ -6,7 +6,7 @@
  ************************************************************************************************ */
  
 open class InputElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "input" }
+  public override class final var localName: NoncolonizedName { return "input" }
   
   public enum TypeValue: String {
     case button
@@ -35,7 +35,7 @@ open class InputElement: SpecifiedElement {
   }
   
   /// Always `true`.
-  open override var isEmpty: Bool { return true }
+  public override final var isEmpty: Bool { return true }
   
   open var autocomplete: Bool {
     get {

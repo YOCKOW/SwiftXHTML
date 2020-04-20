@@ -6,9 +6,9 @@
  ************************************************************************************************ */
  
 open class TableElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "table" }
+  public override class final var localName: NoncolonizedName { return "table" }
   
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   private func _firstElement<T>(type: T.Type) -> T? {
     for child in self.children {
@@ -55,13 +55,13 @@ open class TableElement: SpecifiedElement {
 }
 
 open class TableCaptionElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "caption" }
-  open override var isEmpty: Bool { return false }
+  public override class final var localName: NoncolonizedName { return "caption" }
+  public override final var isEmpty: Bool { return false }
 }
 
 /// The abstract class for `TableHeadElement`, `TableBodyElement`, and `TableFootElement`.
 open class TableRowsElement: SpecifiedElement {
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
 }
 
 extension TableRowsElement: Sequence {
@@ -106,21 +106,21 @@ extension TableRowsElement: Sequence {
 }
 
 open class TableHeaderElement: TableRowsElement {
-  open override class var localName: NoncolonizedName { return "thead" }
+  public override class final var localName: NoncolonizedName { return "thead" }
 }
 
 open class TableBodyElement: TableRowsElement {
-  open override class var localName: NoncolonizedName { return "tbody" }
+  public override class final var localName: NoncolonizedName { return "tbody" }
 }
 
 open class TableFooterElement: TableRowsElement {
-  open override class var localName: NoncolonizedName { return "tfoot" }
+  public override class final var localName: NoncolonizedName { return "tfoot" }
 }
 
 open class TableRowElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "tr" }
+  public override class final var localName: NoncolonizedName { return "tr" }
   
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   /// Returns \<th>\</th> or \<td>\</td> at `index`.
   /// \<th>\</th> is not counted when `includingHeaderCells` is false.
@@ -149,15 +149,15 @@ open class TableRowElement: SpecifiedElement {
 
 /// The abstract class for `TableHeaderCellElement`, and `TableDataCellElement`.
 open class TableCellElement: SpecifiedElement {
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
 }
 
 open class TableHeaderCellElement: TableCellElement {
-  open override class var localName: NoncolonizedName { return "th" }
+  public override class final var localName: NoncolonizedName { return "th" }
 }
 
 open class TableDataCellElement: TableCellElement {
-  open override class var localName: NoncolonizedName { return "td" }
+  public override class final var localName: NoncolonizedName { return "td" }
 }
 
 extension TableElement {

@@ -8,25 +8,25 @@
 open class HeadingElement: SpecifiedElement {}
 
 open class H1Element: HeadingElement {
-  open override class var localName: NoncolonizedName { return "h1" }
+  public override class final var localName: NoncolonizedName { return "h1" }
 }
 
 open class H2Element: HeadingElement {
-  open override class var localName: NoncolonizedName { return "h2" }
+  public override class final var localName: NoncolonizedName { return "h2" }
 }
 
 open class H3Element: HeadingElement {
-  open override class var localName: NoncolonizedName { return "h3" }
+  public override class final var localName: NoncolonizedName { return "h3" }
 }
 
 open class H4Element: HeadingElement {
-  open override class var localName: NoncolonizedName { return "h4" }
+  public override class final var localName: NoncolonizedName { return "h4" }
 }
 
 open class H5Element: HeadingElement {
-  open override class var localName: NoncolonizedName { return "h5" }
+  public override class final var localName: NoncolonizedName { return "h5" }
 }
 
 open class H6Element: HeadingElement {
-  open override class var localName: NoncolonizedName { return "h6" }
+  public override class final var localName: NoncolonizedName { return "h6" }
 }

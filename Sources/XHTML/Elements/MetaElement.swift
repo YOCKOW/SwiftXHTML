@@ -8,10 +8,10 @@
 import BonaFideCharacterSet
 
 open class MetaElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "meta" }
+  public override class final var localName: NoncolonizedName { return "meta" }
   
   /// Always `true`.
-  open override var isEmpty: Bool { return true }
+  public override final var isEmpty: Bool { return true }
   
   public internal(set) override var parent: Element? {
     get {

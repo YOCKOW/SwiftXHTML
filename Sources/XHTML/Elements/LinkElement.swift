@@ -6,9 +6,9 @@
  ************************************************************************************************ */
  
 open class LinkElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "link" }
+  public override class final var localName: NoncolonizedName { return "link" }
   
-  open override var isEmpty: Bool {
+  public override final var isEmpty: Bool {
     return true
   }
   

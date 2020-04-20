@@ -6,11 +6,11 @@
  ************************************************************************************************ */
  
 open class HeaderElement: SpecifiedElement {
-   open override class var localName: NoncolonizedName {
+   public override class final var localName: NoncolonizedName {
      return "header"
    }
    
-   open override var isEmpty: Bool {
+   public override final var isEmpty: Bool {
      return false
    }
  }

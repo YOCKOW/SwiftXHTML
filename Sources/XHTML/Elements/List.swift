@@ -6,31 +6,31 @@
  ************************************************************************************************ */
  
 open class OrderedListElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName {
+  public override class final var localName: NoncolonizedName {
     return "ol"
   }
   
-  open override var isEmpty: Bool {
+  public override final var isEmpty: Bool {
     return false
   }
 }
 
 open class UnorderedListElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName {
+  public override class final var localName: NoncolonizedName {
     return "ul"
   }
   
-  open override var isEmpty: Bool {
+  public override final var isEmpty: Bool {
     return false
   }
 }
 
 open class ListItemElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName {
+  public override class final var localName: NoncolonizedName {
     return "li"
   }
   
-  open override var isEmpty: Bool {
+  public override final var isEmpty: Bool {
     return false
   }
 }

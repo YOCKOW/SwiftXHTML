@@ -7,10 +7,10 @@
 
 /// Represents "\<head\>...\</head\>"
 open class HeadElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "head" }
+  public override class final var localName: NoncolonizedName { return "head" }
   
   /// Always `false` because \<head> element must have children.
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   private var _parent: Element? = nil
   public internal(set) override var parent: Element? {
