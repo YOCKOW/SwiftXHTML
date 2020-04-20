@@ -223,6 +223,11 @@ extension Node {
                         attributes:attributes)
   }
   
+  /// Create an \<section\>\</section\> element.
+  public static func section(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return SectionElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<table> element.
   public static func table(name: QualifiedName = "table",
                            attributes: Attributes = [:],
