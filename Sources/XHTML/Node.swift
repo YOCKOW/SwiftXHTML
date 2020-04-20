@@ -64,6 +64,11 @@ extension Node {
     return AsideElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create an \<blockquote>\</blockquote> element.
+  public static func blockquote(name: QualifiedName = "blockquote", attributes: Attributes = [:], children: [Node]) -> Node {
+    return BlockQuoteElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<body\> element.
   public static func body(name:QualifiedName = "body",
                           attributes:Attributes = [:],
