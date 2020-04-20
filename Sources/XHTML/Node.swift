@@ -49,6 +49,11 @@ extension Node {
     return AnchorElement(name: name, hypertextReference: href, text: text, attributes: attributes)
   }
   
+  /// Create an \<address>\</address> element.
+  public static func address(name: QualifiedName = "address", attributes: Attributes = [:], children: [Node]) -> Node {
+    return AddressElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<article>\</article> element.
   public static func article(name: QualifiedName = "article", attributes: Attributes = [:], children: [Node]) -> Node {
     return ArticleElement(name: name, attributes: attributes, children: children)
