@@ -223,6 +223,11 @@ extension Node {
                         attributes:attributes)
   }
   
+  /// Create an \<nav\>\</nav\> element.
+  public static func nav(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return NavigationElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<section\>\</section\> element.
   public static func section(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return SectionElement(name: name, attributes: attributes, children: children)
