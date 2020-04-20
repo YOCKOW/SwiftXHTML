@@ -248,9 +248,19 @@ extension Node {
                         attributes:attributes)
   }
   
+  /// Create an \<li\>\</li\> element.
+  public static func li(name: QualifiedName = "li", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return ListItemElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<nav\>\</nav\> element.
   public static func nav(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return NavigationElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<ol\>\</ol\> element.
+  public static func ol(name: QualifiedName = "ol", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return OrderedListElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create an \<p\>\</p\> element.
@@ -337,5 +347,10 @@ extension Node {
                         children: [Node] = []) -> Node
   {
     return TableRowElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<ul\>\</ul\> element.
+  public static func ul(name: QualifiedName = "ul", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return UnorderedListElement(name: name, attributes: attributes, children: children)
   }
 }
