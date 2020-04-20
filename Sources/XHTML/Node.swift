@@ -99,7 +99,7 @@ extension Node {
   
   /// Create a \<footer>\</footer> node.
   public static func footer(name:QualifiedName = "footer", attributes:Attributes = [:], children:[Node] = []) -> Node {
-    return FormElement(name:name, attributes:attributes, children:children)
+    return FooterElement(name:name, attributes:attributes, children:children)
   }
   
   public static func form(name:QualifiedName = "form",
