@@ -203,6 +203,11 @@ extension Node {
     return HeadElement(name:name, attributes:attributes, children:children)
   }
   
+  /// Create an \<header>\</header> element.
+  public static func header(name: QualifiedName = "header", attributes: Attributes = [:], children: [Node]) -> Node {
+    return HeaderElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<html\> element.
   public static func html(name:QualifiedName = "html",
                           attributes:Attributes = [:],
