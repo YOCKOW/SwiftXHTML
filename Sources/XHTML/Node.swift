@@ -92,6 +92,11 @@ extension Node {
     return DivisionElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<footer>\</footer> node.
+  public static func footer(name:QualifiedName = "footer", attributes:Attributes = [:], children:[Node] = []) -> Node {
+    return FormElement(name:name, attributes:attributes, children:children)
+  }
+  
   public static func form(name:QualifiedName = "form",
                           attributes:Attributes = [:],
                           children:[Node] = []) -> Node
