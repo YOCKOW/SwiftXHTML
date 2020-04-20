@@ -253,6 +253,11 @@ extension Node {
     return ParagraphElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create an \<pre\>\</pre\> element.
+  public static func pre(name: QualifiedName = "pre", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return PreformattedTextElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<section\>\</section\> element.
   public static func section(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return SectionElement(name: name, attributes: attributes, children: children)
