@@ -42,10 +42,7 @@ open class Node: Equatable {
 
 extension Node {
   /// Create an \<a\> element.
-  public static func a(name:QualifiedName = "a",
-                       href:String, text:String,
-                       attributes:Attributes = [:]) -> Node
-  {
+  public static func a(name:QualifiedName = "a", href:String, text:String, attributes:Attributes = [:]) -> Node {
     return AnchorElement(name: name, hypertextReference: href, text: text, attributes: attributes)
   }
   
@@ -84,11 +81,8 @@ extension Node {
     return BlockQuoteElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<body\> element.
-  public static func body(name:QualifiedName = "body",
-                          attributes:Attributes = [:],
-                          children:[Node] = []) -> Node
-  {
+  /// Create a \<body\> element.
+  public static func body(name:QualifiedName = "body", attributes:Attributes = [:], children:[Node] = []) -> Node {
     return BodyElement(name:name, attributes:attributes, children:children)
   }
   
@@ -98,10 +92,7 @@ extension Node {
   }
   
   /// Create a \<caption> element.
-  public static func caption(name: QualifiedName = "caption",
-                             attributes: Attributes = [:],
-                             children: [Node] = []) -> Node
-  {
+  public static func caption(name: QualifiedName = "caption", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableCaptionElement(name: name, attributes: attributes, children: children)
   }
   
@@ -177,127 +168,84 @@ extension Node {
     return FooterElement(name:name, attributes:attributes, children:children)
   }
   
-  public static func form(name:QualifiedName = "form",
-                          attributes:Attributes = [:],
-                          children:[Node] = []) -> Node
-  {
+  /// Create a \<form\>\</form\> element.
+  public static func form(name:QualifiedName = "form", attributes:Attributes = [:], children:[Node] = []) -> Node {
     return FormElement(name:name, attributes:attributes, children:children)
   }
   
   /// Create an \<h1> element with specifide child-nodes.
-  public static func h1(name: QualifiedName = "h1",
-                        attributes: Attributes = [:],
-                        children: [Node]) -> Node
+  public static func h1(name: QualifiedName = "h1", attributes: Attributes = [:], children: [Node]) -> Node
   {
     return H1Element(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<h1> element with specifide text.
-  public static func h1(name: QualifiedName = "h1",
-                        attributes: Attributes = [:],
-                        text: String) -> Node
-  {
+  /// Create an \<h1> element with specified text.
+  public static func h1(name: QualifiedName = "h1", attributes: Attributes = [:], text: String) -> Node {
     return h1(name: name, attributes: attributes, children: [.text(text)])
   }
   
-  /// Create an \<h2> element with specifide child-nodes.
-  public static func h2(name: QualifiedName = "h2",
-                        attributes: Attributes = [:],
-                        children: [Node]) -> Node
-  {
+  /// Create an \<h2> element with specified child-nodes.
+  public static func h2(name: QualifiedName = "h2", attributes: Attributes = [:], children: [Node]) -> Node {
     return H2Element(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<h2> element with specifide text.
-  public static func h2(name: QualifiedName = "h2",
-                        attributes: Attributes = [:],
-                        text: String) -> Node
-  {
+  /// Create an \<h2> element with specified text.
+  public static func h2(name: QualifiedName = "h2", attributes: Attributes = [:], text: String) -> Node {
     return h2(name: name, attributes: attributes, children: [.text(text)])
   }
   
-  /// Create an \<h3> element with specifide child-nodes.
-  public static func h3(name: QualifiedName = "h3",
-                        attributes: Attributes = [:],
-                        children: [Node]) -> Node
-  {
+  /// Create an \<h3> element with specified child-nodes.
+  public static func h3(name: QualifiedName = "h3", attributes: Attributes = [:], children: [Node]) -> Node {
     return H3Element(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<h3> element with specifide text.
-  public static func h3(name: QualifiedName = "h3",
-                        attributes: Attributes = [:],
-                        text: String) -> Node
-  {
+  /// Create an \<h3> element with specified text.
+  public static func h3(name: QualifiedName = "h3", attributes: Attributes = [:], text: String) -> Node {
     return h3(name: name, attributes: attributes, children: [.text(text)])
   }
   
-  /// Create an \<h4> element with specifide child-nodes.
-  public static func h4(name: QualifiedName = "h4",
-                        attributes: Attributes = [:],
-                        children: [Node]) -> Node
-  {
+  /// Create an \<h4> element with specified child-nodes.
+  public static func h4(name: QualifiedName = "h4", attributes: Attributes = [:], children: [Node]) -> Node {
     return H4Element(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<h4> element with specifide text.
-  public static func h4(name: QualifiedName = "h4",
-                        attributes: Attributes = [:],
-                        text: String) -> Node
-  {
+  /// Create an \<h4> element with specified text.
+  public static func h4(name: QualifiedName = "h4", attributes: Attributes = [:], text: String) -> Node {
     return h4(name: name, attributes: attributes, children: [.text(text)])
   }
   
-  /// Create an \<h5> element with specifide child-nodes.
-  public static func h5(name: QualifiedName = "h5",
-                        attributes: Attributes = [:],
-                        children: [Node]) -> Node
-  {
+  /// Create an \<h5> element with specified child-nodes.
+  public static func h5(name: QualifiedName = "h5", attributes: Attributes = [:], children: [Node]) -> Node {
     return H5Element(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<h5> element with specifide text.
-  public static func h5(name: QualifiedName = "h5",
-                        attributes: Attributes = [:],
-                        text: String) -> Node
-  {
+  /// Create an \<h5> element with specified text.
+  public static func h5(name: QualifiedName = "h5", attributes: Attributes = [:], text: String) -> Node {
     return h5(name: name, attributes: attributes, children: [.text(text)])
   }
   
   /// Create an \<h6> element with specifide child-nodes.
-  public static func h6(name: QualifiedName = "h6",
-                        attributes: Attributes = [:],
-                        children: [Node]) -> Node
-  {
+  public static func h6(name: QualifiedName = "h6", attributes: Attributes = [:], children: [Node]) -> Node {
     return H6Element(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<h6> element with specifide text.
-  public static func h6(name: QualifiedName = "h6",
-                        attributes: Attributes = [:],
-                        text: String) -> Node
-  {
+  /// Create an \<h6> element with specified text.
+  public static func h6(name: QualifiedName = "h6", attributes: Attributes = [:], text: String) -> Node {
     return h6(name: name, attributes: attributes, children: [.text(text)])
   }
   
-  /// Create an \<head\> element.
-  public static func head(name:QualifiedName = "head",
-                          attributes:Attributes = [:],
-                          children:[Node] = []) -> Node
-  {
+  /// Create a \<head\> element.
+  public static func head(name:QualifiedName = "head", attributes:Attributes = [:], children:[Node] = []) -> Node {
     return HeadElement(name:name, attributes:attributes, children:children)
   }
   
-  /// Create an \<header>\</header> element.
+  /// Create a \<header>\</header> element.
   public static func header(name: QualifiedName = "header", attributes: Attributes = [:], children: [Node]) -> Node {
     return HeaderElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create an \<html\> element.
-  public static func html(name:QualifiedName = "html",
-                          attributes:Attributes = [:],
-                          children:[Node] = []) -> Node
-  {
+  public static func html(name: QualifiedName = "html", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return HTMLElement(name:name, attributes:attributes, children:children)
   }
   
@@ -309,16 +257,14 @@ extension Node {
   /// Create an \<input\> element.
   public static func input(name:QualifiedName = "input",
                            type:InputElement.TypeValue,
-                           nameAttribute:String? = nil,
-                           value:String? = nil,
-                           attributes:Attributes = [:]) -> Node
-  {
+                           nameAttribute: String? = nil, value: String? = nil,
+                           attributes: Attributes = [:]) -> Node {
     return InputElement(name:name,
                         type:type, nameAttribute:nameAttribute, value:value,
                         attributes:attributes)
   }
   
-  /// Create a \<ins>\</ins> element.
+  /// Create an \<ins>\</ins> element.
   public static func ins(name: QualifiedName = "ins", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return InsertionElement(name: name, attributes: attributes, children: children)
   }
@@ -328,12 +274,12 @@ extension Node {
     return KeyboardInputElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<li\>\</li\> element.
+  /// Create a \<li\>\</li\> element.
   public static func li(name: QualifiedName = "li", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return ListItemElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<main\>\</main\> element.
+  /// Create a \<main\>\</main\> element.
   public static func main(name: QualifiedName = "main", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return MainElement(name: name, attributes: attributes, children: children)
   }
@@ -343,7 +289,7 @@ extension Node {
     return MarkTextElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<nav\>\</nav\> element.
+  /// Create a \<nav\>\</nav\> element.
   public static func nav(name: QualifiedName = "nav", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return NavigationElement(name: name, attributes: attributes, children: children)
   }
@@ -353,12 +299,12 @@ extension Node {
     return OrderedListElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<p\>\</p\> element.
+  /// Create a \<p\>\</p\> element.
   public static func p(name: QualifiedName = "p", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return ParagraphElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<pre\>\</pre\> element.
+  /// Create a \<pre\>\</pre\> element.
   public static func pre(name: QualifiedName = "pre", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return PreformattedTextElement(name: name, attributes: attributes, children: children)
   }
@@ -400,7 +346,7 @@ extension Node {
     return SampleElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<section\>\</section\> element.
+  /// Create a \<section\>\</section\> element.
   public static func section(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return SectionElement(name: name, attributes: attributes, children: children)
   }
@@ -435,27 +381,18 @@ extension Node {
     return SuperscriptElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<table> element.
-  public static func table(name: QualifiedName = "table",
-                           attributes: Attributes = [:],
-                           children: [Node] = []) -> Node
-  {
+  /// Create a \<table> element.
+  public static func table(name: QualifiedName = "table", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<tbody> element.
-  public static func tbody(name: QualifiedName = "tbody",
-                           attributes: Attributes = [:],
-                           children: [Node] = []) -> Node
-  {
+  /// Create a \<tbody> element.
+  public static func tbody(name: QualifiedName = "tbody", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableBodyElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<td> element.
-  public static func td(name: QualifiedName = "td",
-                        attributes: Attributes = [:],
-                        children: [Node] = []) -> Node
-  {
+  /// Create a \<td> element.
+  public static func td(name: QualifiedName = "td", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableDataCellElement(name: name, attributes: attributes, children: children)
   }
   
@@ -469,45 +406,31 @@ extension Node {
     return Text(text)
   }
   
-  /// Create an \<tfoot> element.
-  public static func tfoot(name: QualifiedName = "tfoot",
-                           attributes: Attributes = [:],
-                           children: [Node] = []) -> Node
-  {
+  /// Create a \<tfoot> element.
+  public static func tfoot(name: QualifiedName = "tfoot", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableFooterElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<th> element.
-  public static func th(name: QualifiedName = "th",
-                        attributes: Attributes = [:],
-                        children: [Node] = []) -> Node
-  {
+  /// Create a \<th> element.
+  public static func th(name: QualifiedName = "th", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableHeaderCellElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<thead> element.
-  public static func thead(name: QualifiedName = "thead",
-                           attributes: Attributes = [:],
-                           children: [Node] = []) -> Node
+  /// Create a \<thead> element.
+  public static func thead(name: QualifiedName = "thead", attributes: Attributes = [:], children: [Node] = []) -> Node
   {
     return TableHeaderElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create an \<title\> element.
-  public static func title(name:QualifiedName = "title",
-                           attributes:Attributes = [:],
-                           _ title: String) -> Node
-  {
+  /// Create a \<title\> element.
+  public static func title(name: QualifiedName = "title", attributes: Attributes = [:], _ title: String) -> Node {
     let titleElement = TitleElement(name:name, attributes:attributes)
     titleElement.title = title
     return titleElement
   }
   
-  /// Create an \<tr> element.
-  public static func tr(name: QualifiedName = "tr",
-                        attributes: Attributes = [:],
-                        children: [Node] = []) -> Node
-  {
+  /// Create a \<tr> element.
+  public static func tr(name: QualifiedName = "tr", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableRowElement(name: name, attributes: attributes, children: children)
   }
   
