@@ -40,6 +40,7 @@ extension Element {
       "hr": HorizontalRuleElement.self,
       "input": InputElement.self,
       "link": LinkElement.self,
+      "main": MainElement.self,
       "meta": MetaElement.self,
       "nav": NavigationElement.self,
       "p": ParagraphElement.self,

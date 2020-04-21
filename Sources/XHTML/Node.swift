@@ -283,6 +283,11 @@ extension Node {
     return ListItemElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create an \<main\>\</main\> element.
+  public static func main(name: QualifiedName = "main", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return MainElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<nav\>\</nav\> element.
   public static func nav(name: QualifiedName = "nav", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return NavigationElement(name: name, attributes: attributes, children: children)
