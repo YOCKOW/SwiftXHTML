@@ -97,9 +97,29 @@ extension Node {
     return comment
   }
   
+  /// Create a \<dd>\</dd> node.
+  public static func dd(name: QualifiedName = "dd", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DescriptionElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<dfn>\</dfn> node.
+  public static func dfn(name: QualifiedName = "dfn", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DefinitionElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<div>\</div> node.
   public static func div(name: QualifiedName = "div", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return DivisionElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<dl>\</dl> node.
+  public static func dl(name: QualifiedName = "dl", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DescriptionListElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<dt>\</dt> node.
+  public static func dt(name: QualifiedName = "dt", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DescriptionTermElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create a \<footer>\</footer> node.
