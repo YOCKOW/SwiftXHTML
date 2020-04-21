@@ -350,6 +350,11 @@ extension Node {
     return OrderedListElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create an \<option\>\</option\> element.
+  public static func option(name: QualifiedName = "option", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return OptionElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<p\>\</p\> element.
   public static func p(name: QualifiedName = "p", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return ParagraphElement(name: name, attributes: attributes, children: children)
