@@ -31,6 +31,7 @@ extension Element {
       "cite": CitationElement.self,
       "code": CodeElement.self,
       "data": DataElement.self,
+      "datalist": DataListElement.self,
       "dd": DescriptionElement.self,
       "del": DeletionElement.self,
       "dfn": DefinitionElement.self,

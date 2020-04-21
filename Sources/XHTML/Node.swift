@@ -133,6 +133,11 @@ extension Node {
     return DataElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<datalist>\</datalist> element.
+  public static func datalist(name: QualifiedName = "datalist", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DataListElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<del>\</del> element.
   public static func del(name: QualifiedName = "del", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return DeletionElement(name: name, attributes: attributes, children: children)
