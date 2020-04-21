@@ -55,6 +55,7 @@ extension Element {
       "input": InputElement.self,
       "ins": InsertionElement.self,
       "kbd": KeyboardInputElement.self,
+      "label": LabelElement.self,
       "legend": LegendElement.self,
       "link": LinkElement.self,
       "main": MainElement.self,

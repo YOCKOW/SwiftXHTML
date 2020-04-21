@@ -305,6 +305,11 @@ extension Node {
     return KeyboardInputElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<label\>\</label\> element.
+  public static func label(name: QualifiedName = "label", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return LabelElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<legend\>\</legend\> element.
   public static func legend(name: QualifiedName = "legend", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return LegendElement(name: name, attributes: attributes, children: children)
