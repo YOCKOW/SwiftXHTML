@@ -345,6 +345,11 @@ extension Node {
     return MarkTextElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<meter\>\</meter\> element.
+  public static func meter(name: QualifiedName = "meter", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return MeterElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<nav\>\</nav\> element.
   public static func nav(name: QualifiedName = "nav", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return NavigationElement(name: name, attributes: attributes, children: children)

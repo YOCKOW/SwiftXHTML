@@ -64,6 +64,7 @@ extension Element {
       "map": ImageMapElement.self,
       "mark": MarkTextElement.self,
       "meta": MetaElement.self,
+      "meter": MeterElement.self,
       "nav": NavigationElement.self,
       "object": ObjectElement.self,
       "optgroup": OptionGroupElement.self,
