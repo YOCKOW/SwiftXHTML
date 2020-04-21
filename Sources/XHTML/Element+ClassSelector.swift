@@ -68,6 +68,7 @@ extension Element {
       "object": ObjectElement.self,
       "optgroup": OptionGroupElement.self,
       "option": OptionElement.self,
+      "output": OutputElement.self,
       "p": ParagraphElement.self,
       "param": ParameterElement.self,
       "picture": PictureElement.self,

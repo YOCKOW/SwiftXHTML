@@ -370,6 +370,11 @@ extension Node {
     return OptionElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create an \<output\>\</output\> element.
+  public static func output(name: QualifiedName = "output", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return OutputElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<p\>\</p\> element.
   public static func p(name: QualifiedName = "p", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return ParagraphElement(name: name, attributes: attributes, children: children)
