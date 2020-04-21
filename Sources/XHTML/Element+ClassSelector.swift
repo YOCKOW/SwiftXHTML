@@ -75,6 +75,7 @@ extension Element {
       "rtc": RubyTextContainerElement.self,
       "samp": SampleElement.self,
       "section": SectionElement.self,
+      "select": SelectionElement.self,
       "small": SmallElement.self,
       "span": SpanElement.self,
       "s": StrikedElement.self,

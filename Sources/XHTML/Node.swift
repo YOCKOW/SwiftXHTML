@@ -407,6 +407,11 @@ extension Node {
     return SampleElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<select\>\</select\> element.
+  public static func select(name: QualifiedName = "select", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return SelectionElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<section\>\</section\> element.
   public static func section(name: QualifiedName = "section", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return SectionElement(name: name, attributes: attributes, children: children)
