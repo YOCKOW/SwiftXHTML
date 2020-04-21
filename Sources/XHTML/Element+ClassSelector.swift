@@ -26,6 +26,8 @@ extension Element {
       "dfn": DefinitionElement.self,
       "dl": DescriptionListElement.self,
       "dt": DescriptionTermElement.self,
+      "figcaption": FigureCaptionElement.self,
+      "figure": FigureElement.self,
       "form": FormElement.self,
       "h1": H1Element.self,
       "h2": H2Element.self,

@@ -122,6 +122,16 @@ extension Node {
     return DescriptionTermElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<figcaption>\</figcaption> node.
+  public static func figcaption(name:QualifiedName = "figcaption", attributes:Attributes = [:], children:[Node] = []) -> Node {
+    return FigureCaptionElement(name:name, attributes:attributes, children:children)
+  }
+  
+  /// Create a \<figure>\</figure> node.
+  public static func figure(name:QualifiedName = "figure", attributes:Attributes = [:], children:[Node] = []) -> Node {
+    return FigureElement(name:name, attributes:attributes, children:children)
+  }
+  
   /// Create a \<footer>\</footer> node.
   public static func footer(name:QualifiedName = "footer", attributes:Attributes = [:], children:[Node] = []) -> Node {
     return FooterElement(name:name, attributes:attributes, children:children)
