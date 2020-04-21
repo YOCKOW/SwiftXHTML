@@ -113,8 +113,11 @@ open class InputElement: SpecifiedElement {
   }
   
   public required init(name: QualifiedName, attributes:Attributes) {
-    super.init(name:name)
-    self.attributes = attributes
+    super.init(name: name, attributes: attributes)
+  }
+  
+  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    super.init(name: name, attributes: attributes, children: children)
   }
   
   public convenience init(name:QualifiedName,

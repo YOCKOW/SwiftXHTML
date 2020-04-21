@@ -35,6 +35,10 @@ open class LinkElement: SpecifiedElement {
     self.attributes = attributes
   }
   
+  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    super.init(name: name, attributes: attributes, children: children)
+  }
+  
   public convenience init(name: QualifiedName,
                           relationship: Relationship,
                           hypertextReference: String,

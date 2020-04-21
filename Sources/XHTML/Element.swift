@@ -50,22 +50,24 @@ open class Element: Node {
     )
   }
   
-  public init(name:QualifiedName) {
+  public init(name: QualifiedName) {
     self.name = name
   }
   
   /// Initialize with `name`, and then add `attributes`.
-  public required convenience init(name:QualifiedName, attributes:Attributes) {
-    self.init(name:name)
+  public required init(name: QualifiedName, attributes: Attributes) {
+    self.name = name
+    super.init()
+    
     self.attributes = attributes
   }
   
   /// Initialize with `name`, and then add `attributes` and `children`.
-  public convenience init(name:QualifiedName,
-                          attributes:Attributes,
-                          children:[Node])
-  {
-    self.init(name:name, attributes:attributes)
+  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    self.name = name
+    super.init()
+    
+    self.attributes = attributes
     self.children = children
   }
   

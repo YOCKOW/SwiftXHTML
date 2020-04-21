@@ -215,6 +215,14 @@ final class ElementTests: XCTestCase {
     }
   }
   
+  func test_ruby() throws {
+    let ruby = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした") as? RubyElement)
+    XCTAssertEqual(ruby.xhtmlString, "<ruby>明日<rt>あした</rt></ruby>")
+    
+    let rubyWithParenthesis = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした", includesFallbackParenthesis: true) as? RubyElement)
+    XCTAssertEqual(rubyWithParenthesis.xhtmlString, "<ruby>明日<rp>(</rp><rt>あした</rt><rp>)</rp></ruby>")
+  }
+  
   func test_table() {
     let table = TableElement(caption: [.text("CAPTION")],
                              numberOfHeaderRows: 1,
