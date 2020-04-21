@@ -168,6 +168,12 @@ extension Node {
     return EmbeddedElement(name:name, attributes:attributes, children:children)
   }
   
+  /// Create a \<fieldset>\</fieldset> node.
+  public static func fieldset(name:QualifiedName = "fieldset", attributes:Attributes = [:], children:[Node] = []) -> Node {
+    return FieldSetElement(name:name, attributes:attributes, children:children)
+  }
+  
+  
   /// Create a \<figcaption>\</figcaption> node.
   public static func figcaption(name:QualifiedName = "figcaption", attributes:Attributes = [:], children:[Node] = []) -> Node {
     return FigureCaptionElement(name:name, attributes:attributes, children:children)

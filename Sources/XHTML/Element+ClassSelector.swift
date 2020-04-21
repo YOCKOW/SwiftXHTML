@@ -37,6 +37,7 @@ extension Element {
       "dt": DescriptionTermElement.self,
       "em": EmphasisElement.self,
       "embed": EmbeddedElement.self,
+      "fieldset": FieldSetElement.self,
       "figcaption": FigureCaptionElement.self,
       "figure": FigureElement.self,
       "form": FormElement.self,
