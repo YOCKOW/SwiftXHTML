@@ -94,6 +94,7 @@ extension Element {
       "strong": StrongElement.self,
       "style": StyleElement.self,
       "sub": SubscriptElement.self,
+      "summary": DisclosureSummaryElement.self,
       "sup": SuperscriptElement.self,
       "table": TableElement.self,
       "tbody": TableBodyElement.self,

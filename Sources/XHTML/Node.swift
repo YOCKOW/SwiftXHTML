@@ -502,6 +502,11 @@ extension Node {
     return SubscriptElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<summary\>\</summary\> element.
+  public static func summary(name: QualifiedName = "summary", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DisclosureSummaryElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<sup\>\</sup\> element.
   public static func sup(name: QualifiedName = "sup", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return SuperscriptElement(name: name, attributes: attributes, children: children)
