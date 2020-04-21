@@ -35,6 +35,7 @@ extension Element {
       "datalist": DataListElement.self,
       "dd": DescriptionElement.self,
       "del": DeletionElement.self,
+      "details": DetailsElement.self,
       "dfn": DefinitionElement.self,
       "dl": DescriptionListElement.self,
       "dt": DescriptionTermElement.self,

@@ -148,6 +148,11 @@ extension Node {
     return DeletionElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<details>\</details> element.
+  public static func details(name: QualifiedName = "details", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DetailsElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<dd>\</dd> node.
   public static func dd(name: QualifiedName = "dd", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return DescriptionElement(name: name, attributes: attributes, children: children)
