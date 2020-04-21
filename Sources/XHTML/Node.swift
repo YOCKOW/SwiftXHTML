@@ -106,6 +106,11 @@ extension Node {
     return ButtonElement(name: name, attributes: attributes)
   }
   
+  /// Create a \<canvas>\</canvas> element.
+  public static func canvas(name: QualifiedName = "canvas", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return CanvasElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<caption> element.
   public static func caption(name: QualifiedName = "caption", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableCaptionElement(name: name, attributes: attributes, children: children)
@@ -355,6 +360,11 @@ extension Node {
     return NavigationElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<noscript\>\</noscript\> element.
+  public static func noscript(name: QualifiedName = "noscript", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return NoScriptElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<object\>\</object\> element.
   public static func object(name: QualifiedName = "object", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return ObjectElement(name: name, attributes: attributes, children: children)
@@ -442,6 +452,11 @@ extension Node {
     return SampleElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<script\>\</script\> element.
+  public static func script(name: QualifiedName = "script", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return ScriptElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<select\>\</select\> element.
   public static func select(name: QualifiedName = "select", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return SelectionElement(name: name, attributes: attributes, children: children)
@@ -500,6 +515,11 @@ extension Node {
   /// Create a \<td> element.
   public static func td(name: QualifiedName = "td", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableDataCellElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<template\>\</template\> element.
+  public static func template(name: QualifiedName = "template", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return TemplateElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create a \<time\>\</time\> element.
