@@ -26,6 +26,7 @@ extension Element {
       "blockquote": BlockQuoteElement.self,
       "body": BodyElement.self,
       "br": LineBreakElement.self,
+      "button": ButtonElement.self,
       "caption": TableCaptionElement.self,
       "cite": CitationElement.self,
       "code": CodeElement.self,

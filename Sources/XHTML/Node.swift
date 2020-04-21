@@ -101,6 +101,11 @@ extension Node {
     return LineBreakElement(name: name, attributes: attributes)
   }
   
+  /// Create a \<button>\</button> element.
+  public static func button(name:QualifiedName = "button", attributes:Attributes = [:]) -> Node {
+    return ButtonElement(name: name, attributes: attributes)
+  }
+  
   /// Create a \<caption> element.
   public static func caption(name: QualifiedName = "caption", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return TableCaptionElement(name: name, attributes: attributes, children: children)
