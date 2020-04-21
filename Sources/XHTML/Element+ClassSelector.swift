@@ -73,6 +73,7 @@ extension Element {
       "param": ParameterElement.self,
       "picture": PictureElement.self,
       "pre": PreformattedTextElement.self,
+      "progress": ProgressIndicatorElement.self,
       "q": QuotationElement.self,
       "ruby": RubyElement.self,
       "rp": RubyFallbackParenthesisTextElement.self,

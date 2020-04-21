@@ -395,6 +395,11 @@ extension Node {
     return PreformattedTextElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<progress\>\</progress\> element.
+  public static func progress(name: QualifiedName = "progress", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return ProgressIndicatorElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<q\>\</q\> element.
   public static func q(name: QualifiedName = "q", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return QuotationElement(name: name, attributes: attributes, children: children)
