@@ -64,6 +64,7 @@ extension Element {
       "meta": MetaElement.self,
       "nav": NavigationElement.self,
       "object": ObjectElement.self,
+      "optgroup": OptionGroupElement.self,
       "option": OptionElement.self,
       "p": ParagraphElement.self,
       "param": ParameterElement.self,
