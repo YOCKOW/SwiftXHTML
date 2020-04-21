@@ -127,6 +127,11 @@ extension Node {
     return DataElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<del>\</del> element.
+  public static func del(name: QualifiedName = "del", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return DeletionElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create a \<dd>\</dd> node.
   public static func dd(name: QualifiedName = "dd", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return DescriptionElement(name: name, attributes: attributes, children: children)
@@ -311,6 +316,11 @@ extension Node {
     return InputElement(name:name,
                         type:type, nameAttribute:nameAttribute, value:value,
                         attributes:attributes)
+  }
+  
+  /// Create a \<ins>\</ins> element.
+  public static func ins(name: QualifiedName = "ins", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return InsertionElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create a \<kbd\>\</kbd\> element.
