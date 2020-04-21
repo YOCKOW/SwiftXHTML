@@ -56,6 +56,11 @@ extension Node {
     return AddressElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create an \<area /> element.
+  public static func area(name: QualifiedName = "area", attributes: Attributes = [:]) -> Node {
+    return ImageAreaElement(name: name, attributes: attributes)
+  }
+  
   /// Create an \<article>\</article> element.
   public static func article(name: QualifiedName = "article", attributes: Attributes = [:], children: [Node]) -> Node {
     return ArticleElement(name: name, attributes: attributes, children: children)
@@ -64,6 +69,11 @@ extension Node {
   /// Create an \<aside>\</aside> element.
   public static func aside(name: QualifiedName = "aside", attributes: Attributes = [:], children: [Node]) -> Node {
     return AsideElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create an \<audio>\</audio> element.
+  public static func audio(name: QualifiedName = "audio", attributes: Attributes = [:], children: [Node]) -> Node {
+    return AudioElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create a \<bdi>\</bdi> element.
@@ -148,9 +158,14 @@ extension Node {
     return DescriptionTermElement(name: name, attributes: attributes, children: children)
   }
   
-  /// Create a \<em>\</em> node.
+  /// Create an \<em>\</em> node.
   public static func em(name: QualifiedName = "em", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return EmphasisElement(name:name, attributes:attributes, children:children)
+  }
+  
+  /// Create an \<embed>\</embed> node.
+  public static func embed(name: QualifiedName = "embed", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return EmbeddedElement(name:name, attributes:attributes, children:children)
   }
   
   /// Create a \<figcaption>\</figcaption> node.
@@ -254,6 +269,16 @@ extension Node {
     return HorizontalRuleElement(name: name, attributes: attributes)
   }
   
+  /// Create an \<iframe>\</iframe> element.
+  public static func iframe(name: QualifiedName = "iframe", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return InlineFrameElement(name: name, attributes: attributes)
+  }
+  
+  /// Create an \<image /> element.
+  public static func image(name:QualifiedName = "image", attributes:Attributes = [:]) -> Node {
+    return ImageElement(name: name, attributes: attributes)
+  }
+  
   /// Create an \<input\> element.
   public static func input(name:QualifiedName = "input",
                            type:InputElement.TypeValue,
@@ -284,6 +309,11 @@ extension Node {
     return MainElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<map>\</map> element.
+  public static func map(name: QualifiedName = "map", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return ImageMapElement(name: name, attributes: attributes)
+  }
+  
   /// Create a \<mark\>\</mark\> element.
   public static func mark(name: QualifiedName = "mark", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return MarkTextElement(name: name, attributes: attributes, children: children)
@@ -294,6 +324,11 @@ extension Node {
     return NavigationElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<object\>\</object\> element.
+  public static func object(name: QualifiedName = "object", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return ObjectElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<ol\>\</ol\> element.
   public static func ol(name: QualifiedName = "ol", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return OrderedListElement(name: name, attributes: attributes, children: children)
@@ -302,6 +337,16 @@ extension Node {
   /// Create a \<p\>\</p\> element.
   public static func p(name: QualifiedName = "p", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return ParagraphElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<param /> element.
+  public static func param(name: QualifiedName = "param", attributes: Attributes = [:]) -> Node {
+    return ParameterElement(name: name, attributes: attributes)
+  }
+  
+  /// Create a \<picture\>\</picture\> element.
+  public static func picture(name: QualifiedName = "picture", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return PictureElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create a \<pre\>\</pre\> element.
@@ -364,6 +409,11 @@ extension Node {
   /// Create a \<s\>\</s\> element.
   public static func s(name: QualifiedName = "s", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return StrikedElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<source /\> element.
+  public static func source(name: QualifiedName = "source", attributes: Attributes = [:]) -> Node {
+    return MediaSourceElement(name: name, attributes: attributes)
   }
   
   /// Create a \<strong\>\</strong\> element.
@@ -434,6 +484,11 @@ extension Node {
     return TableRowElement(name: name, attributes: attributes, children: children)
   }
   
+  /// Create a \<track>\</track> element.
+  public static func track(name: QualifiedName = "track", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return TextTrackElement(name: name, attributes: attributes, children: children)
+  }
+  
   /// Create an \<ul\>\</ul\> element.
   public static func ul(name: QualifiedName = "ul", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return UnorderedListElement(name: name, attributes: attributes, children: children)
@@ -442,6 +497,11 @@ extension Node {
   /// Create a \<var\>\</var\> element.
   public static func `var`(name: QualifiedName = "var", attributes: Attributes = [:], children: [Node] = []) -> Node {
     return VariableElement(name: name, attributes: attributes, children: children)
+  }
+  
+  /// Create a \<video\>\</video\> element.
+  public static func video(name: QualifiedName = "video", attributes: Attributes = [:], children: [Node] = []) -> Node {
+    return VideoElement(name: name, attributes: attributes, children: children)
   }
   
   /// Create a \<wbr /\> element.
