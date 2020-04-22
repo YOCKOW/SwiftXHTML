@@ -7,10 +7,10 @@
 
 /// Represents "<html>...</html>"
 open class HTMLElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "html" }
+  public override class final var localName: NoncolonizedName { return "html" }
   
   /// Always `false` because HTML element must have children.
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   open internal(set) weak var document: Document? = nil
   
@@ -28,21 +28,19 @@ open class HTMLElement: SpecifiedElement {
     return nil
   }
   
-  public override convenience init(name:QualifiedName) {
-    self.init(name:name, attributes:[:])
+  public convenience override init(name: QualifiedName) {
+    self.init(name: name, attributes: [:], children: [])
   }
   
-  public required init(name:QualifiedName, attributes:Attributes) {
+  public convenience required init(name: QualifiedName, attributes: Attributes) {
+    self.init(name: name, attributes: attributes, children: [])
+  }
+  
+  public required init(name:QualifiedName, attributes:Attributes, children:[Node]) {
     var attrs = attributes
     if attrs._namespace(for:name) == nil {
       attrs[.namespaceDeclaration(name.prefix)] = String._xhtmlNamespace
     }
-    super.init(name:name)
-    self.attributes = attrs
-  }
-  
-  public convenience init(name:QualifiedName, attributes:Attributes, children:[Node]) {
-    self.init(name:name, attributes:attributes)
-    self.children = children
+    super.init(name: name, attributes: attributes, children: children)
   }
 }

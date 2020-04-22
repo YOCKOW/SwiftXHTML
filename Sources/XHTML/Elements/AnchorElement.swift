@@ -7,8 +7,8 @@
 
 /// Represents \<a> element.
 open class AnchorElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "a" }
-  open override var isEmpty: Bool { return false }
+  public override class final var localName: NoncolonizedName { return "a" }
+  public override final var isEmpty: Bool { return false }
   
   open var hypertextReference: String? {
     get {
@@ -20,8 +20,11 @@ open class AnchorElement: SpecifiedElement {
   }
   
   public required init(name: QualifiedName, attributes: Attributes) {
-    super.init(name:name)
-    self.attributes = attributes
+    super.init(name: name, attributes: attributes)
+  }
+  
+  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    super.init(name: name, attributes: attributes, children: children)
   }
   
   public convenience init(name:QualifiedName,
@@ -33,4 +36,5 @@ open class AnchorElement: SpecifiedElement {
     self.hypertextReference = hypertextReference
     self.append(Text(text))
   }
+  
 }

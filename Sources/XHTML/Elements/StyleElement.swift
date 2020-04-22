@@ -6,9 +6,9 @@
  ************************************************************************************************ */
  
 open class StyleElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "style" }
+  public override class final var localName: NoncolonizedName { return "style" }
   
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   /// Media Query (Specifies what media/device the media resource is optimized for)
   open var media: String? {

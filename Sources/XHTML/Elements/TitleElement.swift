@@ -7,9 +7,9 @@
 
 /// Represents "\<title\>...\</title\>"
 open class TitleElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "title" }
+  public override class final var localName: NoncolonizedName { return "title" }
   
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   /// The title of the XHTML document; i.e. the text content of \<title\>
   public var title: String {

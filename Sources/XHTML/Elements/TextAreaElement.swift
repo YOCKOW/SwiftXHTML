@@ -7,9 +7,9 @@
 
 /// Represents \<textarea> element.
 open class TextAreaElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "textarea" }
+  public override class final var localName: NoncolonizedName { return "textarea" }
   
-  open override var isEmpty: Bool { return false }
+  public override final var isEmpty: Bool { return false }
   
   open var columnCount: Int? {
     get {

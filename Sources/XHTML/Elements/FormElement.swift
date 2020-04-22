@@ -9,7 +9,7 @@ import NetworkGear
 import yExtensions
 
 open class FormElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "form" }
+  public override class final var localName: NoncolonizedName { return "form" }
   
   /// The location where to submit the form.
   open var action: String? {

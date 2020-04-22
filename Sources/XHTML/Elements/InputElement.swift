@@ -6,7 +6,7 @@
  ************************************************************************************************ */
  
 open class InputElement: SpecifiedElement {
-  open override class var localName: NoncolonizedName { return "input" }
+  public override class final var localName: NoncolonizedName { return "input" }
   
   public enum TypeValue: String {
     case button
@@ -35,7 +35,7 @@ open class InputElement: SpecifiedElement {
   }
   
   /// Always `true`.
-  open override var isEmpty: Bool { return true }
+  public override final var isEmpty: Bool { return true }
   
   open var autocomplete: Bool {
     get {
@@ -113,8 +113,11 @@ open class InputElement: SpecifiedElement {
   }
   
   public required init(name: QualifiedName, attributes:Attributes) {
-    super.init(name:name)
-    self.attributes = attributes
+    super.init(name: name, attributes: attributes)
+  }
+  
+  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    super.init(name: name, attributes: attributes, children: children)
   }
   
   public convenience init(name:QualifiedName,

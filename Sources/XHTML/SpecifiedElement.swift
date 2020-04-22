@@ -24,18 +24,18 @@ open class SpecifiedElement: Element {
   }
   
   public override init(name:QualifiedName) {
-    super.init(name:name)
+    super.init(name: name)
     self.name = name
   }
   
-  public required convenience init(name: QualifiedName, attributes: Attributes) {
-    self.init(name: name)
-    self.attributes = attributes
+  public required init(name: QualifiedName, attributes: Attributes) {
+    super.init(name: name, attributes: attributes)
+    self.name = name
   }
   
-  public convenience init(name: QualifiedName, attributes: Attributes, children: [Node]) {
-    self.init(name: name, attributes: attributes)
-    self.children = children
+  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+    super.init(name: name, attributes: attributes, children: children)
+    self.name = name
   }
   
   public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
