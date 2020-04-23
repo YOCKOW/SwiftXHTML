@@ -6,6 +6,9 @@
  ************************************************************************************************ */
 
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 
 /// Errors related to `Node`.
 /// Mainly they may be thrown when the node is initialized with an instance of `XMLNode`.
