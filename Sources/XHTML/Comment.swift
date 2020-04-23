@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Comment.swift
-   © 2019 YOCKOW.
+   © 2019-2020 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -10,7 +10,7 @@ import StringComposition
 
 /// Validate the text.
 /// Reference: https://www.w3.org/TR/REC-xml/#sec-comments
-private func _validateTextOfComment(_ text:String) -> Bool {
+private func _validateTextOfComment<S>(_ text: S) -> Bool where S: StringProtocol {
   let scalars = text.unicodeScalars
   var ii = scalars.startIndex
   while true {
@@ -32,6 +32,10 @@ private func _validateTextOfComment(_ text:String) -> Bool {
 
 /// Represents the comment.
 public final class Comment: Node {
+  public enum Error: Swift.Error, Equatable {
+    case invalidText
+  }
+  
   private var _text: String
   
   /// The text of comment.
@@ -50,9 +54,9 @@ public final class Comment: Node {
     return self._text == otherComment._text
   }
   
-  public init?(_ text:String) {
-    guard _validateTextOfComment(text) else { return nil }
-    self._text = text
+  public init<S>(_ text: S) throws where S: StringProtocol {
+    guard _validateTextOfComment(text) else { throw Error.invalidText }
+    self._text = String(text)
   }
   
   public override var xhtmlString:String {

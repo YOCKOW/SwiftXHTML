@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Parser.swift
-   © 2019 YOCKOW.
+   © 2019-2020 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -117,11 +117,11 @@ open class Parser: NSObject, XMLParserDelegate {
   }
   
   public func parser(_ parser: XMLParser, foundComment comment: String) {
-    guard let commentNode = Comment(comment) else {
-      self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-      return
+    do {
+      self._appendMiscellany(try Comment(comment))
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
-    self._appendMiscellany(commentNode)
   }
   
   public func parser(_ parser: XMLParser,

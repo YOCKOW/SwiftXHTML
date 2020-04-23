@@ -93,9 +93,8 @@ extension Node {
   
   /// Create an XHTML comment node.
   /// Fatal error will occur if `text` is invalid for XML comment.
-  public static func comment(_ text:String)  -> Node {
-    guard let comment = Comment(text) else { fatalError("Invalid text for comment.") }
-    return comment
+  public static func comment(_ text:String) throws -> Node {
+    return try Comment(text)
   }
   
   /// Create a \<data>\</data> element.
