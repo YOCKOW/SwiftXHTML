@@ -220,6 +220,11 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(abbr.xhtmlString, #"<abbr title="HyperText Markup Language">HTML</abbr>"#)
   }
   
+  func test_data() throws {
+    let data = try DataElement(value: "1", text: "壱")
+    XCTAssertEqual(data.xhtmlString, #"<data value="1">壱</data>"#)
+  }
+  
   func test_ruby() throws {
     let ruby = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした") as? RubyElement)
     XCTAssertEqual(ruby.xhtmlString, "<ruby>明日<rt>あした</rt></ruby>")

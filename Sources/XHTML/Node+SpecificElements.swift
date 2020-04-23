@@ -106,6 +106,11 @@ extension Node {
     return try! DataElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  /// Create a \<data value=\"`value`\">`text`\</data> element.
+  public static func data(xhtmlPrefix: QualifiedName.Prefix = .none, value: String, text: String)  -> Node {
+    return try! DataElement(xhtmlPrefix: xhtmlPrefix, value: value, text: text)
+  }
+  
   /// Create a \<datalist>\</datalist> element.
   public static func datalist(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! DataListElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)

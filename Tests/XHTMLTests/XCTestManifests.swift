@@ -39,7 +39,9 @@ extension ElementTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ElementTests = [
+        ("test_abbr", test_abbr),
         ("test_classSelector", test_classSelector),
+        ("test_data", test_data),
         ("test_equatable", test_equatable),
         ("test_globalAttributes", test_globalAttributes),
         ("test_headingElements", test_headingElements),

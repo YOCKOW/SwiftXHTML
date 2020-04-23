@@ -71,6 +71,10 @@ open class DataElement: SpecifiedElement {
   public final override var isEmpty: Bool {
     return false
   }
+  
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none, value: String, text: String) throws {
+    try self.init(xhtmlPrefix: xhtmlPrefix, attributes: ["value": value], children: [.text(text)])
+  }
 }
 
 open class EmphasisElement: SpecifiedElement {
