@@ -7,11 +7,8 @@
 
 import BonaFideCharacterSet
 
-open class MetaElement: SpecifiedElement {
+open class MetaElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "meta" }
-  
-  /// Always `true`.
-  public override final var isEmpty: Bool { return true }
   
   internal override func _setParent(_ newParent: Element?) throws {
     if let newParent = newParent {

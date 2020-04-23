@@ -5,12 +5,8 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class LinkElement: SpecifiedElement {
+open class LinkElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "link" }
-  
-  public override final var isEmpty: Bool {
-    return true
-  }
   
   open var relationship: Relationship? {
     get {

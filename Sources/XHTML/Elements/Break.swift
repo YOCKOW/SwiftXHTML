@@ -8,21 +8,16 @@
 import StringComposition
 
 /// Represents \<br />
-open class LineBreakElement: SpecifiedElement {
+open class LineBreakElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "br" }
-  public override final var isEmpty: Bool { return true }
   
   open override var prettyXHTMLLines: StringLines {
     return StringLines("<br />\n", detectIndent: false)
   }
 }
 
-open class WordBreakElement: SpecifiedElement {
+open class WordBreakElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "wbr"
-  }
-  
-  public final override var isEmpty: Bool {
-    return true
   }
 }

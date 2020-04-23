@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class InputElement: SpecifiedElement {
+open class InputElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "input" }
   
   public enum TypeValue: String {
@@ -33,9 +33,6 @@ open class InputElement: SpecifiedElement {
     case url
     case week
   }
-  
-  /// Always `true`.
-  public override final var isEmpty: Bool { return true }
   
   open var autocomplete: Bool {
     get {
