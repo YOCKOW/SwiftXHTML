@@ -16,6 +16,10 @@ extension Node {
     return try! AbbreviationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func abbr(xhtmlPrefix: QualifiedName.Prefix = .none, fullForm: String? = nil, abbreviation: String)  -> Node {
+    return try! AbbreviationElement(xhtmlPrefix: xhtmlPrefix, fullForm: fullForm, abbreviation: abbreviation)
+  }
+  
   /// Create an \<address>\</address> element.
   public static func address(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node])  -> Node {
     return try! AddressElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)

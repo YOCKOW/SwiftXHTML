@@ -215,6 +215,11 @@ final class ElementTests: XCTestCase {
     }
   }
   
+  func test_abbr() throws {
+    let abbr = try AbbreviationElement(fullForm: "HyperText Markup Language", abbreviation: "HTML")
+    XCTAssertEqual(abbr.xhtmlString, #"<abbr title="HyperText Markup Language">HTML</abbr>"#)
+  }
+  
   func test_ruby() throws {
     let ruby = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした") as? RubyElement)
     XCTAssertEqual(ruby.xhtmlString, "<ruby>明日<rt>あした</rt></ruby>")

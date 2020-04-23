@@ -13,6 +13,14 @@ open class AbbreviationElement: SpecifiedElement {
   public final override var isEmpty: Bool {
     return false
   }
+  
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
+                          fullForm: String? = nil, abbreviation: String) throws {
+    try self.init(xhtmlPrefix: xhtmlPrefix, children: [.text(abbreviation)])
+    if let fullForm = fullForm {
+      self.globalAttributes.title = fullForm
+    }
+  }
 }
 
 open class BidirectionalIsolateElement: SpecifiedElement {

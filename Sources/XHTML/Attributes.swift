@@ -137,7 +137,7 @@ extension Attributes {
   }
   
   /// The attribute value that is identified by a local name and URI.
-  public subscript(localName localName:NoncolonizedName, uri uri:String?) -> String? {
+  public subscript(localName localName: NoncolonizedName, uri uri: String?, fallbackPrefix fallbackPrefix: QualifiedName.Prefix? = nil) -> String? {
     get {
       if let namespace = uri {
         guard let list = self._attributesForLocalName[localName] else { return nil }
@@ -145,7 +145,6 @@ extension Attributes {
           guard case .attributeName(let qName) = name else { continue }
           if self.namespace(for:qName) == namespace { return value }
         }
-        return nil
       } else {
         // uri == nil
         if let value = self[.attributeName(QualifiedName(localName:localName))] {
@@ -153,19 +152,18 @@ extension Attributes {
         } else if let prefix = self.element?.name.prefix {
           return self[.attributeName(QualifiedName(prefix:prefix, localName:localName))]
         }
-        return nil
       }
+      if let prefix = fallbackPrefix {
+        return self[.attributeName(QualifiedName(prefix: prefix, localName: localName))]
+      }
+      return nil
     }
     set {
       if let namespace = uri {
-        guard let prefix = self.prefix(for:namespace) else {
+        guard let prefix = (self.prefix(for: namespace) ?? fallbackPrefix) else {
           fatalError("No namespace for \(namespace)")
         }
-        if case .none = prefix {
-          self[.attributeName(QualifiedName(localName:localName))] = newValue
-        } else {
-          self[.attributeName(QualifiedName(prefix:prefix, localName:localName))] = newValue
-        }
+        self[.attributeName(QualifiedName(prefix:prefix, localName:localName))] = newValue
       } else {
         self[.attributeName(QualifiedName(localName:localName))] = newValue
       }
