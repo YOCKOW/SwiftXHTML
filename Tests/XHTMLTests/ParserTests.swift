@@ -16,27 +16,25 @@ final class ParserTests: XCTestCase {
     XCTAssertEqual(document.title, "XHTML5")
   }
   
-  func test_errors() {
-    func _test(_ relativePath:String,
-               _ expected:Parser.Error,
-               file:StaticString = #file,
-               line:UInt = #line)
-    {
+  func test_errors_document() {
+    func _test_localFile<E>(at relativePath: String, expectedError: E, file: StaticString = #file, line: UInt = #line) where E: Error {
       do {
         let _ = try Parser.parse(TestResources.shared.data(for:"XHTML/InvalidXHTML/" + relativePath)!)
-        XCTFail("No error was thrown.", file:file, line:line)
+        XCTFail("No error was thrown.", file: file, line: line)
       } catch {
-        guard case let parserError as Parser.Error = error else {
+        switch (error, expectedError) {
+        case (let parserError as Parser.Error, let expectedError as Parser.Error):
+          XCTAssertEqual(parserError, expectedError, file: file, line: line)
+        case (let elementError as ElementError, let expectedError as ElementError):
+          XCTAssertEqual(elementError, expectedError, file: file, line: line)
+        default:
           XCTFail("Unexpected Error: \(error.localizedDescription)", file:file, line:line)
           return
         }
-        XCTAssertEqual(parserError, expected, file:file, line:line)
       }
     }
     
-    _test("RootElementIsNotHTML.xhtml", .rootElementIsNotHTML)
-    // _test("DuplicatedRootElement.xhtml", .duplicatedRootElement)
-    // _test("MisplacedCDATA.xhtml", .misplacedCDATA)
+    _test_localFile(at: "RootElementIsNotHTML.xhtml", expectedError: Parser.Error.rootElementIsNotHTML)
   }
 }
 

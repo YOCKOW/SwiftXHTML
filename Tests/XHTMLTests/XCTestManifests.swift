@@ -81,7 +81,7 @@ extension ParserTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ParserTests = [
-        ("test_errors", test_errors),
+        ("test_errors_document", test_errors_document),
         ("test_parseSimpleXHTML5", test_parseSimpleXHTML5),
     ]
 }

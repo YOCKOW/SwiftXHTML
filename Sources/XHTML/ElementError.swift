@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ElementError: LocalizedError {
+public enum ElementError: LocalizedError, Equatable {
   case invalidLocalName(expected: NoncolonizedName, actual: NoncolonizedName)
   case invalidParent(expected: NoncolonizedName, actual: NoncolonizedName)
 }
