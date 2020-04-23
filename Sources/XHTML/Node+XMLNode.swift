@@ -166,19 +166,28 @@ extension _Node_XMLNode {
   fileprivate init(_xmlNode xmlNode: XMLNode, xhtmlPrefix: QualifiedName.Prefix) throws {
     // Comment
     if xmlNode._isComment {
-      self = try Comment(_xmlNode: xmlNode) as! Self
+      guard let comment = try Comment(_xmlNode: xmlNode) as? Self else {
+        throw NodeError.unexpectedNode(xmlNode)
+      }
+      self = comment
       return
     }
     
     // ProcessingInstruction
     if xmlNode._isProcessingInstruction {
-      self = try ProcessingInstruction(_xmlNode: xmlNode) as! Self
+      guard let pi = try ProcessingInstruction(_xmlNode: xmlNode) as? Self else {
+        throw NodeError.unexpectedNode(xmlNode)
+      }
+      self = pi
       return
     }
     
     // Text
     if xmlNode._isText {
-      self = try Text(_xmlNode: xmlNode) as! Self
+      guard let text = try Text(_xmlNode: xmlNode) as? Self else {
+        throw NodeError.unexpectedNode(xmlNode)
+      }
+      self = text
       return
     }
     
@@ -187,6 +196,10 @@ extension _Node_XMLNode {
     guard let name = xmlElement.name.flatMap(QualifiedName.init) else { throw NodeError.invalidName }
     let attributes = Attributes(attributesOf: xmlElement)
     let element = try Element(_name: name, attributes: attributes, xhtmlPrefix: xhtmlPrefix)
+    if !(element is Self) {
+      throw NodeError.unexpectedNode(xmlNode)
+    }
+    
     if let children = xmlElement.children {
       for child in children {
         element.append(try Node(child, xhtmlPrefix: xhtmlPrefix))
