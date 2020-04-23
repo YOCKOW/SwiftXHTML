@@ -28,19 +28,11 @@ open class HTMLElement: SpecifiedElement {
     return nil
   }
   
-  public convenience override init(name: QualifiedName) {
-    self.init(name: name, attributes: [:], children: [])
-  }
-  
-  public convenience required init(name: QualifiedName, attributes: Attributes) {
-    self.init(name: name, attributes: attributes, children: [])
-  }
-  
-  public required init(name:QualifiedName, attributes:Attributes, children:[Node]) {
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
     var attrs = attributes
     if attrs._namespace(for:name) == nil {
       attrs[.namespaceDeclaration(name.prefix)] = String._xhtmlNamespace
     }
-    super.init(name: name, attributes: attributes, children: children)
+    try super.init(name: name, attributes: attributes, children: children)
   }
 }

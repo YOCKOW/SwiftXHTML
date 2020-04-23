@@ -149,7 +149,9 @@ extension _Node_XMLNode {
       let attributes = Attributes(attributesOf: xmlElement)
       else { return nil }
     
-    let element = Element(name: name, attributes: attributes, xhtmlPrefix: xhtmlPrefix)
+    guard let element = try? Element(_name: name, attributes: attributes, xhtmlPrefix: xhtmlPrefix) else {
+      return nil
+    }
     if let children = xmlElement.children {
       for child in children {
         guard let node = Node(child, xhtmlPrefix: xhtmlPrefix) else { return nil }

@@ -16,33 +16,28 @@ open class SpecifiedElement: Element {
       return self._name
     }
     set {
-      guard newValue.localName == type(of:self).localName else {
-        fatalError("Local name must be \"\(type(of:self).localName)\".")
-      }
-      self._name = newValue
+      try! self._setName(newValue)
     }
   }
   
-  public override init(name:QualifiedName) {
-    super.init(name: name)
-    self.name = name
+  private func _setName(_ newName: QualifiedName) throws {
+    let expectedLocalName = type(of: self).localName
+    if newName.localName != expectedLocalName {
+      throw ElementError.invalidLocalName(expected: expectedLocalName, actual: newName.localName)
+    }
+    self._name = newName
   }
   
-  public required init(name: QualifiedName, attributes: Attributes) {
-    super.init(name: name, attributes: attributes)
-    self.name = name
-  }
-  
-  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
-    super.init(name: name, attributes: attributes, children: children)
-    self.name = name
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
+    try super.init(name: name, attributes: attributes, children: children)
+    try self._setName(name)
   }
   
   public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
                           attributes: Attributes = [:],
-                          children: [Node] = []) {
-    self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
-              attributes: attributes,
-              children: children)
+                          children: [Node] = []) throws {
+    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
+                  attributes: attributes,
+                  children: children)
   }
 }

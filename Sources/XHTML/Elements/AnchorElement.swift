@@ -19,20 +19,16 @@ open class AnchorElement: SpecifiedElement {
     }
   }
   
-  public required init(name: QualifiedName, attributes: Attributes) {
-    super.init(name: name, attributes: attributes)
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
+    try super.init(name: name, attributes: attributes, children: children)
   }
   
-  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
-    super.init(name: name, attributes: attributes, children: children)
-  }
-  
-  public convenience init(name:QualifiedName,
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
                           hypertextReference:String,
                           text:String,
-                          attributes:Attributes = [:])
-  {
-    self.init(name:name, attributes:attributes)
+                          attributes:Attributes = [:]) throws {
+    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
+                  attributes: attributes)
     self.hypertextReference = hypertextReference
     self.append(Text(text))
   }

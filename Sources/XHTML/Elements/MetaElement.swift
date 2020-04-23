@@ -13,19 +13,12 @@ open class MetaElement: SpecifiedElement {
   /// Always `true`.
   public override final var isEmpty: Bool { return true }
   
-  public internal(set) override var parent: Element? {
-    get {
-      return super.parent
-    }
-    set {
-      if newValue == nil {
-        super.parent = nil
-        return
-      }
-      guard case let head as HeadElement = newValue else {
-        fatalError("<meta> must always be inside the <head> element.")
-      }
-      super.parent = head
+  internal override func _setParent(_ newParent: Element?) throws {
+    if let newParent = newParent {
+      guard newParent is HeadElement else { throw ElementError.invalidParent(expected: "head", actual: newParent.name.localName) }
+      try super._setParent(newParent)
+    } else {
+      try super._setParent(nil)
     }
   }
 }
@@ -52,9 +45,9 @@ extension HeadElement {
     case (nil, let meta?):
       self.remove(meta)
     case (let content?, nil):
-      let meta = MetaElement(name: QualifiedName(prefix: self.name.prefix,
-                                                 localName: "meta"),
-                             attributes: ["name": name, "content": content])
+      let meta = try! MetaElement(name: QualifiedName(prefix: self.name.prefix,
+                                                      localName: "meta"),
+                                  attributes: ["name": name, "content": content])
       self.append(meta)
     case (let content?, let meta?):
       meta.attributes["content"] = content

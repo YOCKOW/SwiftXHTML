@@ -14,17 +14,13 @@ open class RubyElement: SpecifiedElement {
     return false
   }
   
-  public required init(name: QualifiedName, attributes: Attributes) {
-    super.init(name: name, attributes: attributes)
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
+    try super.init(name: name, attributes: attributes, children: children)
   }
   
-  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
-    super.init(name: name, attributes: attributes, children: children)
-  }
-  
-  public convenience init(name: QualifiedName = "ruby",
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
                           attributes: Attributes = [:],
-                          text: String, rubyText: String, includesFallbackParenthesis: Bool = false) {
+                          text: String, rubyText: String, includesFallbackParenthesis: Bool = false) throws {
     var children: [Node] = []
     children.append(.text(text))
     if includesFallbackParenthesis {
@@ -38,7 +34,8 @@ open class RubyElement: SpecifiedElement {
         .text(")")
       ]))
     }
-    self.init(name: name, attributes: attributes, children: children)
+    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
+                  attributes: attributes, children: children)
   }
 }
 

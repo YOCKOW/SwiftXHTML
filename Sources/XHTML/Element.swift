@@ -11,19 +11,18 @@ import yExtensions
 open class Element: Node {
   open var name: QualifiedName
   
-  private var _attributes: Attributes = [:]
+  private var _attributes: Attributes!
   public var attributes: Attributes {
     get {
       return self._attributes
     }
     set {
-      self._attributes.element = nil
       self._attributes = newValue
       self._attributes.element = self
     }
   }
   
-  private var _children: [Node] = []
+  private var _children: [Node]!
   public var children: [Node] {
     get {
       return self._children
@@ -31,7 +30,7 @@ open class Element: Node {
     set {
       self._children = newValue
       for child in self._children {
-        child.parent = self
+        try! child._setParent(self)
       }
     }
   }
@@ -50,20 +49,8 @@ open class Element: Node {
     )
   }
   
-  public init(name: QualifiedName) {
-    self.name = name
-  }
-  
-  /// Initialize with `name`, and then add `attributes`.
-  public required init(name: QualifiedName, attributes: Attributes) {
-    self.name = name
-    super.init()
-    
-    self.attributes = attributes
-  }
-  
   /// Initialize with `name`, and then add `attributes` and `children`.
-  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
     self.name = name
     super.init()
     
@@ -136,9 +123,13 @@ open class Element: Node {
     return result
   }
   
-  public func append(_ child:Node) {
-    child.parent = self
+  internal func _append(_ child: Node) throws {
+    try child._setParent(self)
     self._children.append(child)
+  }
+  
+  public func append(_ child: Node) {
+    try! self._append(child)
   }
   
   public func firstIndex(of child: Node) -> Int? {
@@ -146,13 +137,13 @@ open class Element: Node {
   }
   
   public func insert(_ child:Node, at index:Int) {
-    child.parent = self
+    try! child._setParent(self)
     self._children.insert(child, at:index)
   }
   
   public func removeChild(at index:Int) {
     let child = self._children.remove(at:index)
-    child.parent = nil
+    try! child._setParent(nil)
   }
   
   public func remove(_ child: Node) {

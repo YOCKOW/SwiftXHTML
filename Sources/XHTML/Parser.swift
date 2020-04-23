@@ -141,31 +141,31 @@ open class Parser: NSObject, XMLParserDelegate {
                      didStartElement elementName: String,
                      namespaceURI: String?,
                      qualifiedName qName: String?,
-                     attributes attributeDict: [String : String] = [:])
-  {
-    let elementName = _swapElementName(elementName)
-    guard let tagName = QualifiedName(elementName) else {
-      self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-      return
-    }
-    let attributes = Attributes(attributeDict)
-    let element = Element(name:tagName, attributes:attributes, parent:self._processingElement)
-    
-    if element is HTMLElement {
+                     attributes attributeDict: [String: String] = [:]) {
+    do {
+      let elementName = _swapElementName(elementName)
+      guard let tagName = QualifiedName(elementName) else {
+        throw Error.xmlError(.invalidCharacterError)
+      }
+      let attributes = Attributes(attributeDict)
+      let element = try Element(_name: tagName, attributes:attributes, parent: self._processingElement)
+      
+      if element is HTMLElement {
 //      guard self._document == nil && self._processingElement == nil else {
 //        self.parser(parser, parseErrorOccurred:Error.duplicatedRootElement)
 //        return
 //      }
-      
-      self._document = Document(prolog:self._prolog, rootElement:element as! HTMLElement)
-      self._processingElement = element
-    } else {
-      guard let processingElement = self._processingElement else {
-        self.parser(parser, parseErrorOccurred:Error.rootElementIsNotHTML)
-        return
+        self._document = Document(prolog:self._prolog, rootElement:element as! HTMLElement)
+        self._processingElement = element
+      } else {
+        guard let processingElement = self._processingElement else {
+          throw Error.rootElementIsNotHTML
+        }
+        try processingElement._append(element)
+        self._processingElement = element
       }
-      processingElement.append(element)
-      self._processingElement = element
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
   }
   

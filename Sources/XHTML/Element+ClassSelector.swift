@@ -132,19 +132,18 @@ extension _ElementClassSelector {
     return name.localName == "html" && attributes._namespace(for:name)?._isXHTMLNamespace == true
   }
   
-  private static func _forceGenerateElement(name: QualifiedName, attributes: Attributes) -> Self? {
+  private static func _forceGenerateElement(name: QualifiedName, attributes: Attributes) throws -> Self? {
     if let cls = Element.ClassSelector.default[name.localName] {
-      return (cls.init(name:name, attributes:attributes) as! Self)
+      return (try cls.init(name:name, attributes:attributes) as! Self)
     }
     return nil
   }
   
-  internal init(name:QualifiedName,
-                attributes:Attributes,
-                parent:Element?)
-  {
+  internal init(_name name: QualifiedName,
+                attributes: Attributes,
+                parent: Element?) throws {
     if Self._canBeRootElement(name: name, attributes: attributes) {
-      self = HTMLElement(name:name, attributes:attributes) as! Self
+      self = try HTMLElement(name: name, attributes: attributes) as! Self
       return
     }
     
@@ -159,30 +158,30 @@ extension _ElementClassSelector {
     })()
     
     if namespaceIsXHTML {
-      if let instance = Self._forceGenerateElement(name: name, attributes: attributes) {
+      if let instance = try Self._forceGenerateElement(name: name, attributes: attributes) {
         self = instance
         return
       }
     }
   
-    self = Element(name:name, attributes:attributes) as! Self
+    self = try Element(name: name, attributes: attributes) as! Self
   }
   
-  internal init(name: QualifiedName,
+  internal init(_name name: QualifiedName,
                 attributes: Attributes,
-                xhtmlPrefix: QualifiedName.Prefix) {
+                xhtmlPrefix: QualifiedName.Prefix) throws {
     if Self._canBeRootElement(name: name, attributes: attributes) {
-      self = HTMLElement(name:name, attributes:attributes) as! Self
+      self = try HTMLElement(name: name, attributes: attributes) as! Self
       return
     }
     
     if name.prefix == xhtmlPrefix {
-      if let instance = Self._forceGenerateElement(name: name, attributes: attributes) {
+      if let instance = try Self._forceGenerateElement(name: name, attributes: attributes) {
         self = instance
         return
       }
     }
     
-    self = Element(name:name, attributes:attributes) as! Self
+    self = try Element(name: name, attributes: attributes) as! Self
   }
 }
