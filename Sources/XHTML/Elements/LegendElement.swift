@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class LegendElement: SpecifiedElement {
+open class LegendElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public override class final var localName: NoncolonizedName {
     return "legend"
   }

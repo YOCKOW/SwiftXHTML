@@ -54,7 +54,7 @@ open class TableElement: SpecifiedElement {
   }
 }
 
-open class TableCaptionElement: SpecifiedElement {
+open class TableCaptionElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public override class final var localName: NoncolonizedName { return "caption" }
   public override final var isEmpty: Bool { return false }
 }

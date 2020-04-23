@@ -197,6 +197,11 @@ final class ElementTests: XCTestCase {
     )
   }
   
+  func test_simpleTextContent() throws {
+    let title = try TitleElement(xhtmlPrefix: .none, text: "Title")
+    XCTAssertEqual(title.title, "Title")
+  }
+  
   func test_headingElements() {
     let headings: [Node] = [
       .h1(text:"h1"),

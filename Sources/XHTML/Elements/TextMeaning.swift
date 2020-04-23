@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class AbbreviationElement: SpecifiedElement {
+open class AbbreviationElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "abbr"
   }
@@ -23,7 +23,7 @@ open class AbbreviationElement: SpecifiedElement {
   }
 }
 
-open class BidirectionalIsolateElement: SpecifiedElement {
+open class BidirectionalIsolateElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "bdi"
   }
@@ -33,7 +33,7 @@ open class BidirectionalIsolateElement: SpecifiedElement {
   }
 }
 
-open class BidirectionalTextOverrideElement: SpecifiedElement {
+open class BidirectionalTextOverrideElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "bdo"
   }
@@ -43,7 +43,7 @@ open class BidirectionalTextOverrideElement: SpecifiedElement {
   }
 }
 
-open class CitationElement: SpecifiedElement {
+open class CitationElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "cite"
   }
@@ -53,7 +53,7 @@ open class CitationElement: SpecifiedElement {
   }
 }
 
-open class CodeElement: SpecifiedElement {
+open class CodeElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "code"
   }
@@ -77,7 +77,7 @@ open class DataElement: SpecifiedElement {
   }
 }
 
-open class EmphasisElement: SpecifiedElement {
+open class EmphasisElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "em"
   }
@@ -87,7 +87,7 @@ open class EmphasisElement: SpecifiedElement {
   }
 }
 
-open class KeyboardInputElement: SpecifiedElement {
+open class KeyboardInputElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "kbd"
   }
@@ -97,7 +97,7 @@ open class KeyboardInputElement: SpecifiedElement {
   }
 }
 
-open class MarkTextElement: SpecifiedElement {
+open class MarkTextElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "mark"
   }
@@ -107,7 +107,7 @@ open class MarkTextElement: SpecifiedElement {
   }
 }
 
-open class QuotationElement: SpecifiedElement {
+open class QuotationElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "q"
   }
@@ -117,7 +117,7 @@ open class QuotationElement: SpecifiedElement {
   }
 }
 
-open class SampleElement: SpecifiedElement {
+open class SampleElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "samp"
   }
@@ -127,7 +127,7 @@ open class SampleElement: SpecifiedElement {
   }
 }
 
-open class SmallElement: SpecifiedElement {
+open class SmallElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "small"
   }
@@ -137,7 +137,7 @@ open class SmallElement: SpecifiedElement {
   }
 }
 
-open class StrikedElement: SpecifiedElement {
+open class StrikedElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "s"
   }
@@ -147,7 +147,7 @@ open class StrikedElement: SpecifiedElement {
   }
 }
 
-open class StrongElement: SpecifiedElement {
+open class StrongElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "strong"
   }
@@ -157,7 +157,7 @@ open class StrongElement: SpecifiedElement {
   }
 }
 
-open class SubscriptElement: SpecifiedElement {
+open class SubscriptElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "sub"
   }
@@ -167,7 +167,7 @@ open class SubscriptElement: SpecifiedElement {
   }
 }
 
-open class SuperscriptElement: SpecifiedElement {
+open class SuperscriptElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "sup"
   }
@@ -187,7 +187,7 @@ open class TimeElement: SpecifiedElement {
   }
 }
 
-open class VariableElement: SpecifiedElement {
+open class VariableElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "var"
   }

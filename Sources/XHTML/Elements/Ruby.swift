@@ -49,7 +49,7 @@ open class RubyFallbackParenthesisTextElement: SpecifiedElement {
   }
 }
 
-open class RubyTextElement: SpecifiedElement {
+open class RubyTextElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "rt"
   }

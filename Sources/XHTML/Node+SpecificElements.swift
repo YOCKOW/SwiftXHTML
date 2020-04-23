@@ -20,6 +20,10 @@ extension Node {
     return try! AbbreviationElement(xhtmlPrefix: xhtmlPrefix, fullForm: fullForm, abbreviation: abbreviation)
   }
   
+  public static func abbr(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! AbbreviationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create an \<address>\</address> element.
   public static func address(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node])  -> Node {
     return try! AddressElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
@@ -50,9 +54,17 @@ extension Node {
     return try! BidirectionalIsolateElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func bdi(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! BidirectionalIsolateElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<bdo>\</bdo> element.
   public static func bdo(xhtmlPrefix: QualifiedName.Prefix = .none, attributes:Attributes = [:], children: [Node] = [])  -> Node {
     return try! BidirectionalTextOverrideElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func bdo(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! BidirectionalTextOverrideElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<blockquote>\</blockquote> element.
@@ -85,14 +97,26 @@ extension Node {
     return try! TableCaptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func caption(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! TableCaptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<cite>\</cite> element.
   public static func cite(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! CitationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func cite(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! CitationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<code>\</code> element.
   public static func code(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! CodeElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func code(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! CodeElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an XHTML comment node.
@@ -131,9 +155,17 @@ extension Node {
     return try! DescriptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func dd(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! DescriptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<dfn>\</dfn> node.
   public static func dfn(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! DefinitionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func dfn(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! DefinitionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<div>\</div> node.
@@ -151,9 +183,17 @@ extension Node {
     return try! DescriptionTermElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func dt(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! DescriptionTermElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create an \<em>\</em> node.
   public static func em(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! EmphasisElement(xhtmlPrefix: xhtmlPrefix, attributes:attributes, children:children)
+  }
+  
+  public static func em(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! EmphasisElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<embed>\</embed> node.
@@ -170,6 +210,10 @@ extension Node {
   /// Create a \<figcaption>\</figcaption> node.
   public static func figcaption(xhtmlPrefix: QualifiedName.Prefix = .none, attributes:Attributes = [:], children:[Node] = [])  -> Node {
     return try! FigureCaptionElement(xhtmlPrefix: xhtmlPrefix, attributes:attributes, children:children)
+  }
+  
+  public static func figcaption(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! FigureCaptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<figure>\</figure> node.
@@ -195,7 +239,7 @@ extension Node {
   
   /// Create an \<h1> element with specified text.
   public static func h1(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String)  -> Node {
-    return h1(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: [.text(text)])
+    return try! H1Element(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<h2> element with specified child-nodes.
@@ -205,7 +249,7 @@ extension Node {
   
   /// Create an \<h2> element with specified text.
   public static func h2(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String)  -> Node {
-    return h2(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: [.text(text)])
+    return try! H2Element(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<h3> element with specified child-nodes.
@@ -215,7 +259,7 @@ extension Node {
   
   /// Create an \<h3> element with specified text.
   public static func h3(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String)  -> Node {
-    return h3(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: [.text(text)])
+    return try! H3Element(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<h4> element with specified child-nodes.
@@ -225,7 +269,7 @@ extension Node {
   
   /// Create an \<h4> element with specified text.
   public static func h4(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String)  -> Node {
-    return h4(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: [.text(text)])
+    return try! H4Element(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<h5> element with specified child-nodes.
@@ -235,7 +279,7 @@ extension Node {
   
   /// Create an \<h5> element with specified text.
   public static func h5(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String)  -> Node {
-    return h5(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: [.text(text)])
+    return try! H5Element(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create an \<h6> element with specifide child-nodes.
@@ -245,7 +289,7 @@ extension Node {
   
   /// Create an \<h6> element with specified text.
   public static func h6(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String)  -> Node {
-    return h6(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: [.text(text)])
+    return try! H6Element(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<head\> element.
@@ -298,6 +342,10 @@ extension Node {
     return try! KeyboardInputElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func kbd(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! KeyboardInputElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<label\>\</label\> element.
   public static func label(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! LabelElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
@@ -306,6 +354,10 @@ extension Node {
   /// Create a \<legend\>\</legend\> element.
   public static func legend(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! LegendElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func legend(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! LegendElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<li\>\</li\> element.
@@ -326,6 +378,10 @@ extension Node {
   /// Create a \<mark\>\</mark\> element.
   public static func mark(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! MarkTextElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func mark(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! MarkTextElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<meter\>\</meter\> element.
@@ -398,6 +454,10 @@ extension Node {
     return try! QuotationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func q(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! QuotationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<ruby\>\</ruby\> element.
   public static func ruby(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! RubyElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
@@ -420,6 +480,10 @@ extension Node {
     return try! RubyTextElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func rt(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! RubyTextElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create an \<rtc\>\</rtc\> element.
   public static func rtc(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! RubyTextContainerElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
@@ -428,6 +492,10 @@ extension Node {
   /// Create a \<samp\>\</samp\> element.
   public static func samp(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! SampleElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func samp(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! SampleElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<script\>\</script\> element.
@@ -450,6 +518,10 @@ extension Node {
     return try! SmallElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func small(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! SmallElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<span\>\</span\> element.
   public static func span(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! SpanElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
@@ -458,6 +530,10 @@ extension Node {
   /// Create a \<s\>\</s\> element.
   public static func s(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! StrikedElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func s(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! StrikedElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<source /\> element.
@@ -470,9 +546,17 @@ extension Node {
     return try! StrongElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func strong(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! StrongElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<sub\>\</sub\> element.
   public static func sub(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! SubscriptElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func sub(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! SubscriptElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<summary\>\</summary\> element.
@@ -480,9 +564,17 @@ extension Node {
     return try! DisclosureSummaryElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func summary(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! DisclosureSummaryElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
   /// Create a \<sup\>\</sup\> element.
   public static func sup(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! SuperscriptElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func sup(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! SuperscriptElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<table> element.
@@ -556,6 +648,10 @@ extension Node {
   /// Create a \<var\>\</var\> element.
   public static func `var`(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = [])  -> Node {
     return try! VariableElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func `var`(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
+    return try! VariableElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
   /// Create a \<video\>\</video\> element.

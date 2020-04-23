@@ -49,6 +49,7 @@ extension ElementTests {
         ("test_namespace", test_namespace),
         ("test_prettyXHTMLString", test_prettyXHTMLString),
         ("test_ruby", test_ruby),
+        ("test_simpleTextContent", test_simpleTextContent),
         ("test_table", test_table),
         ("test_xhtmlString", test_xhtmlString),
     ]

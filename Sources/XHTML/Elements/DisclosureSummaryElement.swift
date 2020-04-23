@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class DisclosureSummaryElement: SpecifiedElement {
+open class DisclosureSummaryElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "summary"
   }
