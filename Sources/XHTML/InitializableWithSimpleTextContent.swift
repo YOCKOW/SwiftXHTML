@@ -18,7 +18,7 @@ extension InitializableWithSimpleTextContent {
 extension InitializableWithSimpleTextContent where Self: SpecifiedElement {
   public init(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) throws {
     try self.init(
-      name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
+      name: QualifiedName(prefix: xhtmlPrefix, localName: Self.localName),
       attributes: attributes,
       text: text
     )
