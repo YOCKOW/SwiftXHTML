@@ -14,8 +14,8 @@ import FoundationXML
 #endif
 
 final class Node_XMLNodeTests: XCTestCase {
-  func test_attributes() {
-    let xmlElement = try! XMLElement(xmlString:
+  func test_attributes() throws {
+    let xmlElement = try XMLElement(xmlString:
       #"""
         <element
           xmlns="http://default/ns"
@@ -31,14 +31,14 @@ final class Node_XMLNodeTests: XCTestCase {
   }
   
   func test_comment() throws {
-    let commentXMLNode = XMLNode.comment(withStringValue: "comment") as! XMLNode
+    let commentXMLNode = try XCTUnwrap(XMLNode.comment(withStringValue: "comment") as? XMLNode)
     let comment = try Comment(_xmlNode: commentXMLNode)
     XCTAssertNotNil(comment)
     XCTAssertEqual(comment.text, "comment")
   }
   
   func test_processingInstruction() throws {
-    let piXMLNode = XMLNode.processingInstruction(withName: "name", stringValue: "value") as! XMLNode
+    let piXMLNode = try XCTUnwrap(XMLNode.processingInstruction(withName: "name", stringValue: "value") as? XMLNode)
     let pi = try ProcessingInstruction(_xmlNode: piXMLNode)
     XCTAssertNotNil(pi)
     XCTAssertEqual(pi.target, "name")
@@ -46,14 +46,14 @@ final class Node_XMLNodeTests: XCTestCase {
   }
   
   func test_text() throws {
-    let textXMLNode = XMLNode.text(withStringValue: "<my text>") as! XMLNode
+    let textXMLNode = try XCTUnwrap(XMLNode.text(withStringValue: "<my text>") as? XMLNode)
     let text = try Text(_xmlNode: textXMLNode)
     XCTAssertNotNil(text)
     XCTAssertEqual(text.text, "<my text>")
   }
   
   func test_node() throws {
-    let xmlNode = try! XMLElement(xmlString: #"""
+    let xmlNode = try XMLElement(xmlString: #"""
       <html xmlns="http://www.w3.org/1999/xhtml">
         <head><title>my page</title></head>
         <body>text1<a href="uri">link</a>text2</body>

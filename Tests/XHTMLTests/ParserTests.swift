@@ -11,8 +11,8 @@ import XCTest
 import TestResources
 
 final class ParserTests: XCTestCase {
-  func test_parseSimpleXHTML5() {
-    let document = try! Parser.parse(TestResources.shared.data(for:"XHTML/SimpleXHTML5.utf8.xhtml")!)
+  func test_parseSimpleXHTML5() throws {
+    let document = try Parser.parse(try XCTUnwrap(TestResources.shared.data(for:"XHTML/SimpleXHTML5.utf8.xhtml")))
     XCTAssertEqual(document.title, "XHTML5")
   }
   
