@@ -37,6 +37,7 @@ extension Element {
       "del": DeletionElement.self,
       "details": DetailsElement.self,
       "dfn": DefinitionElement.self,
+      "div": DivisionElement.self,
       "dl": DescriptionListElement.self,
       "dt": DescriptionTermElement.self,
       "em": EmphasisElement.self,
