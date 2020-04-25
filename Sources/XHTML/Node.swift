@@ -29,6 +29,11 @@ open class Node: Equatable {
     return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
   
+  /// Returns prettified XHTML String.
+  public final var prettyXHTMLString: String {
+    return prettyXHTMLString()
+  }
+  
   /// The parent node.
   public private(set) weak var parent: Element? = nil
   
