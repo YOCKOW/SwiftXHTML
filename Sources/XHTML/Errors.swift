@@ -16,6 +16,7 @@ public enum NodeError: Error, Equatable {
   case invalidAttributeName
   case invalidName
   case invalidProcessingInstructionName
+  case invalidString
   case unexpectedNode(XMLNode)
 }
 

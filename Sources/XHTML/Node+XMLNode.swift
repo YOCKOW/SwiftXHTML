@@ -155,7 +155,7 @@ extension Text {
     assert(xmlNode._isText)
     
     guard let text = xmlNode.stringValue else { throw NodeError.unexpectedNode(xmlNode) }
-    self.init(text)
+    try self.init(text)
   }
 }
 

@@ -22,7 +22,7 @@ open class TitleElement: SpecifiedElement, InitializableWithSimpleTextContent {
       return result
     }
     set {
-      self.children = [Text(newValue)]
+      self.children = [try! Text(newValue)]
     }
   }
 }

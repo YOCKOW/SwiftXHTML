@@ -189,35 +189,36 @@ open class Parser: NSObject, XMLParserDelegate {
   }
   
   public func parser(_ parser: XMLParser, foundCharacters string: String) {
-    if let processingElement = self._processingElement {
-      if case let lastChild as Text = processingElement.children.last {
-        lastChild.text += string
+    do {
+      if let processingElement = self._processingElement {
+        if case let lastChild as Text = processingElement.children.last, !(lastChild is CDATASection) {
+          lastChild.text += string
+        } else {
+          processingElement.append(try Text(string))
+        }
       } else {
-        processingElement.append(Text(string))
+        guard string.consists(of: .xmlWhitespaces) else {
+          throw Error.xmlError(.invalidCharacterError)
+        }
       }
-    } else {
-      guard string.consists(of:.xmlWhitespaces) else {
-        self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-        return
-      }
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
   }
   
   public func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
-    guard
-      let cdata = String(data:CDATABlock, encoding:.utf8),
-      let section = CDATASection(cdata)
-    else
-    {
-      self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-      return
+    do {
+      guard let cdata = String(data: CDATABlock, encoding: self._prolog.stringEncoding) else {
+        throw Error.xmlError(.unknownEncodingError)
+      }
+      let section = try CDATASection(cdata)
+      guard let processingElement = self._processingElement else {
+        // throw Error.misplacedCDATA
+        return
+      }
+      processingElement.append(section)
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
-    
-    guard let processingElement = self._processingElement else {
-      // self.parser(parser, parseErrorOccurred:Error.misplacedCDATA)
-      return
-    }
-    
-    processingElement.append(section)
   }
 }

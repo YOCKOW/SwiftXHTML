@@ -30,7 +30,7 @@ open class AnchorElement: SpecifiedElement {
     try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
                   attributes: attributes)
     self.hypertextReference = hypertextReference
-    self.append(Text(text))
+    self.append(try Text(text))
   }
   
 }
