@@ -216,3 +216,11 @@ extension Node {
     try self.init(_xmlNode: xmlNode, xhtmlPrefix: xhtmlPrefix)
   }
 }
+
+extension Element {
+  /// Initialize with a string.
+  public convenience init(xhtmlString: String, xhtmlPrefix: QualifiedName.Prefix = .none) throws {
+    let xmlElement = try XMLElement(xmlString: xhtmlString)
+    try self.init(_xmlNode: xmlElement, xhtmlPrefix: xhtmlPrefix)
+  }
+}
