@@ -159,6 +159,10 @@ extension Document {
     return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
   
+  public var prettyXHTMLString: String {
+    return self.prettyXHTMLString()
+  }
+  
   public var prettyXHTMLData: Data? {
     return self.prettyXHTMLLines.data(using: self.prolog.stringEncoding)
   }
