@@ -1,5 +1,5 @@
 /* *************************************************************************************************
- Text.swift
+ TextNodeConvertible.swift
    © 2019-2020 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
@@ -7,11 +7,19 @@
 
 import StringComposition
 
+public protocol TextNodeConvertible {
+  var textNode: Text { get }
+}
+
 /// Represents text.
-open class Text: Node {
+open class Text: Node, TextNodeConvertible {
   open var text: String
   
-  public init(_ text:String) throws {
+  public var textNode: Text {
+    return self
+  }
+  
+  public init(_ text:String) {
     self.text = text
   }
   
@@ -31,13 +39,13 @@ open class Text: Node {
   }
 }
 
-open class CDATASection: Text {
+open class CDATASection: Node, TextNodeConvertible {
   private static func _validate(text: String) -> Bool {
     return !text.contains("]]>")
   }
   
   private var _text: String
-  public override var text: String {
+  public var text: String {
     get {
       return self._text
     }
@@ -45,6 +53,10 @@ open class CDATASection: Text {
       guard Self._validate(text: newValue) else { fatalError("Invalid String for CDATASection.") }
       self._text = newValue
     }
+  }
+  
+  public var textNode: Text {
+    return Text(self._text)
   }
   
   open override var xhtmlString: String {
@@ -55,10 +67,9 @@ open class CDATASection: Text {
     return StringLines(self.xhtmlString, detectIndent: false)
   }
   
-  public override init(_ text: String) throws {
+  public init(_ text: String) throws {
     guard Self._validate(text: text) else { throw NodeError.invalidString }
     self._text = text
-    try super.init(text)
   }
   
   public convenience init(_ textNode: Text) throws {

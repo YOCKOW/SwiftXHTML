@@ -191,10 +191,10 @@ open class Parser: NSObject, XMLParserDelegate {
   public func parser(_ parser: XMLParser, foundCharacters string: String) {
     do {
       if let processingElement = self._processingElement {
-        if case let lastChild as Text = processingElement.children.last, !(lastChild is CDATASection) {
+        if case let lastChild as Text = processingElement.children.last {
           lastChild.text += string
         } else {
-          processingElement.append(try Text(string))
+          processingElement.append(Text(string))
         }
       } else {
         guard string.consists(of: .xmlWhitespaces) else {

@@ -604,7 +604,7 @@ extension Node {
   
   /// Create an XHTML text node.
   public static func text(_ text:String) -> Node {
-    return try! Text(text)
+    return Text(text)
   }
   
   /// Create a \<tfoot> element.
