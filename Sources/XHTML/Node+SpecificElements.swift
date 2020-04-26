@@ -140,6 +140,14 @@ extension Node {
     return try! DataListElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func datalist<S>(xhtmlPrefix: QualifiedName.Prefix = .none, identifier: String, options: S) -> Node where S: Sequence, S.Element: OptionElement {
+    return try! DataListElement(xhtmlPrefix: xhtmlPrefix, identifier: identifier, options: options)
+  }
+  
+  public static func datalist<S>(xhtmlPrefix: QualifiedName.Prefix = .none, identifier: String, values: S) -> Node where S: Sequence, S.Element: StringProtocol {
+    return try! DataListElement(xhtmlPrefix: xhtmlPrefix, identifier: identifier, values: values)
+  }
+  
   /// Create a \<del>\</del> element.
   public static func del(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = []) -> Node {
     return try! DeletionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)

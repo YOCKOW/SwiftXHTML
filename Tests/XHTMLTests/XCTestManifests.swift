@@ -43,6 +43,7 @@ extension ElementTests {
         ("test_base", test_base),
         ("test_classSelector", test_classSelector),
         ("test_data", test_data),
+        ("test_datalist", test_datalist),
         ("test_equatable", test_equatable),
         ("test_globalAttributes", test_globalAttributes),
         ("test_headingElements", test_headingElements),
