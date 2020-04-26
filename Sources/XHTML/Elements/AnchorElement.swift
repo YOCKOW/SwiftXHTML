@@ -6,7 +6,7 @@
  ************************************************************************************************ */
 
 /// Represents \<a> element.
-open class AnchorElement: SpecifiedElement {
+open class AnchorElement: SpecifiedElement, TargetHoldableElement {
   public override class final var localName: NoncolonizedName { return "a" }
   public override final var isEmpty: Bool { return false }
   
