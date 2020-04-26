@@ -243,6 +243,56 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(rubyWithParenthesis.xhtmlString, "<ruby>明日<rp>(</rp><rt>あした</rt><rp>)</rp></ruby>")
   }
   
+  func test_selection() throws {
+    do {
+      let select = try SelectionElement(options: [
+        try .init(value: "A", text: "A"),
+        try .init(value: "B", text: "B"),
+        try .init(value: "C", text: "C"),
+      ])
+      
+      XCTAssertEqual(select.prettyXHTMLString(indent: .spaces(count: 2)), """
+      <select>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      
+      """)
+    }
+    
+    do { // optgroup
+      let select = try SelectionElement(optionGroups: [
+        try .init(label: "Group 1", options: [
+          try .init(value: "1-A", label: "1-A"),
+          try .init(value: "1-B", label: "1-B"),
+          try .init(value: "1-C", label: "1-C"),
+        ]),
+        try .init(label: "Group 2", options: [
+          try .init(value: "2-A", label: "2-A"),
+          try .init(value: "2-B", label: "2-B"),
+          try .init(value: "2-C", label: "2-C"),
+        ]),
+      ])
+      
+      XCTAssertEqual(select.prettyXHTMLString(indent: .spaces(count: 2)), """
+      <select>
+        <optgroup label="Group 1">
+          <option label="1-A" value="1-A"></option>
+          <option label="1-B" value="1-B"></option>
+          <option label="1-C" value="1-C"></option>
+        </optgroup>
+        <optgroup label="Group 2">
+          <option label="2-A" value="2-A"></option>
+          <option label="2-B" value="2-B"></option>
+          <option label="2-C" value="2-C"></option>
+        </optgroup>
+      </select>
+      
+      """)
+    }
+  }
+  
   func test_table() throws {
     let table = try TableElement(caption: [.text("CAPTION")],
                                  numberOfHeaderRows: 1,

@@ -14,7 +14,7 @@ open class HeadElement: SpecifiedElement {
   
   internal override func _setParent(_ newParent: Element?) throws {
     if let newParent = newParent {
-      guard newParent is HTMLElement else { throw ElementError.invalidParent(expected: "html", actual: newParent.name.localName) }
+      guard newParent is HTMLElement else { throw ElementError.invalidParent(expected: ["html"], actual: newParent.name.localName) }
       try super._setParent(newParent)
     } else {
       try super._setParent(nil)

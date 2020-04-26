@@ -40,6 +40,7 @@ extension ElementTests {
     // to regenerate.
     static let __allTests__ElementTests = [
         ("test_abbr", test_abbr),
+        ("test_base", test_base),
         ("test_classSelector", test_classSelector),
         ("test_data", test_data),
         ("test_equatable", test_equatable),
@@ -49,6 +50,7 @@ extension ElementTests {
         ("test_namespace", test_namespace),
         ("test_prettyXHTMLString", test_prettyXHTMLString),
         ("test_ruby", test_ruby),
+        ("test_selection", test_selection),
         ("test_simpleTextContent", test_simpleTextContent),
         ("test_table", test_table),
         ("test_xhtmlString", test_xhtmlString),
@@ -104,7 +106,7 @@ extension StringTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__StringTests = [
-        ("test_ampersandEscape", test_ampersandEscape),
+        ("test_ampersandEncoding", test_ampersandEncoding),
     ]
 }
 

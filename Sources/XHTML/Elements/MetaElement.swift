@@ -12,7 +12,7 @@ open class MetaElement: PerpetuallyEmptyElement {
   
   internal override func _setParent(_ newParent: Element?) throws {
     if let newParent = newParent {
-      guard newParent is HeadElement else { throw ElementError.invalidParent(expected: "head", actual: newParent.name.localName) }
+      guard newParent is HeadElement else { throw ElementError.invalidParent(expected: ["head"], actual: newParent.name.localName) }
       try super._setParent(newParent)
     } else {
       try super._setParent(nil)

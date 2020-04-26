@@ -22,7 +22,7 @@ public enum NodeError: Error, Equatable {
 
 public enum ElementError: LocalizedError, Equatable {
   case invalidLocalName(expected: NoncolonizedName, actual: NoncolonizedName)
-  case invalidParent(expected: NoncolonizedName, actual: NoncolonizedName)
+  case invalidParent(expected: [NoncolonizedName], actual: NoncolonizedName)
   
   public var errorDescription: String? {
     switch self {

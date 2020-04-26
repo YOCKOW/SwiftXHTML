@@ -414,9 +414,17 @@ extension Node {
     return try! OptionGroupElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  public static func optgroup<S>(xhtmlPrefix: QualifiedName.Prefix = .none, label: String, options: S) -> Node where S: Sequence, S.Element: OptionElement {
+    return try! OptionGroupElement(xhtmlPrefix: xhtmlPrefix, label: label, options: options)
+  }
+  
   /// Create an \<option\>\</option\> element.
   public static func option(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = []) -> Node {
     return try! OptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func option(xhtmlPrefix: QualifiedName.Prefix = .none, value: String, text: String, isSelected: Bool = false) -> Node {
+    return try! OptionElement(xhtmlPrefix: xhtmlPrefix, value: value, text: text, isSelected: isSelected)
   }
   
   /// Create an \<output\>\</output\> element.
@@ -506,6 +514,14 @@ extension Node {
   /// Create a \<select\>\</select\> element.
   public static func select(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = []) -> Node {
     return try! SelectionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
+  }
+  
+  public static func select<S>(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], options: S) -> Node where S: Sequence, S.Element: OptionElement {
+    return try! SelectionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, options: options)
+  }
+  
+  public static func select<S>(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], optionGroups: S) -> Node where S: Sequence, S.Element: OptionGroupElement {
+    return try! SelectionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, optionGroups: optionGroups)
   }
   
   /// Create a \<section\>\</section\> element.

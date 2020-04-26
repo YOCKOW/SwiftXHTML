@@ -106,12 +106,12 @@ open class Element: Node {
       var childrenLines = self.children.reduce(into: StringLines()) {
         $0.append(contentsOf: $1.prettyXHTMLLines)
       }
-      if result.count == 1 && childrenLines.count == 1 {
+      if result.count == 1 && childrenLines.count <= 1 {
         let startTagWidth = result[0].payloadProperties.estimatedWidth
-        let childWidth = childrenLines[0].payloadProperties.estimatedWidth
+        let childWidth = childrenLines.first?.payloadProperties.estimatedWidth ?? 0
         let endTagWidth = endTag.estimatedWidth
         if startTagWidth + childWidth + endTagWidth < 100 {
-          result[0].payload += childrenLines[0].payload + endTag
+          result[0].payload += (childrenLines.first?.payload ?? "") + endTag
           break appendChildrenAndEndTag
         }
       }
