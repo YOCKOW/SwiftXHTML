@@ -35,7 +35,7 @@ extension Attributes {
   }
   
   public var xhtmlString: String {
-    return self._attributes.map({ _pairDescription(name: $0, value: $1) }).joined(separator: " ")
+    return self._attributes.sorted(by: { $0.key < $1.key }).map({ _pairDescription(name: $0, value: $1) }).joined(separator: " ")
   }
   
   /// Lines containing attributes represented by XHTML.
@@ -49,7 +49,7 @@ extension Attributes {
       buffer = ""
     }
     
-    for (name, value) in self._attributes {
+    for (name, value) in self._attributes.sorted(by: { $0.key < $1.key }) {
       let pairDescription = _pairDescription(name: name, value: value)
       if buffer.estimatedWidth + pairDescription.estimatedWidth > 100 {
         _flush()

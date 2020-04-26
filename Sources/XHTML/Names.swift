@@ -20,7 +20,8 @@ private func _validateNCName(_ string:String) -> Bool {
 public struct NoncolonizedName: CustomStringConvertible,
                                 RawRepresentable,
                                 ExpressibleByStringLiteral,
-                                Hashable
+                                Hashable,
+                                Comparable
 {
   public typealias RawValue = String
   public typealias StringLiteralType = String
@@ -28,6 +29,10 @@ public struct NoncolonizedName: CustomStringConvertible,
   private let _string:String
   public var description: String { return self._string }
   public var rawValue: String { return self._string }
+  
+  public static func <(lhs: NoncolonizedName, rhs: NoncolonizedName) -> Bool {
+    return lhs._string < rhs._string
+  }
   
   private init(uncheckedString:String) {
     self._string = uncheckedString
@@ -47,13 +52,26 @@ public struct NoncolonizedName: CustomStringConvertible,
 
 
 /// Represents [QName](https://www.w3.org/TR/REC-xml-names/#NT-QName).
-public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral {
+public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral, Comparable {
   public typealias StringLiteralType = String
   
-  public enum Prefix: Hashable {
+  public enum Prefix: Hashable, Comparable {
     case none
     case namespace(NoncolonizedName)
     public static let `default`: Prefix = .none
+    
+    public static func <(lhs: QualifiedName.Prefix, rhs: QualifiedName.Prefix) -> Bool {
+      switch (lhs, rhs) {
+      case (.none, .none):
+        return false
+      case (.none, .namespace):
+        return true
+      case (.namespace, .none):
+        return false
+      case (.namespace(let lName), .namespace(let rName)):
+        return lName < rName
+      }
+    }
     
     fileprivate init?(_ string: String) {
       if string.isEmpty {
@@ -72,6 +90,12 @@ public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStr
   
   public var prefix: Prefix
   public var localName: NoncolonizedName
+  
+  public static func <(lhs: QualifiedName, rhs: QualifiedName) -> Bool {
+    if lhs.prefix < rhs.prefix { return true }
+    if lhs.prefix > rhs.prefix { return false }
+    return lhs.localName < rhs.localName
+  }
   
   public var description: String {
     switch self.prefix {
@@ -110,12 +134,25 @@ public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStr
 
 
 /// Represents the name of [Attribute](https://www.w3.org/TR/REC-xml-names/#NT-Attribute).
-public enum AttributeName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral {
+public enum AttributeName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral, Comparable {
   /// Namespace attribute
   case namespaceDeclaration(QualifiedName.Prefix)
   
   /// Ordinary attribute
   case attributeName(QualifiedName)
+  
+  public static func <(lhs: AttributeName, rhs: AttributeName) -> Bool {
+    switch (lhs, rhs) {
+    case (.namespaceDeclaration(let lPrefix), .namespaceDeclaration(let rPrefix)):
+      return lPrefix < rPrefix
+    case (.namespaceDeclaration, .attributeName):
+      return true
+    case (.attributeName, .namespaceDeclaration):
+      return false
+    case (.attributeName(let lName), .attributeName(let rName)):
+      return lName < rName
+    }
+  }
   
   public var description: String {
     switch self {

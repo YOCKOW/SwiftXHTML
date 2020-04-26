@@ -225,6 +225,11 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(abbr.xhtmlString, #"<abbr title="HyperText Markup Language">HTML</abbr>"#)
   }
   
+  func test_base() throws {
+    let base = try BaseElement(hypertextReference: "https://example.com/", target: .top)
+    XCTAssertEqual(base.xhtmlString, #"<base href="https://example.com/" target="_top" />"#)
+  }
+  
   func test_data() throws {
     let data = try DataElement(value: "1", text: "壱")
     XCTAssertEqual(data.xhtmlString, #"<data value="1">壱</data>"#)
