@@ -29,13 +29,13 @@ open class Text: Node, TextNodeConvertible {
   }
   
   open override var xhtmlString: String {
-    return self.text._addingAmpersandEncoding()
+    return self.text._addingUntrimmedAmpersandEncoding()
   }
   
   open override var prettyXHTMLLines: StringLines {
     let rawLines = self.text.split(omittingEmptySubsequences: false, whereSeparator: { $0.isNewline })
-    let escaped = rawLines.map({ $0._addingAmpersandEncoding() })
-    return StringLines(escaped.map({ String.Line($0, indentLevel: 0)! }))
+    let escapedLines = rawLines.map({ $0._addingUntrimmedAmpersandEncoding() })
+    return StringLines(escapedLines.map({ String.Line($0, indentLevel: 0)! }))
   }
 }
 

@@ -16,6 +16,7 @@ let package = Package(
     .package(url:"https://github.com/YOCKOW/SwiftPredicate.git", from: "1.2.1"),
     .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.1.1"),
     .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "1.3.1"),
+    .package(url:"https://github.com/YOCKOW/SwiftUnicodeSupplement.git", from: "1.0.0"),
     .package(url:"https://github.com/YOCKOW/ySwiftExtensions.git", "0.10.1"..<"2.0.0"),
   ],
   targets: [
@@ -28,6 +29,7 @@ let package = Package(
               "SwiftPredicate",
               "SwiftRanges",
               "SwiftStringComposition",
+              "SwiftUnicodeSupplement",
               "ySwiftExtensions",
             ]),
     .target(name: "TestResources", dependencies: [], path: "Tests/TestResources"),
