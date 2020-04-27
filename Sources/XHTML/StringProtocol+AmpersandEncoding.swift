@@ -82,6 +82,7 @@ private let _allowedCategories: Set<Unicode.GeneralCategory> = [
   .dashPunctuation,
   .closePunctuation,
   .finalPunctuation,
+  .initialPunctuation,
   .otherPunctuation,
   .openPunctuation,
   .currencySymbol,
