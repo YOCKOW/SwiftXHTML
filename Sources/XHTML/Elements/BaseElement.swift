@@ -1,14 +1,16 @@
 /* *************************************************************************************************
- AnchorElement.swift
-   © 2019 YOCKOW.
+ BaseElement.swift
+   © 2020 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
+ 
 
-/// Represents \<a> element.
-open class AnchorElement: SpecifiedElement, TargetHoldableElement {
-  public override class final var localName: NoncolonizedName { return "a" }
-  public override final var isEmpty: Bool { return false }
+/// Represents \<base\> element.
+open class BaseElement: PerpetuallyEmptyElement, TargetHoldableElement {
+  public override class final var localName: NoncolonizedName {
+    return "base"
+  }
   
   open var hypertextReference: String? {
     get {
@@ -24,13 +26,17 @@ open class AnchorElement: SpecifiedElement, TargetHoldableElement {
   }
   
   public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
-                          hypertextReference:String,
-                          text:String,
-                          attributes:Attributes = [:]) throws {
-    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: type(of: self).localName),
-                  attributes: attributes)
+                          hypertextReference: String,
+                          target: TargetAttributeValue? = nil) throws {
+    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: Self.localName))
     self.hypertextReference = hypertextReference
-    self.append(Text(text))
+    self.target = target
   }
   
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
+                          target: TargetAttributeValue) throws {
+    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: Self.localName))
+    self.target = target
+  }
 }
+

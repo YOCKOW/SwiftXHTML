@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class InputElement: SpecifiedElement {
+open class InputElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "input" }
   
   public enum TypeValue: String {
@@ -33,9 +33,6 @@ open class InputElement: SpecifiedElement {
     case url
     case week
   }
-  
-  /// Always `true`.
-  public override final var isEmpty: Bool { return true }
   
   open var autocomplete: Bool {
     get {
@@ -112,21 +109,16 @@ open class InputElement: SpecifiedElement {
     }
   }
   
-  public required init(name: QualifiedName, attributes:Attributes) {
-    super.init(name: name, attributes: attributes)
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
+    try super.init(name: name, attributes: attributes, children: children)
   }
   
-  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
-    super.init(name: name, attributes: attributes, children: children)
-  }
-  
-  public convenience init(name:QualifiedName,
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
                           type:TypeValue,
                           nameAttribute:String?,
                           value:String?,
-                          attributes:Attributes = [:])
-  {
-    self.init(name:name, attributes:attributes)
+                          attributes: Attributes = [:]) throws {
+    try self.init(name: QualifiedName(prefix: xhtmlPrefix, localName: Swift.type(of: self).localName), attributes:attributes)
     self.type = type
     self.nameAttribute = nameAttribute
     self.value = value

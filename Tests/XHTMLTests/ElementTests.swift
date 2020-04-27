@@ -12,34 +12,34 @@ import StringComposition
 import TestResources
 
 final class ElementTests: XCTestCase {
-  func test_xhtmlString() {
-    let element = Element(name:"element")
+  func test_xhtmlString() throws {
+    let element = try Element(name:"element")
     element.attributes = ["name":"value&value"]
     
     XCTAssertEqual(element.xhtmlString, "<element name=\"value&amp;value\" />")
   }
   
-  func test_classSelector() {
-    let title = Element(name:"title",
-                        attributes:["xmlns":"http://www.w3.org/1999/xhtml"],
-                        parent:nil)
+  func test_classSelector() throws {
+    let title = try Element(_name:"title",
+                            attributes: ["xmlns":"http://www.w3.org/1999/xhtml"],
+                            parent: nil)
     XCTAssertTrue(title is TitleElement)
     
-    let head = Element(name: "xhtml:head", attributes: [:], xhtmlPrefix: .namespace("xhtml"))
+    let head = try Element(_name: "xhtml:head", attributes: [:], xhtmlPrefix: .namespace("xhtml"))
     XCTAssertTrue(head is HeadElement)
   }
   
-  func test_equatable() {
-    let element1 = Element(name:"foo", attributes:["name":"value"], children:[.text("Text")])
-    let element2 = Element(name:"foo", attributes:["name":"value"], children:[.text("Text")])
+  func test_equatable() throws {
+    let element1 = try Element(name:"foo", attributes: ["name":"value"], children: [.text("Text")])
+    let element2 = try Element(name:"foo", attributes: ["name":"value"], children: [.text("Text")])
     XCTAssertTrue(element1 !== element2)
     XCTAssertEqual(element1, element2)
   }
   
-  func test_namespace() {
-    let grandchild = Element(name:"grandchild", attributes:["name":"value", "myns:name":"my value"])
-    let child = Element(name:"child", attributes:["xmlns:myns":"http://my/ns"], children:[grandchild])
-    let root = Element(name:"root", attributes:["xmlns":"http://default/ns"], children:[child])
+  func test_namespace() throws {
+    let grandchild = try Element(name: "grandchild", attributes: ["name":"value", "myns:name":"my value"])
+    let child = try Element(name: "child", attributes: ["xmlns:myns":"http://my/ns"], children: [grandchild])
+    let root = try Element(name: "root", attributes: ["xmlns":"http://default/ns"], children: [child])
     
     XCTAssertEqual(grandchild.namespace(for: .default), "http://default/ns")
     XCTAssertEqual(grandchild.namespace(for: .namespace("myns")), "http://my/ns")
@@ -70,9 +70,9 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(child.attributes["myns:name"], "child value")
   }
   
-  func test_globalAttributes() {
-    let html = HTMLElement(name:"xhtml:html", attributes:["xmlns:xhtml":._xhtmlNamespace])
-    let element = Element(name:"xhtml:element")
+  func test_globalAttributes() throws {
+    let html = try HTMLElement(name: "xhtml:html", attributes: ["xmlns:xhtml":._xhtmlNamespace])
+    let element = try Element(name: "xhtml:element")
     html.append(element)
     
     element.attributes["accesskey"] = "k"
@@ -159,21 +159,21 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(text.text, "The identifier of this element is \"My ID\"")
   }
   
-  func test_prettyXHTMLString() {
+  func test_prettyXHTMLString() throws {
     let indent = String.Indent.spaces(count: 2)
     
-    let parent = Element(name:"parent")
+    let parent = try Element(name: "parent")
     XCTAssertEqual(parent.prettyXHTMLString(indent: indent), "<parent />\n")
     
-    let child = Element(name:"child")
+    let child = try Element(name: "child")
     parent.append(child)
     XCTAssertEqual(parent.prettyXHTMLString(indent: indent), "<parent><child /></parent>\n")
     
-    let grandchild = Element(name:"grandchild")
+    let grandchild = try Element(name: "grandchild")
     child.append(grandchild)
     XCTAssertEqual(parent.prettyXHTMLString(indent: indent), "<parent><child><grandchild /></child></parent>\n")
     
-    let grandchild2 = Element(name:"grandchild2")
+    let grandchild2 = try Element(name: "grandchild2")
     child.append(grandchild2)
     
     XCTAssertEqual(child.prettyXHTMLString(indent: indent), """
@@ -197,6 +197,11 @@ final class ElementTests: XCTestCase {
     )
   }
   
+  func test_simpleTextContent() throws {
+    let title = try TitleElement(xhtmlPrefix: .none, text: "Title")
+    XCTAssertEqual(title.title, "Title")
+  }
+  
   func test_headingElements() {
     let headings: [Node] = [
       .h1(text:"h1"),
@@ -215,6 +220,26 @@ final class ElementTests: XCTestCase {
     }
   }
   
+  func test_abbr() throws {
+    let abbr = try AbbreviationElement(fullForm: "HyperText Markup Language", abbreviation: "HTML")
+    XCTAssertEqual(abbr.xhtmlString, #"<abbr title="HyperText Markup Language">HTML</abbr>"#)
+  }
+  
+  func test_base() throws {
+    let base = try BaseElement(hypertextReference: "https://example.com/", target: .top)
+    XCTAssertEqual(base.xhtmlString, #"<base href="https://example.com/" target="_top" />"#)
+  }
+  
+  func test_data() throws {
+    let data = try DataElement(value: "1", text: "壱")
+    XCTAssertEqual(data.xhtmlString, #"<data value="1">壱</data>"#)
+  }
+  
+  func test_datalist() throws {
+    let datalist = try DataListElement(identifier: "candidates", values: ["A", "B"])
+    XCTAssertEqual(datalist.xhtmlString, #"<datalist id="candidates"><option value="A"></option><option value="B"></option></datalist>"#)
+  }
+  
   func test_ruby() throws {
     let ruby = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした") as? RubyElement)
     XCTAssertEqual(ruby.xhtmlString, "<ruby>明日<rt>あした</rt></ruby>")
@@ -223,13 +248,63 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(rubyWithParenthesis.xhtmlString, "<ruby>明日<rp>(</rp><rt>あした</rt><rp>)</rp></ruby>")
   }
   
-  func test_table() {
-    let table = TableElement(caption: [.text("CAPTION")],
-                             numberOfHeaderRows: 1,
-                             numberOfHeaderColumns: 1,
-                             numberOfRows: 2,
-                             numberOfColumns: 1,
-                             numberOfFooterRows: 1)
+  func test_selection() throws {
+    do {
+      let select = try SelectionElement(options: [
+        try .init(value: "A", text: "A"),
+        try .init(value: "B", text: "B"),
+        try .init(value: "C", text: "C"),
+      ])
+      
+      XCTAssertEqual(select.prettyXHTMLString(indent: .spaces(count: 2)), """
+      <select>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      
+      """)
+    }
+    
+    do { // optgroup
+      let select = try SelectionElement(optionGroups: [
+        try .init(label: "Group 1", options: [
+          try .init(value: "1-A", label: "1-A"),
+          try .init(value: "1-B", label: "1-B"),
+          try .init(value: "1-C", label: "1-C"),
+        ]),
+        try .init(label: "Group 2", options: [
+          try .init(value: "2-A", label: "2-A"),
+          try .init(value: "2-B", label: "2-B"),
+          try .init(value: "2-C", label: "2-C"),
+        ]),
+      ])
+      
+      XCTAssertEqual(select.prettyXHTMLString(indent: .spaces(count: 2)), """
+      <select>
+        <optgroup label="Group 1">
+          <option label="1-A" value="1-A"></option>
+          <option label="1-B" value="1-B"></option>
+          <option label="1-C" value="1-C"></option>
+        </optgroup>
+        <optgroup label="Group 2">
+          <option label="2-A" value="2-A"></option>
+          <option label="2-B" value="2-B"></option>
+          <option label="2-C" value="2-C"></option>
+        </optgroup>
+      </select>
+      
+      """)
+    }
+  }
+  
+  func test_table() throws {
+    let table = try TableElement(caption: [.text("CAPTION")],
+                                 numberOfHeaderRows: 1,
+                                 numberOfHeaderColumns: 1,
+                                 numberOfRows: 2,
+                                 numberOfColumns: 1,
+                                 numberOfFooterRows: 1)
     
     table.header?[0][0].append(.text("NAME"))
     table.header?[0][1].append(.text("AGE"))

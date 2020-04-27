@@ -122,9 +122,9 @@ extension Document {
     contents: [Node]
     ) -> Document
   {
-    let head = HeadElement(name: "head")
-    let body = BodyElement(name: "body")
-    let html = HTMLElement(name: "html", attributes: [:], children: [head, body])
+    let head = try! HeadElement(name: "head")
+    let body = try! BodyElement(name: "body")
+    let html = try! HTMLElement(name: "html", attributes: [:], children: [head, body])
     let document = Document(xmlVersion: xmlVersion,
                             stringEncoding: stringEncoding,
                             version: version,
@@ -159,6 +159,10 @@ extension Document {
     return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
   
+  public var prettyXHTMLString: String {
+    return self.prettyXHTMLString()
+  }
+  
   public var prettyXHTMLData: Data? {
     return self.prettyXHTMLLines.data(using: self.prolog.stringEncoding)
   }
@@ -174,11 +178,11 @@ extension Document {
       
       let prefix = self.rootElement.name.prefix
       if self.rootElement.head == nil {
-        let head = HeadElement(name: QualifiedName(prefix: prefix, localName: "head"))
+        let head = try! HeadElement(name: QualifiedName(prefix: prefix, localName: "head"))
         self.rootElement.append(head)
       }
       if self.rootElement.head!.title == nil {
-        let title = TitleElement(name: QualifiedName(prefix: prefix, localName: "title"))
+        let title = try! TitleElement(name: QualifiedName(prefix: prefix, localName: "title"))
         self.rootElement.head!.append(title)
       }
       

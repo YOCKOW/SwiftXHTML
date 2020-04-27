@@ -6,7 +6,7 @@
  ************************************************************************************************ */
 
 /// Represents "\<title\>...\</title\>"
-open class TitleElement: SpecifiedElement {
+open class TitleElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public override class final var localName: NoncolonizedName { return "title" }
   
   public override final var isEmpty: Bool { return false }

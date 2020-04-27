@@ -5,7 +5,6 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class HorizontalRuleElement: SpecifiedElement {
+open class HorizontalRuleElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "hr" }
-  public override final var isEmpty: Bool { return true }
 }

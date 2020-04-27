@@ -11,9 +11,13 @@ extension Element {
     private unowned let _element: Element
     fileprivate init(_ element:Element) { self._element = element }
     
-    fileprivate subscript(_ localName:NoncolonizedName) -> String? {
-      get { return self._element.attributes[localName:localName, uri:._xhtmlNamespace] }
-      set { self._element.attributes[localName:localName, uri:._xhtmlNamespace] = newValue }
+    fileprivate subscript(_ localName: NoncolonizedName) -> String? {
+      get {
+        return self._element.attributes[localName: localName, uri: ._xhtmlNamespace, fallbackPrefix: QualifiedName.Prefix.none]
+      }
+      set {
+        self._element.attributes[localName: localName, uri: ._xhtmlNamespace, fallbackPrefix: QualifiedName.Prefix.none] = newValue
+      }
     }
   }
 

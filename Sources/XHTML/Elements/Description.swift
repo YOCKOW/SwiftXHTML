@@ -15,7 +15,7 @@ open class DescriptionListElement: SpecifiedElement {
   }
 }
 
-open class DescriptionTermElement: SpecifiedElement {
+open class DescriptionTermElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "dt"
   }
@@ -25,7 +25,7 @@ open class DescriptionTermElement: SpecifiedElement {
   }
 }
 
-open class DescriptionElement: SpecifiedElement {
+open class DescriptionElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "dd"
   }
@@ -35,7 +35,7 @@ open class DescriptionElement: SpecifiedElement {
   }
 }
 
-open class DefinitionElement: SpecifiedElement {
+open class DefinitionElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "dfn"
   }

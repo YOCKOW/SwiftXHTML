@@ -5,7 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class HeadingElement: SpecifiedElement {}
+open class HeadingElement: SpecifiedElement, InitializableWithSimpleTextContent {}
 
 open class H1Element: HeadingElement {
   public override class final var localName: NoncolonizedName { return "h1" }

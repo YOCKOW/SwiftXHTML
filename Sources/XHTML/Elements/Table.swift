@@ -54,7 +54,7 @@ open class TableElement: SpecifiedElement {
   }
 }
 
-open class TableCaptionElement: SpecifiedElement {
+open class TableCaptionElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public override class final var localName: NoncolonizedName { return "caption" }
   public override final var isEmpty: Bool { return false }
 }
@@ -182,23 +182,23 @@ extension TableElement {
     numberOfRows: Int,
     numberOfColumns: Int,
     numberOfFooterRows: Int = 0
-  ) {
+  ) throws {
     var indexOfRow = 0
     
-    func _row(isInHeaderRow: Bool = false) -> TableRowElement {
-      let row = TableRowElement(xhtmlPrefix: xhtmlPrefix)
+    func _row(isInHeaderRow: Bool = false) throws -> TableRowElement {
+      let row = try TableRowElement(xhtmlPrefix: xhtmlPrefix)
       
       for _ in 0..<numberOfHeaderColumns {
-        row.append(TableHeaderCellElement(xhtmlPrefix: xhtmlPrefix, attributes: ["scope":"row"]))
+        row.append(try TableHeaderCellElement(xhtmlPrefix: xhtmlPrefix, attributes: ["scope":"row"]))
       }
       
       if isInHeaderRow {
         for _ in 0..<numberOfColumns {
-          row.append(TableHeaderCellElement(xhtmlPrefix: xhtmlPrefix, attributes: ["scope":"col"]))
+          row.append(try TableHeaderCellElement(xhtmlPrefix: xhtmlPrefix, attributes: ["scope":"col"]))
         }
       } else {
         for _ in 0..<numberOfColumns {
-          row.append(TableDataCellElement(xhtmlPrefix: xhtmlPrefix))
+          row.append(try TableDataCellElement(xhtmlPrefix: xhtmlPrefix))
         }
       }
       
@@ -206,9 +206,9 @@ extension TableElement {
       return row
     }
     
-    self.init(xhtmlPrefix: xhtmlPrefix, attributes: attributes)
+    try self.init(xhtmlPrefix: xhtmlPrefix, attributes: attributes)
     if let captionContents = caption {
-      self.append(TableCaptionElement(xhtmlPrefix: xhtmlPrefix, children: captionContents))
+      self.append(try TableCaptionElement(xhtmlPrefix: xhtmlPrefix, children: captionContents))
     }
     
     precondition(numberOfHeaderRows >= 0, "The number of header rows must not be negative.")
@@ -218,26 +218,25 @@ extension TableElement {
     precondition(numberOfFooterRows >= 0, "The number of footer rows must not be negative.")
     
     if numberOfHeaderRows > 0 {
-      let thead = TableHeaderElement(xhtmlPrefix: xhtmlPrefix)
+      let thead = try TableHeaderElement(xhtmlPrefix: xhtmlPrefix)
       for _ in 0..<numberOfHeaderRows {
-        thead.append(_row(isInHeaderRow: true))
+        thead.append(try _row(isInHeaderRow: true))
       }
       self.append(thead)
     }
     
-    let tbody = TableBodyElement(xhtmlPrefix: xhtmlPrefix)
+    let tbody = try TableBodyElement(xhtmlPrefix: xhtmlPrefix)
     for _ in 0..<numberOfRows {
-      tbody.append(_row())
+      tbody.append(try _row())
     }
     self.append(tbody)
     
     if numberOfFooterRows > 0 {
-      let tfoot = TableFooterElement(xhtmlPrefix: xhtmlPrefix)
+      let tfoot = try TableFooterElement(xhtmlPrefix: xhtmlPrefix)
       for _ in 0..<numberOfFooterRows {
-        tfoot.append(_row())
+        tfoot.append(try _row())
       }
       self.append(tfoot)
     }
-    
   }
 }

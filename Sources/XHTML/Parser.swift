@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Parser.swift
-   © 2019 YOCKOW.
+   © 2019-2020 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -117,11 +117,11 @@ open class Parser: NSObject, XMLParserDelegate {
   }
   
   public func parser(_ parser: XMLParser, foundComment comment: String) {
-    guard let commentNode = Comment(comment) else {
-      self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-      return
+    do {
+      self._appendMiscellany(try Comment(comment))
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
-    self._appendMiscellany(commentNode)
   }
   
   public func parser(_ parser: XMLParser,
@@ -141,31 +141,31 @@ open class Parser: NSObject, XMLParserDelegate {
                      didStartElement elementName: String,
                      namespaceURI: String?,
                      qualifiedName qName: String?,
-                     attributes attributeDict: [String : String] = [:])
-  {
-    let elementName = _swapElementName(elementName)
-    guard let tagName = QualifiedName(elementName) else {
-      self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-      return
-    }
-    let attributes = Attributes(attributeDict)
-    let element = Element(name:tagName, attributes:attributes, parent:self._processingElement)
-    
-    if element is HTMLElement {
+                     attributes attributeDict: [String: String] = [:]) {
+    do {
+      let elementName = _swapElementName(elementName)
+      guard let tagName = QualifiedName(elementName) else {
+        throw Error.xmlError(.invalidCharacterError)
+      }
+      let attributes = Attributes(attributeDict)
+      let element = try Element(_name: tagName, attributes:attributes, parent: self._processingElement)
+      
+      if element is HTMLElement {
 //      guard self._document == nil && self._processingElement == nil else {
 //        self.parser(parser, parseErrorOccurred:Error.duplicatedRootElement)
 //        return
 //      }
-      
-      self._document = Document(prolog:self._prolog, rootElement:element as! HTMLElement)
-      self._processingElement = element
-    } else {
-      guard let processingElement = self._processingElement else {
-        self.parser(parser, parseErrorOccurred:Error.rootElementIsNotHTML)
-        return
+        self._document = Document(prolog:self._prolog, rootElement:element as! HTMLElement)
+        self._processingElement = element
+      } else {
+        guard let processingElement = self._processingElement else {
+          throw Error.rootElementIsNotHTML
+        }
+        try processingElement._append(element)
+        self._processingElement = element
       }
-      processingElement.append(element)
-      self._processingElement = element
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
   }
   
@@ -189,35 +189,36 @@ open class Parser: NSObject, XMLParserDelegate {
   }
   
   public func parser(_ parser: XMLParser, foundCharacters string: String) {
-    if let processingElement = self._processingElement {
-      if case let lastChild as Text = processingElement.children.last {
-        lastChild.text += string
+    do {
+      if let processingElement = self._processingElement {
+        if case let lastChild as Text = processingElement.children.last {
+          lastChild.text += string
+        } else {
+          processingElement.append(Text(string))
+        }
       } else {
-        processingElement.append(Text(string))
+        guard string.consists(of: .xmlWhitespaces) else {
+          throw Error.xmlError(.invalidCharacterError)
+        }
       }
-    } else {
-      guard string.consists(of:.xmlWhitespaces) else {
-        self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-        return
-      }
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
   }
   
   public func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
-    guard
-      let cdata = String(data:CDATABlock, encoding:.utf8),
-      let section = CDATASection(cdata)
-    else
-    {
-      self.parser(parser, parseErrorOccurred:Error.xmlError(.invalidCharacterError))
-      return
+    do {
+      guard let cdata = String(data: CDATABlock, encoding: self._prolog.stringEncoding) else {
+        throw Error.xmlError(.unknownEncodingError)
+      }
+      let section = try CDATASection(cdata)
+      guard let processingElement = self._processingElement else {
+        // throw Error.misplacedCDATA
+        return
+      }
+      processingElement.append(section)
+    } catch {
+      self.parser(parser, parseErrorOccurred: error)
     }
-    
-    guard let processingElement = self._processingElement else {
-      // self.parser(parser, parseErrorOccurred:Error.misplacedCDATA)
-      return
-    }
-    
-    processingElement.append(section)
   }
 }

@@ -15,7 +15,7 @@ open class FigureElement: SpecifiedElement {
   }
 }
 
-open class FigureCaptionElement: SpecifiedElement {
+open class FigureCaptionElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "figcaption"
   }

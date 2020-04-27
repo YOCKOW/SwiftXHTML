@@ -15,33 +15,21 @@ open class AudioElement: SpecifiedElement {
   }
 }
 
-open class EmbeddedElement: SpecifiedElement {
+open class EmbeddedElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "embed"
   }
-  
-  public final override var isEmpty: Bool {
-    return false
-  }
 }
 
-open class ImageElement: SpecifiedElement {
+open class ImageElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "img"
   }
-  
-  public final override var isEmpty: Bool {
-    return true
-  }
 }
 
-open class ImageAreaElement: SpecifiedElement {
+open class ImageAreaElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "area"
-  }
-  
-  public final override var isEmpty: Bool {
-    return true
   }
 }
 
@@ -65,13 +53,9 @@ open class InlineFrameElement: SpecifiedElement {
   }
 }
 
-open class MediaSourceElement: SpecifiedElement {
+open class MediaSourceElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "source"
-  }
-  
-  public final override var isEmpty: Bool {
-    return true
   }
 }
 
@@ -85,13 +69,9 @@ open class ObjectElement: SpecifiedElement {
   }
 }
 
-open class ParameterElement: SpecifiedElement {
+open class ParameterElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "param"
-  }
-  
-  public final override var isEmpty: Bool {
-    return true
   }
 }
 
@@ -105,13 +85,9 @@ open class PictureElement: SpecifiedElement {
   }
 }
 
-open class TextTrackElement: SpecifiedElement {
+open class TextTrackElement: PerpetuallyEmptyElement {
   public final override class var localName: NoncolonizedName {
     return "track"
-  }
-  
-  public final override var isEmpty: Bool {
-    return false
   }
 }
 

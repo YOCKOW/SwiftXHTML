@@ -12,18 +12,12 @@ open class HeadElement: SpecifiedElement {
   /// Always `false` because \<head> element must have children.
   public override final var isEmpty: Bool { return false }
   
-  private var _parent: Element? = nil
-  public internal(set) override var parent: Element? {
-    get {
-      return self._parent
-    }
-    set {
-      if let parent = newValue {
-        guard parent is HTMLElement else { fatalError("<head> must be a child of <html>") }
-        self._parent = parent
-      } else {
-        self._parent = nil
-      }
+  internal override func _setParent(_ newParent: Element?) throws {
+    if let newParent = newParent {
+      guard newParent is HTMLElement else { throw ElementError.invalidParent(expected: ["html"], actual: newParent.name.localName) }
+      try super._setParent(newParent)
+    } else {
+      try super._setParent(nil)
     }
   }
   

@@ -17,10 +17,42 @@ and is intended to be used by it.
 * [SwiftPredicate](https://github.com/YOCKOW/SwiftPredicate)
 * [SwiftRanges](https://github.com/YOCKOW/SwiftRanges)
 * [SwiftStringComposition](https://github.com/YOCKOW/SwiftStringComposition)
+* [SwiftUnicodeSupplement](https://github.com/YOCKOW/SwiftUnicodeSupplement)
 * [ySwiftExtensions](https://github.com/YOCKOW/ySwiftExtensions)
 
 
 # Usage
+
+## As a parser
+
+```Swift
+import XHTML
+
+let string = """
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Title</title>
+  </head>
+  <body>
+    <div id="main">
+      <h1>My Page</h1>
+      <p>Welcome to my page.</p>
+    </div>
+  </body>
+</html>
+"""
+
+let document = try Parser.parse(string.data(using: .utf8)!)
+
+print(document.prolog.xmlVersion) // -> "1.0"
+print(document.element(for: "main")!.name) // -> "div"
+
+```
+
+
+## As a generator
 
 ```Swift
 import XHTML
@@ -53,8 +85,14 @@ print(page.prettyXHTMLString)
 </html>
 
 */
-
 ```
+
+
+## What are not supported yet...
+
+- XPath
+- CSS selector
+- CSS parser
 
 
 # License

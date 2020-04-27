@@ -5,12 +5,8 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class LinkElement: SpecifiedElement {
+open class LinkElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "link" }
-  
-  public override final var isEmpty: Bool {
-    return true
-  }
   
   open var relationship: Relationship? {
     get {
@@ -30,20 +26,15 @@ open class LinkElement: SpecifiedElement {
     }
   }
   
-  public required init(name: QualifiedName, attributes: Attributes) {
-    super.init(name:name)
-    self.attributes = attributes
-  }
-  
-  public required init(name: QualifiedName, attributes: Attributes, children: [Node]) {
-    super.init(name: name, attributes: attributes, children: children)
+  public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
+    try super.init(name: name, attributes: attributes, children: children)
   }
   
   public convenience init(name: QualifiedName,
                           relationship: Relationship,
                           hypertextReference: String,
-                          attributes: Attributes = [:]) {
-    self.init(name:name, attributes:attributes)
+                          attributes: Attributes = [:]) throws {
+    try self.init(name: name, attributes: attributes)
     self.relationship = relationship
     self.hypertextReference = hypertextReference
   }

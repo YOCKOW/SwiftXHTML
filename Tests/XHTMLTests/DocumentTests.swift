@@ -30,8 +30,8 @@ final class DocumentTests: XCTestCase {
                   "\(infoOfXHTML5UTF16BE)")
   }
   
-  func test_initialization() {
-    let root = HTMLElement(name:"html")
+  func test_initialization() throws {
+    let root = try HTMLElement(name:"html")
     let document = Document(rootElement:root)
     XCTAssertEqual(
       document.xhtmlString,
@@ -42,9 +42,9 @@ final class DocumentTests: XCTestCase {
       """)
   }
   
-  func test_tree() {
+  func test_tree() throws {
     let document = Document(
-      rootElement:.init(name:"html", attributes:[:], children:[
+      rootElement: try .init(name:"html", attributes:[:], children:[
         .head(children:[.title("My XHTML.")]),
         .body(children:[])
       ])
@@ -53,8 +53,8 @@ final class DocumentTests: XCTestCase {
     XCTAssertEqual(document.title, "My XHTML.")
   }
   
-  func test_title() {
-    let document = Document(rootElement: .init(name:"html"))
+  func test_title() throws {
+    let document = Document(rootElement: try .init(name:"html"))
     XCTAssertNil(document.title)
     
     document.title = "title"
