@@ -101,6 +101,10 @@ extension Node {
     return try! TableCaptionElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
   }
   
+  public static func cdata(_ text: String) -> Node {
+    return try! CDATASection(text)
+  }
+  
   /// Create a \<cite>\</cite> element.
   public static func cite(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = []) -> Node {
     return try! CitationElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
@@ -572,6 +576,10 @@ extension Node {
   
   public static func strong(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], text: String) -> Node {
     return try! StrongElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, text: text)
+  }
+  
+  public static func style(xhtmlPrefix: QualifiedName.Prefix = .none, media: String? = nil, nonce: String? = nil, type: String = "text/css", css: String) -> Node {
+    return try! StyleElement(xhtmlPrefix: xhtmlPrefix, media: media, nonce: nonce, type: type, css: css)
   }
   
   /// Create a \<sub\>\</sub\> element.

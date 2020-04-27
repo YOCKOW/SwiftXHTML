@@ -303,6 +303,21 @@ final class ElementTests: XCTestCase {
     }
   }
   
+  func test_style() throws {
+    let style = try StyleElement(css: """
+    #ID {
+      font-size: 1000%;
+    }
+    """)
+    XCTAssertEqual(style.xhtmlString, """
+    <style type="text/css"><![CDATA[
+    #ID {
+      font-size: 1000%;
+    }
+    ]]></style>
+    """)
+  }
+  
   func test_table() throws {
     let table = try TableElement(caption: [.text("CAPTION")],
                                  numberOfHeaderRows: 1,
