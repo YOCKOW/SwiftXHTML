@@ -377,6 +377,15 @@ extension Node {
     return try! ListItemElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
   }
   
+  /// Create a \<link /\> element.
+  public static func link(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:]) -> Node {
+    return try! LinkElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes)
+  }
+  
+  public static func link(xhtmlPrefix: QualifiedName.Prefix = .none, relationship: Relationship, hypertextReference: String, attributes: Attributes = [:]) -> Node {
+    return try! LinkElement(xhtmlPrefix: xhtmlPrefix, relationship: relationship, hypertextReference: hypertextReference, attributes: attributes)
+  }
+  
   /// Create a \<main\>\</main\> element.
   public static func main(xhtmlPrefix: QualifiedName.Prefix = .none, attributes: Attributes = [:], children: [Node] = []) -> Node {
     return try! MainElement(xhtmlPrefix: xhtmlPrefix, attributes: attributes, children: children)
