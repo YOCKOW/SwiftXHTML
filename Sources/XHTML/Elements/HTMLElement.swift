@@ -28,10 +28,12 @@ open class HTMLElement: SpecifiedElement {
     return nil
   }
   
+  /// Initialize with specified `name`, `attributes`, and `children`.
+  /// Default XHTML namespace will be set when `attributes` does not contain the namespace.
   public required init(name: QualifiedName, attributes: Attributes = [:], children: [Node] = []) throws {
-    var attrs = attributes
-    if attrs._namespace(for:name) == nil {
-      attrs[.namespaceDeclaration(name.prefix)] = String._xhtmlNamespace
+    var attributes = attributes
+    if attributes._namespace(for: name) == nil {
+      attributes[.namespaceDeclaration(name.prefix)] = String._xhtmlNamespace
     }
     try super.init(name: name, attributes: attributes, children: children)
   }
