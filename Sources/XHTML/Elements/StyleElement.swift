@@ -39,4 +39,14 @@ open class StyleElement: SpecifiedElement {
       self.attributes["type"] = newValue
     }
   }
+  
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
+                          media: String? = nil, nonce: String? = nil, type: String = "text/css",
+                          css: String) throws {
+    try self.init(xhtmlPrefix: xhtmlPrefix)
+    self.media = media
+    self.nonce = nonce
+    self.type = type
+    self.children = [.cdata("\n" + css + "\n")]
+  }
 }
