@@ -30,11 +30,11 @@ open class LinkElement: PerpetuallyEmptyElement {
     try super.init(name: name, attributes: attributes, children: children)
   }
   
-  public convenience init(name: QualifiedName,
+  public convenience init(xhtmlPrefix: QualifiedName.Prefix = .none,
                           relationship: Relationship,
                           hypertextReference: String,
                           attributes: Attributes = [:]) throws {
-    try self.init(name: name, attributes: attributes)
+    try self.init(xhtmlPrefix: xhtmlPrefix, attributes: attributes)
     self.relationship = relationship
     self.hypertextReference = hypertextReference
   }
