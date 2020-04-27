@@ -240,6 +240,11 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(datalist.xhtmlString, #"<datalist id="candidates"><option value="A"></option><option value="B"></option></datalist>"#)
   }
   
+  func test_html() throws {
+    let html = try HTMLElement(name: "html")
+    XCTAssertEqual(html.attributes[.namespaceDeclaration(.none)], String._xhtmlNamespace)
+  }
+  
   func test_ruby() throws {
     let ruby = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした") as? RubyElement)
     XCTAssertEqual(ruby.xhtmlString, "<ruby>明日<rt>あした</rt></ruby>")
