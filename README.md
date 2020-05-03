@@ -7,18 +7,12 @@ and is intended to be used by it.
 
 # Requirements
 
-- Swift 5 (including compatibility mode for Swift 4 or 4.2)
-- macOS or Linux
+- Swift 5
+- macOS(>=10.15) or Linux
 
 ## Dependencies
 
-* [SwiftBonaFideCharacterSet](https://github.com/YOCKOW/SwiftBonaFideCharacterSet)
-* [SwiftNetworkGear](https://github.com/YOCKOW/SwiftNetworkGear)
-* [SwiftPredicate](https://github.com/YOCKOW/SwiftPredicate)
-* [SwiftRanges](https://github.com/YOCKOW/SwiftRanges)
-* [SwiftStringComposition](https://github.com/YOCKOW/SwiftStringComposition)
-* [SwiftUnicodeSupplement](https://github.com/YOCKOW/SwiftUnicodeSupplement)
-* [ySwiftExtensions](https://github.com/YOCKOW/ySwiftExtensions)
+![Dependencies](./dependencies.svg)
 
 
 # Usage
