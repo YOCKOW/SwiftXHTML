@@ -204,6 +204,7 @@ extension Element.GlobalAttributes {
 
 extension Element.GlobalAttributes {
   /// Accessor to "data-*"
+  @dynamicMemberLookup
   public final class DataSet {
     private unowned let _element: Element
     fileprivate init(_ element:Element) { self._element = element }
@@ -241,7 +242,7 @@ extension Element.GlobalAttributes {
     
     /// The value of "data-*".
     /// The attribute name will be "data-abc-def" when `key` is "abcDef".
-    public subscript(_ key:String) -> String? {
+    public subscript(dynamicMember key: String) -> String? {
       get {
         guard let attrName = self._attributeName(for:key) else { return nil }
         return self._element.attributes[attrName]
@@ -249,6 +250,23 @@ extension Element.GlobalAttributes {
       set {
         guard let attrName = self._attributeName(for:key) else { return }
         self._element.attributes[attrName] = newValue
+      }
+    }
+    
+    /// The value of "data-*".
+    /// You can access the data using "abc-def" or "abcDef" for "data-abc-def".
+    public subscript(_ key:String) -> String? {
+      get {
+        if let attrName = AttributeName("data-\(key)") {
+          return self._element.attributes[attrName]
+        }
+        return self[dynamicMember: key]
+      }
+      set {
+        if let attrName = AttributeName("data-\(key)") {
+          self._element.attributes[attrName] = newValue
+        }
+        self[dynamicMember: key] = newValue
       }
     }
   }
