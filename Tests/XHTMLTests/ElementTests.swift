@@ -141,8 +141,8 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(element.attributes["translate"], "yes")
     
     element.attributes["data-abc-def"] = "some data"
-    XCTAssertEqual(element.globalAttributes.dataSet["abcDef"], "some data")
-    element.globalAttributes.dataSet["abcDef"] = "another data"
+    XCTAssertEqual(element.globalAttributes.dataSet.abcDef, "some data")
+    element.globalAttributes.dataSet.abcDef = "another data"
     XCTAssertEqual(element.attributes["data-abc-def"], "another data")
   }
   
