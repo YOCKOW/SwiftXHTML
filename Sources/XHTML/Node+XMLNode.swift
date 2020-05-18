@@ -5,6 +5,7 @@
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
+import BonaFideCharacterSet
 import Foundation
 #if canImport(FoundationXML)
 import FoundationXML
@@ -155,7 +156,7 @@ extension Text {
     assert(xmlNode._isText)
     
     guard let text = xmlNode.stringValue else { throw NodeError.unexpectedNode(xmlNode) }
-    self.init(text)
+    self.init(text.trimmingUnicodeScalars(in: .xmlWhitespaces))
   }
 }
 
