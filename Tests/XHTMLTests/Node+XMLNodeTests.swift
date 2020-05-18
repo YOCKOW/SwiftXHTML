@@ -56,7 +56,7 @@ final class Node_XMLNodeTests: XCTestCase {
     let xmlNode = try XMLElement(xmlString: #"""
       <html xmlns="http://www.w3.org/1999/xhtml">
         <head><title>my page</title></head>
-        <body>text1<a href="uri">link</a>text2</body>
+        <body>  text1  <a href="uri">link</a>  text2  </body>
       </html>
     """#)
     guard case let html as HTMLElement = try Node(xmlNode) else { XCTFail("Not HTML."); return }
