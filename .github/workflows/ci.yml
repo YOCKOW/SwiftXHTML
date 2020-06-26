@@ -37,7 +37,7 @@ jobs:
           build-${{ github.workspace }}-
     - uses: YOCKOW/Action-setup-swift@master
       with:
-        swift-version: '5.2.2'
+        swift-version: '5.2.4'
     - name: Try to build products with debug mode.
       run: |
         swift build --configuration debug -Xswiftc -swift-version -Xswiftc ${{ matrix.swift-compat-ver }}
