@@ -347,4 +347,75 @@ final class ElementTests: XCTestCase {
       "</table>"
     )
   }
+  
+  func test_table_calendar() {
+    let calendar = TableElement.calendar(year: 2020, month: 6, locale: .init(identifier: "en_US"))
+    
+    XCTAssertEqual(
+      calendar.prettyXHTMLString(indent: .spaces(count: 2), newline: .lineFeed),
+      """
+      <table class="calendar">
+        <thead class="calendar_weekdayNames">
+          <tr>
+            <th class="calendar_weekdayName_0">Sun</th>
+            <th class="calendar_weekdayName_1">Mon</th>
+            <th class="calendar_weekdayName_2">Tue</th>
+            <th class="calendar_weekdayName_3">Wed</th>
+            <th class="calendar_weekdayName_4">Thu</th>
+            <th class="calendar_weekdayName_5">Fri</th>
+            <th class="calendar_weekdayName_6">Sat</th>
+          </tr>
+        </thead>
+        <tbody class="calendar_body">
+          <tr>
+            <td class="calendar_weekday_0"></td>
+            <td class="calendar_weekday_1">1</td>
+            <td class="calendar_weekday_2">2</td>
+            <td class="calendar_weekday_3">3</td>
+            <td class="calendar_weekday_4">4</td>
+            <td class="calendar_weekday_5">5</td>
+            <td class="calendar_weekday_6">6</td>
+          </tr>
+          <tr>
+            <td class="calendar_weekday_0">7</td>
+            <td class="calendar_weekday_1">8</td>
+            <td class="calendar_weekday_2">9</td>
+            <td class="calendar_weekday_3">10</td>
+            <td class="calendar_weekday_4">11</td>
+            <td class="calendar_weekday_5">12</td>
+            <td class="calendar_weekday_6">13</td>
+          </tr>
+          <tr>
+            <td class="calendar_weekday_0">14</td>
+            <td class="calendar_weekday_1">15</td>
+            <td class="calendar_weekday_2">16</td>
+            <td class="calendar_weekday_3">17</td>
+            <td class="calendar_weekday_4">18</td>
+            <td class="calendar_weekday_5">19</td>
+            <td class="calendar_weekday_6">20</td>
+          </tr>
+          <tr>
+            <td class="calendar_weekday_0">21</td>
+            <td class="calendar_weekday_1">22</td>
+            <td class="calendar_weekday_2">23</td>
+            <td class="calendar_weekday_3">24</td>
+            <td class="calendar_weekday_4">25</td>
+            <td class="calendar_weekday_5">26</td>
+            <td class="calendar_weekday_6">27</td>
+          </tr>
+          <tr>
+            <td class="calendar_weekday_0">28</td>
+            <td class="calendar_weekday_1">29</td>
+            <td class="calendar_weekday_2">30</td>
+            <td class="calendar_weekday_3"></td>
+            <td class="calendar_weekday_4"></td>
+            <td class="calendar_weekday_5"></td>
+            <td class="calendar_weekday_6"></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      """
+    )
+  }
 }
