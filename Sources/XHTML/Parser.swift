@@ -11,24 +11,9 @@ import FoundationXML
 #endif
 import yExtensions
 
-extension Element {
-  fileprivate func _trimTexts() -> Void {
-    for child in self.children {
-      switch child {
-      case let text as Text:
-        text.text = text.text.trimmingUnicodeScalars(in:.xmlWhitespaces)
-      case let element as Element:
-        element._trimTexts()
-      default:
-        break
-      }
-    }
-  }
-}
-
 /// The workaround for [SR-10157](https://bugs.swift.org/browse/SR-10157)
 private func _swapElementName(_ name:String) -> String {
-  #if os(Linux) && compiler(<5.1)
+  #if !canImport(ObjectiveC) && compiler(<5.1)
   let splitted = name.splitOnce(separator:":")
   if let originalPrefix = splitted.1 {
     return "\(originalPrefix):\(splitted.0)"
@@ -43,6 +28,7 @@ open class Parser: NSObject, XMLParserDelegate {
     case rootElementIsNotHTML
     // case duplicatedRootElement // Parser Fails
     // case misplacedCDATA // Parser Fails
+    case invalidTagName
     case unexpectedError
   }
   
@@ -220,5 +206,62 @@ open class Parser: NSObject, XMLParserDelegate {
     } catch {
       self.parser(parser, parseErrorOccurred: error)
     }
+  }
+}
+
+private protocol _ParsedElement {}
+extension Element: _ParsedElement {}
+extension _ParsedElement {
+  init(_xhtmlString: String, xhtmlPrefix: QualifiedName.Prefix = .none) throws {
+    let xhtmlString = _xhtmlString.trimmingUnicodeScalars(in: .xmlWhitespaces)
+    do {
+      let string = #"<?xml version="1.0" encoding="UTF-8"?>\#n<!DOCTYPE html>\#n\#(xhtmlString)"#
+      let document = try Parser.parse(string.data(using: .utf8)!)
+      if case let html as Self = document.rootElement {
+        self = html
+      }
+      throw Parser.Error.unexpectedError
+    } catch Parser.Error.rootElementIsNotHTML {
+      let htmlStartTag: String
+      let htmlEndTag: String
+      switch xhtmlPrefix {
+      case .none:
+        htmlStartTag = #"<html xmlns="http://www.w3.org/1999/xhtml">"#
+        htmlEndTag = "</html>"
+      case .namespace(let ns):
+        htmlStartTag = #"<\#(ns.rawValue):html xmlns:\#(ns.rawValue)="http://www.w3.org/1999/xhtml">"#
+        htmlEndTag = "</\(ns.rawValue):html>"
+      }
+      
+      let string = """
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE html>
+      \(htmlStartTag)
+      \(xhtmlString)
+      \(htmlEndTag)
+      """
+      
+      let document = try Parser.parse(string.data(using: .utf8)!)
+      if document.rootElement.children.isEmpty {
+        throw Parser.Error.unexpectedError
+      }
+      guard document.rootElement.children.count == 1 else {
+        throw Parser.Error.xmlError(.extraContentError)
+      }
+      
+      if case let element as Self = document.rootElement.children.first {
+        self = element
+      } else {
+        throw Parser.Error.invalidTagName
+      }
+    }
+  }
+}
+
+extension Element {
+  /// Initialize with a string.
+  public convenience init(xhtmlString: String, xhtmlPrefix: QualifiedName.Prefix = .none) throws {
+    // `XMLElement(xmlString:)` does NOT reserve white-spaces...
+    try self.init(_xhtmlString: xhtmlString, xhtmlPrefix: xhtmlPrefix)
   }
 }

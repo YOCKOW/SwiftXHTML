@@ -61,6 +61,12 @@ open class CodeElement: SpecifiedElement, InitializableWithSimpleTextContent {
   public final override var isEmpty: Bool {
     return false
   }
+  
+  override func _trimTexts() {
+    if children.count == 1 && children.first is Text {
+      super._trimTexts()
+    }
+  }
 }
 
 open class DataElement: SpecifiedElement {

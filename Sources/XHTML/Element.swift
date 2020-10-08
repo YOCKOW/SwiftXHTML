@@ -151,6 +151,26 @@ open class Element: Node {
       self.removeChild(at: index)
     }
   }
+  
+  public func removeEmptyTextNodes() {
+    var filtered: [Node] = []
+    for child in children {
+      if case let textNode as Text = child, textNode.text.isEmpty {
+        continue
+      } else if case let childElement as Element = child {
+        childElement.removeEmptyTextNodes()
+      }
+      filtered.append(child)
+    }
+    children = filtered
+  }
+  
+  override func _trimTexts() {
+    for child in children {
+      child._trimTexts()
+    }
+    removeEmptyTextNodes()
+  }
 }
 
 extension Element {

@@ -75,19 +75,6 @@ final class Node_XMLNodeTests: XCTestCase {
     XCTAssertEqual(anchor.hypertextReference, "uri")
     XCTAssertEqual((anchor.children.first as? Text)?.text, "link")
   }
-  
-  func test_element() throws {
-    let element = try Element(xhtmlString: """
-    <div id="Outer">
-      <span id="Inner">Some Text</span>
-    </div>
-    """)
-    
-    XCTAssertTrue(element is DivisionElement)
-    XCTAssertEqual(element.attributes["id"], "Outer")
-    XCTAssertEqual(element.children.count, 1)
-    XCTAssertTrue(element.children.first is SpanElement)
-  }
 }
 
 

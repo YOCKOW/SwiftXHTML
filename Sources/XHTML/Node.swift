@@ -48,5 +48,12 @@ open class Node: Equatable {
   public static func == (lhs: Node, rhs: Node) -> Bool {
     return lhs.isEqual(to:rhs)
   }
+  
+  /// Removes leading and trailing whitespaces in each node if necessary.
+  ///
+  /// Expected to be overridden in subclasses.
+  internal func _trimTexts() {
+    
+  }
 }
 
