@@ -36,6 +36,62 @@ final class ParserTests: XCTestCase {
     
     _test_localFile(at: "RootElementIsNotHTML.xhtml", expectedError: Parser.Error.rootElementIsNotHTML)
   }
+  
+  func test_element() throws {
+    let element = try Element(xhtmlString: """
+    <div id="Outer">
+      <span id="Inner">Some Text</span>
+    </div>
+    """)
+    
+    XCTAssertTrue(element is DivisionElement)
+    XCTAssertEqual(element.attributes["id"], "Outer")
+    XCTAssertEqual(element.children.count, 1)
+    XCTAssertTrue(element.children.first is SpanElement)
+  }
+  
+  func test_pre() throws {
+    let string = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <title>Title</title>
+      </head>
+      <body>
+        <div>
+          Here is my code:
+    <pre>
+    <span class="keyword">if</span> <span class="keyword">let</span> string = maybeString {
+      print(string)
+    }
+    </pre>
+        </div>
+      </body>
+    </html>
+    """
+    let document = try Parser.parse(XCTUnwrap(string.data(using: .utf8)))
+    let parsedString = document.rootElement.xhtmlString
+    XCTAssertEqual(
+      parsedString,
+      #"<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Title</title></head><body><div>Here is my code:<pre><span class="keyword">if</span>&#x20;<span class="keyword">let</span>&#x20;string = maybeString {&#x0A;  print(string)&#x0A;}</pre></div></body></html>"#
+    )
+  }
+  
+  func test_pre_element() throws {
+    let pre = try PreformattedTextElement(xhtmlString: """
+    <pre>
+    <span class="keyword">if</span> <span class="keyword">let</span> string = maybeString {
+      print(string)
+    }
+    </pre>
+    """)
+    
+    XCTAssertEqual(
+      pre.xhtmlString,
+      #"<pre><span class="keyword">if</span>&#x20;<span class="keyword">let</span>&#x20;string = maybeString {&#x0A;  print(string)&#x0A;}</pre>"#
+    )
+  }
 }
 
 

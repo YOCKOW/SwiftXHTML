@@ -156,7 +156,7 @@ extension Text {
     assert(xmlNode._isText)
     
     guard let text = xmlNode.stringValue else { throw NodeError.unexpectedNode(xmlNode) }
-    self.init(text.trimmingUnicodeScalars(in: .xmlWhitespaces))
+    self.init(text)
   }
 }
 
@@ -215,13 +215,6 @@ extension Node {
   /// You can specify the prefix of XHTML by passing `xhtmlPrefix`.
   public convenience init(_ xmlNode: XMLNode, xhtmlPrefix: QualifiedName.Prefix = .none) throws {
     try self.init(_xmlNode: xmlNode, xhtmlPrefix: xhtmlPrefix)
-  }
-}
-
-extension Element {
-  /// Initialize with a string.
-  public convenience init(xhtmlString: String, xhtmlPrefix: QualifiedName.Prefix = .none) throws {
-    let xmlElement = try XMLElement(xmlString: xhtmlString)
-    try self.init(_xmlNode: xmlElement, xhtmlPrefix: xhtmlPrefix)
+    _trimTexts()
   }
 }

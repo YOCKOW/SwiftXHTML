@@ -79,7 +79,6 @@ extension Node_XMLNodeTests {
     static let __allTests__Node_XMLNodeTests = [
         ("test_attributes", test_attributes),
         ("test_comment", test_comment),
-        ("test_element", test_element),
         ("test_node", test_node),
         ("test_processingInstruction", test_processingInstruction),
         ("test_text", test_text),
@@ -91,8 +90,11 @@ extension ParserTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ParserTests = [
+        ("test_element", test_element),
         ("test_errors_document", test_errors_document),
         ("test_parseSimpleXHTML5", test_parseSimpleXHTML5),
+        ("test_pre_element", test_pre_element),
+        ("test_pre", test_pre),
     ]
 }
 

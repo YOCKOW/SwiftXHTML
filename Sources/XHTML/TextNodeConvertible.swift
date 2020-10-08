@@ -37,6 +37,10 @@ open class Text: Node, TextNodeConvertible {
     let escapedLines = rawLines.map({ $0._addingUntrimmedAmpersandEncoding() })
     return StringLines(escapedLines.map({ String.Line($0, indentLevel: 0)! }))
   }
+  
+  override func _trimTexts() {
+    self.text = self.text.trimmingUnicodeScalars(in: .xmlWhitespaces)
+  }
 }
 
 open class CDATASection: Node, TextNodeConvertible {
@@ -74,5 +78,9 @@ open class CDATASection: Node, TextNodeConvertible {
   
   public convenience init(_ textNode: Text) throws {
     try self.init(textNode.text)
+  }
+  
+  override func _trimTexts() {
+    self.text = self.text.trimmingUnicodeScalars(in: .xmlWhitespaces)
   }
 }
