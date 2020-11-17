@@ -52,7 +52,7 @@ a.external_repository_anchor {
 <title>NetworkGear</title>
 <ellipse fill="none" stroke="black" cx="187.33" cy="-296.09" rx="63.78" ry="26.74" />
 <text text-anchor="middle" x="187.33" y="-299.89" font-family="monospace" font-size="12px"><a href="https://github.com/YOCKOW/SwiftNetworkGear.git" xlink:href="https://github.com/YOCKOW/SwiftNetworkGear.git" class="external_repository_anchor">NetworkGear</a></text>
-<text text-anchor="middle" x="187.33" y="-284.89" font-family="monospace" font-size="12px">@0.14.2</text>
+<text text-anchor="middle" x="187.33" y="-284.89" font-family="monospace" font-size="12px">@0.14.4</text>
 </g>
 
 <g id="edge3" class="edge">
@@ -103,7 +103,7 @@ a.external_repository_anchor {
 <title>yExtensions</title>
 <ellipse fill="none" stroke="black" cx="345.33" cy="-206.35" rx="58.88" ry="26.74" />
 <text text-anchor="middle" x="345.33" y="-210.15" font-family="monospace" font-size="12px"><a href="https://github.com/YOCKOW/ySwiftExtensions.git" xlink:href="https://github.com/YOCKOW/ySwiftExtensions.git" class="external_repository_anchor">yExtensions</a></text>
-<text text-anchor="middle" x="345.33" y="-195.15" font-family="monospace" font-size="12px">@1.5.3</text>
+<text text-anchor="middle" x="345.33" y="-195.15" font-family="monospace" font-size="12px">@1.6.2</text>
 </g>
 
 <g id="edge8" class="edge">
@@ -122,7 +122,7 @@ a.external_repository_anchor {
 <title>StringComposition</title>
 <ellipse fill="none" stroke="black" cx="392.33" cy="-296.09" rx="84.71" ry="26.74" />
 <text text-anchor="middle" x="392.33" y="-299.89" font-family="monospace" font-size="12px"><a href="https://github.com/YOCKOW/SwiftStringComposition.git" xlink:href="https://github.com/YOCKOW/SwiftStringComposition.git" class="external_repository_anchor">StringComposition</a></text>
-<text text-anchor="middle" x="392.33" y="-284.89" font-family="monospace" font-size="12px">@2.0.1</text>
+<text text-anchor="middle" x="392.33" y="-284.89" font-family="monospace" font-size="12px">@2.0.2</text>
 </g>
 
 <g id="edge10" class="edge">
