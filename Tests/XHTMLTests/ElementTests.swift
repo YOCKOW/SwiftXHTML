@@ -252,6 +252,12 @@ final class ElementTests: XCTestCase {
     let rubyWithParenthesis = try XCTUnwrap(Node.ruby(text: "明日", rubyText: "あした", includesFallbackParenthesis: true) as? RubyElement)
     XCTAssertEqual(rubyWithParenthesis.xhtmlString, "<ruby>明日<rp>(</rp><rt>あした</rt><rp>)</rp></ruby>")
   }
+
+  func test_script() throws {
+    // https://github.com/YOCKOW/SwiftXHTML/issues/32
+    let script = try ScriptElement(attributes: ["type": "module", "async": "async"], children: [])
+    XCTAssertEqual(script.xhtmlString, #"<script async="async" type="module"></script>"#)
+  }
   
   func test_selection() throws {
     do {

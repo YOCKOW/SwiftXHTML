@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Scripting.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -28,6 +28,10 @@ open class NoScriptElement: SpecifiedElement {
 open class ScriptElement: SpecifiedElement {
   public final override class var localName: NoncolonizedName {
     return "script"
+  }
+
+  public final override var isEmpty: Bool {
+    return false
   }
 }
 
