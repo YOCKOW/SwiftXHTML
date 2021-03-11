@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  TextNodeConvertible.swift
-   © 2019-2020 YOCKOW.
+   © 2019-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -27,14 +27,34 @@ open class Text: Node, TextNodeConvertible {
     guard case let otherText as Text = other else { return false }
     return self.text == otherText.text
   }
+
+  private var _isDescendantOfScript: Bool {
+    var node: Node = self
+    while let parent = node.parent {
+      if parent is ScriptElement {
+        return true
+      }
+      node = parent
+    }
+    return false
+  }
   
   open override var xhtmlString: String {
-    return self.text._addingUntrimmedAmpersandEncoding()
+    if _isDescendantOfScript {
+      return text._addingAmpersandEncodingInScript()
+    } else {
+      return text._addingUntrimmedAmpersandEncoding()
+    }
   }
   
   open override var prettyXHTMLLines: StringLines {
+    let escape: (Substring) -> String = _isDescendantOfScript ? {
+      return $0._addingAmpersandEncodingInScript()
+    } : {
+      return $0._addingUntrimmedAmpersandEncoding()
+    }
     let rawLines = self.text.split(omittingEmptySubsequences: false, whereSeparator: { $0.isNewline })
-    let escapedLines = rawLines.map({ $0._addingUntrimmedAmpersandEncoding() })
+    let escapedLines = rawLines.map(escape)
     return StringLines(escapedLines.map({ String.Line($0, indentLevel: 0)! }))
   }
   

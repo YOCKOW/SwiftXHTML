@@ -58,6 +58,7 @@ extension ElementTests {
         ("test_style", test_style),
         ("test_table_calendar", test_table_calendar),
         ("test_table", test_table),
+        ("test_xhtmlString_textInScript", test_xhtmlString_textInScript),
         ("test_xhtmlString", test_xhtmlString),
     ]
 }

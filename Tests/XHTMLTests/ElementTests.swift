@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  ElementTests.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -17,6 +17,27 @@ final class ElementTests: XCTestCase {
     element.attributes = ["name":"value&value"]
     
     XCTAssertEqual(element.xhtmlString, "<element name=\"value&amp;value\" />")
+  }
+
+  func test_xhtmlString_textInScript() throws {
+    let script = try ScriptElement(children: [
+      .text("""
+
+      let something = 0;
+      if (something > 0) {
+        console.log("It's greater than zero.")
+      }
+
+      """)
+    ])
+    XCTAssertEqual(script.xhtmlString, """
+    <script>
+    let something = 0;
+    if (something &gt; 0) {
+      console.log("It's greater than zero.")
+    }
+    </script>
+    """)
   }
   
   func test_classSelector() throws {

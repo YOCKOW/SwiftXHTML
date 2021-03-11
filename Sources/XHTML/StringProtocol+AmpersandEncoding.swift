@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  StringProtocol+AmpersandEncoding.swift
-   © 2019-2020 YOCKOW.
+   © 2019-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -33,39 +33,6 @@ extension Unicode.Scalar {
   }
 }
 
-extension StringProtocol {
-  /// Returns a new string made from the receiver by replacing all scalars not in the specified set
-  /// with ampersand-encoded characters.
-  ///
-  /// - parameter whereAllowedUnicodeScalar: A closure that returns true if its argument should not
-  ///                                        be encoded; otherwise, false.
-  ///                                        `<`, `>`, `&`, `"`, and `'` are always encoded
-  ///                                        even if the closure returns `true`.
-  public func addingAmpersandEncoding(whereAllowedUnicodeScalar isAllowed: (Unicode.Scalar) throws -> Bool) rethrows -> String {
-    var resultScalars = String.UnicodeScalarView()
-    for scalar in self.unicodeScalars {
-      if let escapedScalars = _table[scalar] {
-        resultScalars.append(contentsOf: escapedScalars)
-      } else if try isAllowed(scalar) {
-        resultScalars.append(scalar)
-      } else {
-        resultScalars.append(contentsOf: scalar._forceAddingAmpersandEncoding().unicodeScalars)
-      }
-    }
-    return String(resultScalars)
-  }
-  
-  /// Returns a new string made from the receiver by replacing all scalars not in the specified set
-  /// with ampersand-encoded characters.
-  ///
-  /// - parameter allowedScalars: The scalars not replaced in the string.
-  ///                             `<`, `>`, `&`, `"`, and `'` are always encoded
-  ///                             even if the set contains them.
-  public func addingAmpersandEncoding(withAllowedUnicodeScalars allowedScalars: UnicodeScalarSet) -> String {
-    return self.addingAmpersandEncoding(whereAllowedUnicodeScalar: { allowedScalars.contains($0) })
-  }
-}
-
 private let _allowedCategories: Set<Unicode.GeneralCategory> = [
   .lowercaseLetter,
   .modifierLetter,
@@ -90,17 +57,72 @@ private let _allowedCategories: Set<Unicode.GeneralCategory> = [
   .mathSymbol,
   .otherSymbol,
 ]
+
 extension StringProtocol {
-  internal func _addingAmpersandEncoding() -> String {
-    return self.addingAmpersandEncoding {
-      return $0 == "\u{20}" || _allowedCategories.contains($0.latestProperties.generalCategory)
+  internal func _addingAmpersandEncoding(
+    whereAllowedUnicodeScalar isAllowed: (Unicode.Scalar) throws -> Bool
+  ) rethrows -> String {
+    var resultScalars = String.UnicodeScalarView()
+    for scalar in self.unicodeScalars {
+      if try isAllowed(scalar) {
+        resultScalars.append(scalar)
+      } else {
+        if let escapedScalars = _table[scalar] {
+          resultScalars.append(contentsOf: escapedScalars)
+        } else {
+          resultScalars.append(contentsOf: scalar._forceAddingAmpersandEncoding().unicodeScalars)
+        }
+      }
+    }
+    return String(resultScalars)
+  }
+
+  /// Returns a new string made from the receiver by replacing all scalars not in the specified set
+  /// with ampersand-encoded characters.
+  ///
+  /// - parameter whereAllowedUnicodeScalar: A closure that returns true if its argument should not
+  ///                                        be encoded; otherwise, false.
+  ///                                        `<`, `>`, `&`, `"`, and `'` are always encoded
+  ///                                        even if the closure returns `true`.
+  public func addingAmpersandEncoding(whereAllowedUnicodeScalar isAllowed: (Unicode.Scalar) throws -> Bool) rethrows -> String {
+    return try _addingAmpersandEncoding {
+      try !_table.keys.contains($0) && isAllowed($0)
     }
   }
   
+  /// Returns a new string made from the receiver by replacing all scalars not in the specified set
+  /// with ampersand-encoded characters.
+  ///
+  /// - parameter allowedScalars: The scalars not replaced in the string.
+  ///                             `<`, `>`, `&`, `"`, and `'` are always encoded
+  ///                             even if the set contains them.
+  public func addingAmpersandEncoding(withAllowedUnicodeScalars allowedScalars: UnicodeScalarSet) -> String {
+    return self.addingAmpersandEncoding(whereAllowedUnicodeScalar: { allowedScalars.contains($0) })
+  }
+}
+
+extension StringProtocol {
+  internal func _addingAmpersandEncoding() -> String {
+    return addingAmpersandEncoding {
+      return $0 == "\u{20}" || _allowedCategories.contains($0.latestProperties.generalCategory)
+    }
+  }
+
   internal func _forceAddingAmpersandEncoding() -> String {
     return self.addingAmpersandEncoding { _ -> Bool in false }
   }
-  
+
+  internal func _addingAmpersandEncodingInScript() -> String {
+    return _addingAmpersandEncoding {
+      switch $0 {
+      case "<", ">", "&":
+        return false
+      default:
+        return true
+      }
+    }
+  }
+
   internal func _addingUntrimmedAmpersandEncoding() -> String {
     if let firstIndexOfNonSpace = self.firstIndex(where: { $0 != "\u{20}" }) {
       let endIndexOfNonSpace = self.index(after: self.lastIndex(where: { $0 != "\u{20}" })!)
