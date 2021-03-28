@@ -166,6 +166,13 @@ final class ElementTests: XCTestCase {
     element.globalAttributes.dataSet.abcDef = "another data"
     XCTAssertEqual(element.attributes["data-abc-def"], "another data")
   }
+
+  func test_globalAttributes_dynamicMemberLookup() throws {
+    let element = try Element(xhtmlString: #"<div data-some-key="some value" class="class1 class2"></div>"#)
+    XCTAssertEqual(element.dataSet.someKey, "some value")
+    XCTAssertEqual(element.class, ["class1", "class2"])
+    XCTAssertEqual(element.title, nil)
+  }
   
   func test_id() throws {
     let document = try Parser.parse(TestResources.shared.data(for:"XHTML/XHTML5ForVariousTests.xhtml")!)

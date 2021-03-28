@@ -45,6 +45,7 @@ extension ElementTests {
         ("test_data", test_data),
         ("test_datalist", test_datalist),
         ("test_equatable", test_equatable),
+        ("test_globalAttributes_dynamicMemberLookup", test_globalAttributes_dynamicMemberLookup),
         ("test_globalAttributes", test_globalAttributes),
         ("test_headingElements", test_headingElements),
         ("test_html", test_html),

@@ -7,7 +7,8 @@
  
 import StringComposition
 import yExtensions
- 
+
+@dynamicMemberLookup
 open class Element: Node {
   open var name: QualifiedName
   
@@ -19,6 +20,19 @@ open class Element: Node {
     set {
       self._attributes = newValue
       self._attributes.element = self
+    }
+  }
+
+  open subscript<T>(dynamicMember keyPath: KeyPath<GlobalAttributes, T>) -> T {
+    return self.globalAttributes[keyPath: keyPath]
+  }
+
+  open subscript<T>(dynamicMember keyPath: ReferenceWritableKeyPath<GlobalAttributes, T>) -> T {
+    get {
+      return self.globalAttributes[keyPath: keyPath]
+    }
+    set {
+      self.globalAttributes[keyPath: keyPath] = newValue
     }
   }
   
