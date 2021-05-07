@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  FieldSetElement.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class FieldSetElement: SpecifiedElement {
+
+/// Represents \<fieldset\>\</fieldset\>.
+open class FieldSetElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "fieldset"
   }

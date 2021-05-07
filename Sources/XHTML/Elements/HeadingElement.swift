@@ -1,11 +1,11 @@
 /* *************************************************************************************************
  HeadingElement.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
-open class HeadingElement: SpecifiedElement, InitializableWithSimpleTextContent {}
+open class HeadingElement: SpecifiedElement, BlockLevelElement, InitializableWithSimpleTextContent {}
 
 open class H1Element: HeadingElement {
   public override class final var localName: NoncolonizedName { return "h1" }

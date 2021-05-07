@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  List.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class OrderedListElement: SpecifiedElement {
+
+/// Represents \<ol>\</ol>
+open class OrderedListElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "ol"
   }
@@ -15,7 +16,8 @@ open class OrderedListElement: SpecifiedElement {
   }
 }
 
-open class UnorderedListElement: SpecifiedElement {
+/// Represents \<ul>\</ul>
+open class UnorderedListElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "ul"
   }
@@ -25,7 +27,8 @@ open class UnorderedListElement: SpecifiedElement {
   }
 }
 
-open class ListItemElement: SpecifiedElement {
+/// Represents \<li>\</li>
+open class ListItemElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "li"
   }

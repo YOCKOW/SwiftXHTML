@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  FormElement.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -8,7 +8,8 @@
 import NetworkGear
 import yExtensions
 
-open class FormElement: SpecifiedElement {
+/// Represents \<form>\</form>
+open class FormElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName { return "form" }
   
   /// The location where to submit the form.

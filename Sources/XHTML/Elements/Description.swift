@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  Description.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class DescriptionListElement: SpecifiedElement {
+
+/// Represents \<dl\>\</dl\>.
+open class DescriptionListElement: SpecifiedElement, BlockLevelElement {
   public final override class var localName: NoncolonizedName {
     return "dl"
   }
@@ -15,7 +16,8 @@ open class DescriptionListElement: SpecifiedElement {
   }
 }
 
-open class DescriptionTermElement: SpecifiedElement, InitializableWithSimpleTextContent {
+/// Represents \<dt\>\</dt\>.
+open class DescriptionTermElement: SpecifiedElement, BlockLevelElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "dt"
   }
@@ -25,7 +27,8 @@ open class DescriptionTermElement: SpecifiedElement, InitializableWithSimpleText
   }
 }
 
-open class DescriptionElement: SpecifiedElement, InitializableWithSimpleTextContent {
+/// Represents \<dd\>\</dd\>.
+open class DescriptionElement: SpecifiedElement, BlockLevelElement, InitializableWithSimpleTextContent {
   public final override class var localName: NoncolonizedName {
     return "dd"
   }
