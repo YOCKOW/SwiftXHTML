@@ -1,18 +1,17 @@
 /* *************************************************************************************************
- BlockQuoteElement.swift
-   © 2020-2021 YOCKOW.
+ DialogElement.swift
+   © 2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-/// Represents \<blockquote\>\</blockquote\>.
-open class BlockQuoteElement: SpecifiedElement, BlockLevelElement {
-  public override class final var localName: NoncolonizedName {
-    return "blockquote"
+/// Represents \<dialog\>\</dialog\>.
+open class DialogElement: SpecifiedElement, BlockLevelElement {
+  public final override class var localName: NoncolonizedName {
+    return "dialog"
   }
-  
-  public override final var isEmpty: Bool {
+
+  public final override var isEmpty: Bool {
     return false
   }
 }
-

@@ -1,13 +1,14 @@
 /* *************************************************************************************************
  PreformattedTextElement.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
  
 import StringComposition
 
-open class PreformattedTextElement: SpecifiedElement {
+/// Represents \<pre>\</pre>
+open class PreformattedTextElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "pre"
   }

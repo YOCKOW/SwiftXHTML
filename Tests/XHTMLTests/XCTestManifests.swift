@@ -41,6 +41,7 @@ extension ElementTests {
     static let __allTests__ElementTests = [
         ("test_abbr", test_abbr),
         ("test_base", test_base),
+        ("test_blockLevelElement", test_blockLevelElement),
         ("test_classSelector", test_classSelector),
         ("test_data", test_data),
         ("test_datalist", test_datalist),

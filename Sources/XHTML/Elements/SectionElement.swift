@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  SectionElement.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class SectionElement: SpecifiedElement {
+
+/// Represents \<section>\</section>
+open class SectionElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "section"
   }

@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  ParagraphElement.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class ParagraphElement: SpecifiedElement {
+
+/// Represents \<p>\</p>
+open class ParagraphElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName {
     return "p"
   }

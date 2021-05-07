@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  HeaderElement.swift
-   © 2020 YOCKOW.
+   © 2020-2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class HeaderElement: SpecifiedElement {
+
+/// Represents \<header>\</header>
+open class HeaderElement: SpecifiedElement, BlockLevelElement {
    public override class final var localName: NoncolonizedName {
      return "header"
    }

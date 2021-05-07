@@ -229,6 +229,50 @@ final class ElementTests: XCTestCase {
     let title = try TitleElement(xhtmlPrefix: .none, text: "Title")
     XCTAssertEqual(title.title, "Title")
   }
+
+  func test_blockLevelElement() throws {
+    let blockLevelTags: [(tag: NoncolonizedName, empty: Bool)] = [
+      ("address", false),
+      ("article", false),
+      ("aside", false),
+      ("blockquote", false),
+      ("details", false),
+      ("dialog", false),
+      ("dd", false),
+      ("div", false),
+      ("dl", false),
+      ("dt", false),
+      ("fieldset", false),
+      ("figcaption", false),
+      ("figure", false),
+      ("footer", false),
+      ("form", false),
+      ("h1", false),
+      ("h2", false),
+      ("h3", false),
+      ("h4", false),
+      ("h5", false),
+      ("h6", false),
+      ("header", false),
+      ("hr", true),
+      ("li", false),
+      ("main", false),
+      ("nav", false),
+      ("ol", false),
+      ("p", false),
+      ("pre", false),
+      ("section", false),
+      ("table", false),
+      ("ul", false),
+    ]
+
+    try blockLevelTags.forEach {
+      let name = $0.tag.rawValue
+      let string = $0.empty ? "<\(name)/>" : "<\(name)></\(name)>"
+      let element = try XHTMLElement(xhtmlString: string)
+      XCTAssertTrue(element is BlockLevelElement, "`\(name)` shoul be `BlockLevelElement`.")
+    }
+  }
   
   func test_headingElements() {
     let headings: [Node] = [

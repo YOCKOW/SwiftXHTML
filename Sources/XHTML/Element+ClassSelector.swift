@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Element+ClassSelector.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -37,6 +37,7 @@ extension Element {
       "del": DeletionElement.self,
       "details": DetailsElement.self,
       "dfn": DefinitionElement.self,
+      "dialog": DialogElement.self,
       "div": DivisionElement.self,
       "dl": DescriptionListElement.self,
       "dt": DescriptionTermElement.self,
@@ -45,6 +46,7 @@ extension Element {
       "fieldset": FieldSetElement.self,
       "figcaption": FigureCaptionElement.self,
       "figure": FigureElement.self,
+      "footer": FooterElement.self,
       "form": FormElement.self,
       "h1": H1Element.self,
       "h2": H2Element.self,
@@ -62,6 +64,7 @@ extension Element {
       "kbd": KeyboardInputElement.self,
       "label": LabelElement.self,
       "legend": LegendElement.self,
+      "li": ListItemElement.self,
       "link": LinkElement.self,
       "main": MainElement.self,
       "map": ImageMapElement.self,
@@ -71,6 +74,7 @@ extension Element {
       "nav": NavigationElement.self,
       "noscript": NoScriptElement.self,
       "object": ObjectElement.self,
+      "ol": OrderedListElement.self,
       "optgroup": OptionGroupElement.self,
       "option": OptionElement.self,
       "output": OutputElement.self,
@@ -109,6 +113,7 @@ extension Element {
       "title": TitleElement.self,
       "tr": TableRowElement.self,
       "track": TextTrackElement.self,
+      "ul": UnorderedListElement.self,
       "var": VariableElement.self,
       "video": VideoElement.self,
       "wbr": WordBreakElement.self,

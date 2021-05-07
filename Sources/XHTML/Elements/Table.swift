@@ -1,11 +1,12 @@
 /* *************************************************************************************************
  Table.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
-open class TableElement: SpecifiedElement {
+
+/// Represents \<table>\</table>
+open class TableElement: SpecifiedElement, BlockLevelElement {
   public override class final var localName: NoncolonizedName { return "table" }
   
   public override final var isEmpty: Bool { return false }
