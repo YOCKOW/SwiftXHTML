@@ -131,16 +131,16 @@ extension ProcessingInstruction {
       var pi: ProcessingInstruction? = nil
       public func parser(_ parser: XMLParser,
                          foundProcessingInstructionWithTarget target: String,
-                         data: String?) {
+                         bytes: String?) {
         guard let targetName = NoncolonizedName(target) else {
           self.error = NodeError.invalidProcessingInstructionName
           parser.abortParsing()
           return
         }
-        self.pi = ProcessingInstruction(target: targetName, content: data)
+        self.pi = ProcessingInstruction(target: targetName, content: bytes)
       }
     }
-    let parser = XMLParser(data: xmlNode.xmlString.data(using: .utf8)!)
+    let parser = XMLParser(bytes: xmlNode.xmlString.data(using: .utf8)!)
     let delegate = _Delegate()
     parser.delegate = delegate
     _ = parser.parse()
