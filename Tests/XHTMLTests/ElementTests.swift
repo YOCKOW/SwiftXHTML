@@ -224,6 +224,23 @@ final class ElementTests: XCTestCase {
       """
     )
   }
+
+  func test_interpolate() throws {
+    let element = try Element(
+      xhtmlString: #"<div data-class="lazy-class"><span data-text="lazy-text"></span></div>"#
+    )
+    element.interpolate {
+      if case let div as DivisionElement = $0 {
+        div.class = div.dataSet.class.map { [$0] }
+      } else if case let span as SpanElement = $0 {
+        span.children = [.text(span.dataSet.text ?? "UNEXPECTED")]
+      }
+    }
+    XCTAssertEqual(
+      element.xhtmlString,
+      #"<div class="lazy-class" data-class="lazy-class"><span data-text="lazy-text">lazy-text</span></div>"#
+    )
+  }
   
   func test_simpleTextContent() throws {
     let title = try TitleElement(xhtmlPrefix: .none, text: "Title")

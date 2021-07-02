@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Element.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -184,6 +184,13 @@ open class Element: Node {
       child._trimTexts()
     }
     removeEmptyTextNodes()
+  }
+
+  open override func interpolate(_ amender: (Node) throws -> Void) rethrows {
+    for child in children {
+      try amender(child)
+    }
+    try amender(self)
   }
 }
 

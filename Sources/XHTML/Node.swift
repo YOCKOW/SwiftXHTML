@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Node.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -54,6 +54,13 @@ open class Node: Equatable {
   /// Expected to be overridden in subclasses.
   internal func _trimTexts() {
     
+  }
+
+  /// Interpolates the instance with `amender`.
+  /// An argument of `amender` is the instance itself, or
+  /// one of its children if the receiver is `Element`.
+  open func interpolate(_ amender: (Node) throws -> Void) rethrows {
+    try amender(self)
   }
 }
 
