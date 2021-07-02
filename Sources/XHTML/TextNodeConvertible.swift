@@ -28,10 +28,10 @@ open class Text: Node, TextNodeConvertible {
     return self.text == otherText.text
   }
 
-  private var _isDescendantOfScript: Bool {
+  private var _shouldUseMinimumAmpersandEncoding: Bool {
     var node: Node = self
     while let parent = node.parent {
-      if parent is ScriptElement {
+      if parent._descendantTextNodesShouldUseMinimumAmpersandEncoding {
         return true
       }
       node = parent
@@ -40,16 +40,16 @@ open class Text: Node, TextNodeConvertible {
   }
   
   open override var xhtmlString: String {
-    if _isDescendantOfScript {
-      return text._addingAmpersandEncodingInScript()
+    if _shouldUseMinimumAmpersandEncoding {
+      return text._addingMinimumAmpersandEncoding()
     } else {
       return text._addingUntrimmedAmpersandEncoding()
     }
   }
   
   open override var prettyXHTMLLines: StringLines {
-    let escape: (Substring) -> String = _isDescendantOfScript ? {
-      return $0._addingAmpersandEncodingInScript()
+    let escape: (Substring) -> String = _shouldUseMinimumAmpersandEncoding ? {
+      return $0._addingMinimumAmpersandEncoding()
     } : {
       return $0._addingUntrimmedAmpersandEncoding()
     }

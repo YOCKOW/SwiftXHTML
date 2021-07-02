@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  StyleElement.swift
-   © 2019 YOCKOW.
+   © 2019,2021 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -9,6 +9,10 @@ open class StyleElement: SpecifiedElement {
   public override class final var localName: NoncolonizedName { return "style" }
   
   public override final var isEmpty: Bool { return false }
+
+  internal override var _descendantTextNodesShouldUseMinimumAmpersandEncoding: Bool {
+    return true
+  }
   
   /// Media Query (Specifies what media/device the media resource is optimized for)
   open var media: String? {
