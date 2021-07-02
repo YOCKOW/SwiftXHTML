@@ -33,6 +33,10 @@ open class ScriptElement: SpecifiedElement {
   public final override var isEmpty: Bool {
     return false
   }
+
+  internal override var _descendantTextNodesShouldUseMinimumAmpersandEncoding: Bool {
+    return true
+  }
 }
 
 open class TemplateElement: SpecifiedElement {

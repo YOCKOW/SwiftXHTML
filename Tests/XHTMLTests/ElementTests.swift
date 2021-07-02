@@ -39,7 +39,31 @@ final class ElementTests: XCTestCase {
     </script>
     """)
   }
-  
+
+  func test_xhtmlString_textInStyle() throws {
+    let style = try StyleElement(xhtmlString: """
+    <style type="text/css">
+    div {
+      color: green;
+    }
+    div > p {
+      color: red;
+    }
+    </style>
+    """)
+
+    XCTAssertEqual(style.xhtmlString, """
+    <style type="text/css">\
+    div {
+      color: green;
+    }
+    div &gt; p {
+      color: red;
+    }\
+    </style>
+    """)
+  }
+
   func test_classSelector() throws {
     let title = try Element(_name:"title",
                             attributes: ["xmlns":"http://www.w3.org/1999/xhtml"],

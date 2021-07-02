@@ -112,7 +112,7 @@ extension StringProtocol {
     return self.addingAmpersandEncoding { _ -> Bool in false }
   }
 
-  internal func _addingAmpersandEncodingInScript() -> String {
+  internal func _addingMinimumAmpersandEncoding() -> String {
     return _addingAmpersandEncoding {
       switch $0 {
       case "<", ">", "&":

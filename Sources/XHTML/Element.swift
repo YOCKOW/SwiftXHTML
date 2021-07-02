@@ -71,6 +71,10 @@ open class Element: Node {
     self.attributes = attributes
     self.children = children
   }
+
+  internal var _descendantTextNodesShouldUseMinimumAmpersandEncoding: Bool {
+    return false
+  }
   
   open override var xhtmlString: String {
     let tagName = self.name.description
