@@ -250,20 +250,35 @@ final class ElementTests: XCTestCase {
   }
 
   func test_interpolate() throws {
-    let element = try Element(
-      xhtmlString: #"<div data-class="lazy-class"><span data-text="lazy-text"></span></div>"#
-    )
-    element.interpolate {
+    let element = try Element(xhtmlString: """
+    <div data-class="lazy-class">
+      <div data-class="lazy-child-class">
+        <span data-text="lazy-text-1">PLACEHOLDER</span>
+      </div>
+      <div data-class="lazy-child-class">
+        <span data-text="lazy-text-2">PLACEHOLDER</span>
+      </div>
+    </div>
+    """)
+    try element.interpolate {
       if case let div as DivisionElement = $0 {
         div.class = div.dataSet.class.map { [$0] }
       } else if case let span as SpanElement = $0 {
-        span.children = [.text(span.dataSet.text ?? "UNEXPECTED")]
+        span.children = [.text(try XCTUnwrap(span.dataSet.text))]
       }
     }
-    XCTAssertEqual(
-      element.xhtmlString,
-      #"<div class="lazy-class" data-class="lazy-class"><span data-text="lazy-text">lazy-text</span></div>"#
-    )
+    XCTAssertEqual(element.class, ["lazy-class"])
+    XCTAssertEqual(element.children.count, 2)
+
+    let firstChild = try XCTUnwrap(element.children.first as? DivisionElement)
+    let lastChild = try XCTUnwrap(element.children.last as? DivisionElement)
+    XCTAssertEqual(firstChild.class, ["lazy-child-class"])
+    XCTAssertEqual(lastChild.class, ["lazy-child-class"])
+
+    let firstSpan = try XCTUnwrap(firstChild.children.first as? SpanElement)
+    let lastSpan = try XCTUnwrap(lastChild.children.first as? SpanElement)
+    XCTAssertEqual(firstSpan.children.first?.xhtmlString, "lazy-text-1")
+    XCTAssertEqual(lastSpan.children.first?.xhtmlString, "lazy-text-2")
   }
   
   func test_simpleTextContent() throws {
