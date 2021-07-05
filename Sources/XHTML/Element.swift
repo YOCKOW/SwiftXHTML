@@ -192,7 +192,7 @@ open class Element: Node {
 
   open override func interpolate(_ amender: (Node) throws -> Void) rethrows {
     for child in children {
-      try amender(child)
+      try child.interpolate(amender)
     }
     try amender(self)
   }
