@@ -24,7 +24,7 @@ public enum TargetAttributeValue: Hashable, RawRepresentable, ExpressibleByStrin
     case "_parent":
       self = .parent
     case "_self":
-      self = .self
+      self = .self // Cannot silence warning here because of SR-15182.
     case "_top":
       self = .top
     default:
