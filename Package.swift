@@ -20,8 +20,8 @@ let package = Package(
     .package(url:"https://github.com/YOCKOW/SwiftBonaFideCharacterSet.git", from: "1.6.2"),
     .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", "0.14.8"..<"2.0.0"),
     .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.1.1"),
-    .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "2.0.3"),
-    .package(url:"https://github.com/YOCKOW/SwiftUnicodeSupplement.git", from: "1.1.1"),
+    .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "2.0.4"),
+    .package(url:"https://github.com/YOCKOW/SwiftUnicodeSupplement.git", from: "1.2.0"),
     .package(url:"https://github.com/YOCKOW/ySwiftExtensions.git", from: "1.7.5"),
   ],
   targets: [
