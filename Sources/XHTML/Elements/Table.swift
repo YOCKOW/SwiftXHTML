@@ -61,11 +61,9 @@ open class TableCaptionElement: SpecifiedElement, InitializableWithSimpleTextCon
 }
 
 /// The abstract class for `TableHeadElement`, `TableBodyElement`, and `TableFootElement`.
-open class TableRowsElement: SpecifiedElement {
+open class TableRowsElement: SpecifiedElement, Sequence {
   public override final var isEmpty: Bool { return false }
-}
-
-extension TableRowsElement: Sequence {
+  
   public typealias Element = TableRowElement
   public struct Iterator: IteratorProtocol {
     public typealias Element = TableRowElement
