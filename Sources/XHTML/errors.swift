@@ -12,7 +12,7 @@ import FoundationXML
 
 /// Errors related to `Node`.
 /// Mainly they may be thrown when the node is initialized with an instance of `XMLNode`.
-public enum NodeError: Error, Equatable {
+public enum NodeError: Error, Equatable, @unchecked Sendable {
   case invalidAttributeName
   case invalidName
   case invalidProcessingInstructionName
