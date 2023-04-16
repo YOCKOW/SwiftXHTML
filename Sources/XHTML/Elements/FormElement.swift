@@ -1,10 +1,11 @@
 /* *************************************************************************************************
  FormElement.swift
-   © 2019,2021 YOCKOW.
+   © 2019,2021,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
+import Foundation
 import NetworkGear
 import yExtensions
 
