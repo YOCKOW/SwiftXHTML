@@ -1,23 +1,20 @@
 /* *************************************************************************************************
  Document.swift
-   © 2019 YOCKOW.
+   © 2019,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
 import Foundation
-
-import BonaFideCharacterSet
 import StringComposition
 import yExtensions
 
 private func _validateXMLVersion(_ string:String) -> Bool {
-  let numbers = UnicodeScalarSet(unicodeScalarsIn:"0"..."9")
   guard string.count >= 3 else { return false }
   guard string.hasPrefix("1.") else { return false }
-  guard
-    string[string.index(string.startIndex, offsetBy:2)..<string.endIndex].consists(of:numbers) else
-  {
+  guard string[string.index(string.startIndex, offsetBy:2)...].unicodeScalars.allSatisfy({
+    ("0"..."9").contains($0)
+  }) else {
     return false
   }
   return true

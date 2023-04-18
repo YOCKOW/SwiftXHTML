@@ -1,18 +1,15 @@
 /* *************************************************************************************************
  Names.swift
-   © 2018 YOCKOW.
+   © 2018,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-import BonaFideCharacterSet
 import yExtensions
 
 private func _validateNCName(_ string:String) -> Bool {
-  guard
-    let firstScalar = string.unicodeScalars.first,
-    UnicodeScalarSet.xmlNameStartCharacterScalars.contains(firstScalar) else { return false }
-  guard string.consists(of:.xmlNoncolonizedNameScalars) else { return false }
+  guard let firstScalar = string.unicodeScalars.first, firstScalar.isXMLNameStart else { return false }
+  guard string.unicodeScalars.allSatisfy(\.isAllowedInXMLNoncolonizedName) else { return false }
   return true
 }
 

@@ -183,7 +183,7 @@ open class Parser: NSObject, XMLParserDelegate {
           processingElement.append(Text(string))
         }
       } else {
-        guard string.consists(of: .xmlWhitespaces) else {
+        guard string.unicodeScalars.allSatisfy(\.isXMLWhitespace) else {
           throw Error.xmlError(.invalidCharacterError)
         }
       }
@@ -213,7 +213,7 @@ private protocol _ParsedElement {}
 extension Element: _ParsedElement {}
 extension _ParsedElement {
   init(_xhtmlString: String, xhtmlPrefix: QualifiedName.Prefix = .none) throws {
-    let xhtmlString = _xhtmlString.trimmingUnicodeScalars(in: .xmlWhitespaces)
+    let xhtmlString = _xhtmlString._trimmingUnicodeScalars(where: \.isXMLWhitespace)
     do {
       let string = #"<?xml version="1.0" encoding="UTF-8"?>\#n<!DOCTYPE html>\#n\#(xhtmlString)"#
       let document = try Parser.parse(string.data(using: .utf8)!)

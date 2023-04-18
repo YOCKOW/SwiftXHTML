@@ -59,7 +59,7 @@ open class Text: Node, TextNodeConvertible {
   }
   
   override func _trimTexts() {
-    self.text = self.text.trimmingUnicodeScalars(in: .xmlWhitespaces)
+    self.text = self.text._trimmingUnicodeScalars(where: \.isXMLWhitespace)
   }
 }
 
@@ -101,6 +101,6 @@ open class CDATASection: Node, TextNodeConvertible {
   }
   
   override func _trimTexts() {
-    self.text = self.text.trimmingUnicodeScalars(in: .xmlWhitespaces)
+    self.text = self.text._trimmingUnicodeScalars(where: \.isXMLWhitespace)
   }
 }

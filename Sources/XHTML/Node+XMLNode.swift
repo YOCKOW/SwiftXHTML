@@ -1,11 +1,10 @@
 /* *************************************************************************************************
  Node+XMLNode.swift
-   © 2019-2020 YOCKOW.
+   © 2019-2020,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-import BonaFideCharacterSet
 import Foundation
 #if canImport(FoundationXML)
 import FoundationXML
