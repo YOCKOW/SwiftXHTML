@@ -1,11 +1,10 @@
 /* *************************************************************************************************
  Comment.swift
-   © 2019-2020 YOCKOW.
+   © 2019-2020,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-import BonaFideCharacterSet
 import StringComposition
 
 /// Validate the text.
@@ -18,7 +17,7 @@ private func _validateTextOfComment<S>(_ text: S) -> Bool where S: StringProtoco
     let nextIndex = scalars.index(after:ii)
     
     let scalar = scalars[ii]
-    guard UnicodeScalarSet.xmlCharacterScalars.contains(scalar) else { return false }
+    guard scalar.isAllowedInXML else { return false }
     if scalar == "-" {
       guard nextIndex < scalars.endIndex else { return false }
       guard scalars[nextIndex] != "-" else { return false }

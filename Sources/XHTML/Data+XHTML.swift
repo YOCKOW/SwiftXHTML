@@ -1,11 +1,10 @@
 /* *************************************************************************************************
  Data+XHTML.swift
-   © 2018 YOCKOW.
+   © 2018,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-import BonaFideCharacterSet
 import Foundation
 #if canImport(FoundationXML)
 import FoundationXML
@@ -45,9 +44,9 @@ private struct _ASCIICode: ExpressibleByUnicodeScalarLiteral, Equatable {
     guard value < 0x80 else { return nil }
     self._scalar = Unicode.Scalar(UInt8(value))
   }
-  
-  fileprivate func isContained(in scalars:UnicodeScalarSet) -> Bool {
-    return scalars.contains(self._scalar)
+
+  fileprivate func hasUnicodeScalar(_ isUnicodeScalar: KeyPath<Unicode.Scalar, Bool>) -> Bool {
+    return self._scalar[keyPath: isUnicodeScalar]
   }
 }
 
@@ -165,7 +164,7 @@ extension _ASCIICodeView {
     // leading whitespaces are accepted here.
     for ii in 0..<self.count {
       guard let ascii = self[ii] else { return nil }
-      if ascii.isContained(in:.xmlWhitespaces) { continue }
+      if ascii.hasUnicodeScalar(\.isXMLWhitespace) { continue }
       if ascii == "<" { return ii }
       return nil // The first non-space character is not "<"
     }

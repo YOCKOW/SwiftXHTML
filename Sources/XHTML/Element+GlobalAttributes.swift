@@ -1,10 +1,10 @@
 /* *************************************************************************************************
  Element+GlobalAttributes.swift
-   © 2019 YOCKOW.
+   © 2019,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
- 
+
 extension Element {
   /// Accessor to global attributes.
   public final class GlobalAttributes {
@@ -39,8 +39,8 @@ extension Element.GlobalAttributes {
   /// One or more classnames for the element
   public var `class`: [String]? {
     get {
-      guard let classes_string = self["class"] else { return nil }
-      return classes_string.split(separator:.whitespacesAndNewlines, omittingEmptySubsequences:true)
+      guard let classesString = self["class"] else { return nil }
+      return classesString.split(omittingEmptySubsequences: true, whereSeparator: { $0.isWhitespace || $0.isNewline }).map(String.init)
     }
     set {
       if let classes = newValue {

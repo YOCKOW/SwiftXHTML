@@ -1,11 +1,9 @@
 /* *************************************************************************************************
  Version.swift
-   © 2018 YOCKOW.
+   © 2018,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
-
-import BonaFideCharacterSet
 
 public enum HTML4_01Version: Hashable {
   /// Corresponding to strict HTML 4.01.
@@ -117,7 +115,7 @@ extension String {
   fileprivate func _removeWhitespacesAndNewlines() -> String {
     var newScalars = UnicodeScalarView()
     for scalar in self.unicodeScalars {
-      if UnicodeScalarSet.xmlWhitespaces.contains(scalar) { continue }
+      if scalar.isXMLWhitespace { continue }
       newScalars.append(scalar)
     }
     return String(newScalars)

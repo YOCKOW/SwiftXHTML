@@ -17,8 +17,7 @@ let package = Package(
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
-    .package(url:"https://github.com/YOCKOW/SwiftBonaFideCharacterSet.git", from: "1.6.2"),
-    .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", "0.14.8"..<"2.0.0"),
+    .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", "0.16.0"..<"2.0.0"),
     .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.1.1"),
     .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "2.0.4"),
     .package(url:"https://github.com/YOCKOW/SwiftUnicodeSupplement.git", from: "1.2.0"),
@@ -29,7 +28,6 @@ let package = Package(
     // Targets can depend on other targets in this package, and on products in packages which this package depends on.
     .target(name: "XHTML",
             dependencies: [
-              "SwiftBonaFideCharacterSet",
               "SwiftNetworkGear",
               "SwiftRanges",
               "SwiftStringComposition",

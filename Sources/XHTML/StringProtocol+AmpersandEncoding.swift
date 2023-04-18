@@ -1,11 +1,10 @@
 /* *************************************************************************************************
  StringProtocol+AmpersandEncoding.swift
-   © 2019-2021 YOCKOW.
+   © 2019-2021,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-import BonaFideCharacterSet
 import UnicodeSupplement
 
 private let _lt = "&lt;".unicodeScalars
@@ -88,16 +87,6 @@ extension StringProtocol {
     return try _addingAmpersandEncoding {
       try !_table.keys.contains($0) && isAllowed($0)
     }
-  }
-  
-  /// Returns a new string made from the receiver by replacing all scalars not in the specified set
-  /// with ampersand-encoded characters.
-  ///
-  /// - parameter allowedScalars: The scalars not replaced in the string.
-  ///                             `<`, `>`, `&`, `"`, and `'` are always encoded
-  ///                             even if the set contains them.
-  public func addingAmpersandEncoding(withAllowedUnicodeScalars allowedScalars: UnicodeScalarSet) -> String {
-    return self.addingAmpersandEncoding(whereAllowedUnicodeScalar: { allowedScalars.contains($0) })
   }
 }
 

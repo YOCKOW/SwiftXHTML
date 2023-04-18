@@ -1,11 +1,9 @@
 /* *************************************************************************************************
  MetaElement.swift
-   © 2019 YOCKOW.
+   © 2019,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
-
-import BonaFideCharacterSet
 
 open class MetaElement: PerpetuallyEmptyElement {
   public override class final var localName: NoncolonizedName { return "meta" }
@@ -90,8 +88,8 @@ extension HeadElement {
   public var keywords: [String]? {
     get {
       guard let keywords_string = self._metaContent(for: "keywords") else { return nil }
-      return keywords_string.components(separatedBy: ",").map{
-        $0.trimmingUnicodeScalars(in: .whitespacesAndNewlines)
+      return keywords_string.components(separatedBy: ",").map {
+        String($0._trimmingCharacters(where: { $0.isWhitespace || $0.isNewline }))
       }
     }
     set {
