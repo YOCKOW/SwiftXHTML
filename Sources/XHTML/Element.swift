@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Element.swift
-   © 2019,2021 YOCKOW.
+   © 2019,2021,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -75,7 +75,7 @@ open class Element: Node {
   internal var _descendantTextNodesShouldUseMinimumAmpersandEncoding: Bool {
     return false
   }
-  
+
   open override var xhtmlString: String {
     let tagName = self.name.description
     
@@ -95,6 +95,37 @@ open class Element: Node {
     
     return result
     
+  }
+
+  private var _htmlTagName: String {
+    if namespace(for: name) == ._xhtmlNamespace {
+      return name.localName.description
+    }
+    return name.description
+  }
+
+  open override var htmlString: String {
+    get throws {
+      let tagName = _htmlTagName
+      var result = "<\(tagName)"
+
+      if !attributes.isEmpty {
+        let attrHTML = attributes.htmlString
+        if !attrHTML.isEmpty {
+          result += " \(attributes.htmlString)"
+        }
+      }
+
+      if self.isEmpty {
+        return result + " />" // Ref. https://developer.mozilla.org/en-US/docs/Glossary/Void_element
+      }
+
+      result += ">"
+      result += try children.map({ try $0.htmlString }).joined()
+      result += "</\(tagName)>"
+
+      return result
+    }
   }
   
   open override var prettyXHTMLLines: StringLines {
@@ -139,6 +170,52 @@ open class Element: Node {
     }
     
     return result
+  }
+
+  open override var prettyHTMLLines: StringLines {
+    get throws {
+      let tagName = _htmlTagName
+
+      var result = StringLines()
+
+      do { // Start Tag
+        var attributesLines = self.attributes.prettyHTMLLines
+        switch attributesLines.count {
+        case 0:
+          result.append("<\(tagName)")
+        case 1:
+          result.append("<\(tagName) \(attributesLines[0].payload)")
+        default:
+          attributesLines.shiftRight()
+          result.append("<\(tagName)")
+          result.append(contentsOf: attributesLines)
+        }
+        result[result.endIndex - 1].payload += self.isEmpty ? " />" : ">"
+      }
+
+      let endTag = "</\(tagName)>"
+      appendChildrenAndEndTag: do {
+        if self.isEmpty { break appendChildrenAndEndTag }
+
+        var childrenLines = try children.reduce(into: StringLines()) {
+          $0.append(contentsOf: try $1.prettyHTMLLines)
+        }
+        if result.count == 1 && childrenLines.count <= 1 {
+          let startTagWidth = result[0].payloadProperties.estimatedWidth
+          let childWidth = childrenLines.first?.payloadProperties.estimatedWidth ?? 0
+          let endTagWidth = endTag.estimatedWidth
+          if startTagWidth + childWidth + endTagWidth < 100 {
+            result[0].payload += (childrenLines.first?.payload ?? "") + endTag
+            break appendChildrenAndEndTag
+          }
+        }
+        childrenLines.shiftRight()
+        result.append(contentsOf: childrenLines)
+        result.append(String.Line(endTag)!)
+      }
+
+      return result
+    }
   }
   
   internal func _append(_ child: Node) throws {

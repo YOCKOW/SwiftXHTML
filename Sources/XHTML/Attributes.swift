@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Attributes.swift
-   © 2018-2019 YOCKOW.
+   © 2018-2019,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -33,38 +33,75 @@ extension Attributes {
   private func _pairDescription(name: AttributeName, value: String) -> String {
     return "\(name.description)=\"\(value._addingAmpersandEncoding())\""
   }
+
+  private func _htmlPairDescription(name: AttributeName, value: String) -> String? {
+    switch name {
+    case .namespaceDeclaration:
+      if value == ._xhtmlNamespace {
+        return nil
+      }
+      return "\(name.description)=\"\(value._addingAmpersandEncoding())\""
+    case .attributeName(let attrName):
+      if attrName.prefix == .namespace("xml") { // hmm...
+        return nil
+      }
+      if _namespace(for: attrName) == ._xhtmlNamespace {
+        return "\(attrName.localName.description)=\"\(value._addingAmpersandEncoding())\""
+      }
+      return "\(attrName.description)=\"\(value._addingAmpersandEncoding())\""
+    }
+  }
   
   public var xhtmlString: String {
     return self._attributes.sorted(by: { $0.key < $1.key }).map({ _pairDescription(name: $0, value: $1) }).joined(separator: " ")
   }
-  
-  /// Lines containing attributes represented by XHTML.
-  /// The result is empty when the instance is empty.
-  public var prettyXHTMLLines: StringLines {
+
+  public var htmlString: String {
+    return _attributes.compactMap({ _htmlPairDescription(name: $0, value: $1) }).joined(separator: " ")
+  }
+
+  private func _prettyLines(html: Bool) -> StringLines {
     var result = StringLines()
     var buffer = ""
-    
+
     func _flush() {
       result.append(String.Line(buffer)!)
       buffer = ""
     }
-    
+
     for (name, value) in self._attributes.sorted(by: { $0.key < $1.key }) {
-      let pairDescription = _pairDescription(name: name, value: value)
+      let pairDescription = html ? (_htmlPairDescription(name: name, value: value) ?? "") :  _pairDescription(name: name, value: value)
       if buffer.estimatedWidth + pairDescription.estimatedWidth > 100 {
         _flush()
       }
-      buffer += buffer.isEmpty ? pairDescription : " \(pairDescription)"
+      buffer += buffer.isEmpty || pairDescription.isEmpty ? pairDescription : " \(pairDescription)"
     }
-    
+
     if !buffer.isEmpty { _flush() }
-    
+
     return result
+  }
+
+  /// Lines containing attributes represented by XHTML.
+  /// The result is empty when the instance is empty.
+  public var prettyXHTMLLines: StringLines {
+    return _prettyLines(html: false)
+  }
+
+  public var prettyHTMLLines: StringLines {
+    return _prettyLines(html: true)
   }
   
   public func prettyXHTMLString(indent: String.Indent = .default,
                                 newline: Character.Newline = .lineFeed) -> String {
     return self.prettyXHTMLLines._description(indent: indent, newline: newline)
+  }
+
+  public func prettyHTMLString(
+    indent: String.Indent = .default,
+    newline: Character.Newline = .lineFeed
+  )-> String {
+    return prettyHTMLLines._description(indent: indent, newline: newline)
   }
 }
 

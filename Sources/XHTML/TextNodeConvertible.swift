@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  TextNodeConvertible.swift
-   © 2019-2021 YOCKOW.
+   © 2019-2021,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -86,9 +86,21 @@ open class CDATASection: Node, TextNodeConvertible {
   open override var xhtmlString: String {
     return "<![CDATA[\(self._text)]]>"
   }
+
+  open override var htmlString: String {
+    get throws {
+      throw XHTML2HTMLError.disallowedInHTML
+    }
+  }
   
   open override var prettyXHTMLLines: StringLines {
     return StringLines(self.xhtmlString, detectIndent: false)
+  }
+
+  open override var prettyHTMLLines: StringLines {
+    get throws {
+      throw XHTML2HTMLError.disallowedInHTML
+    }
   }
   
   public init(_ text: String) throws {

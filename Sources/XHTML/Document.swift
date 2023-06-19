@@ -48,14 +48,17 @@ open class Document {
     }
     
     private var _documentType: String {
-      guard let doctype = self.version._documentType else {
-        fatalError("The version of XHTML must be specified.")
-      }
-      return doctype
+      return self.version._documentType
     }
     
     public var xhtmlString: String {
       return "\(self._xmlDeclaration)\n\(self._documentType)\n\(self.miscellanies.xhtmlString)"
+    }
+
+    public var htmlString: String {
+      get throws {
+        return "\(_documentType)\n\(try miscellanies.htmlString)"
+      }
     }
     
     public var prettyXHTMLLines: StringLines {
@@ -66,10 +69,30 @@ open class Document {
       result.append(contentsOf: self.miscellanies.prettyXHTMLLines)
       return result
     }
+
+    public var prettyHTMLLines: StringLines {
+      get throws {
+        var result = StringLines([
+          "\(self._documentType)",
+        ])
+        result.append(contentsOf: try miscellanies.prettyHTMLLines)
+        return result
+      }
+    }
     
     public func prettyXHTMLString(indent: String.Indent = .default,
                                   newline: Character.Newline = .lineFeed) -> String  {
       var lines = self.prettyXHTMLLines
+      lines.indent = indent
+      lines.newline = newline
+      return lines.description
+    }
+
+    public func prettyHTMLString(
+      indent: String.Indent = .default,
+      newline: Character.Newline = .lineFeed
+    ) throws -> String  {
+      var lines = try prettyHTMLLines
       lines.indent = indent
       lines.newline = newline
       return lines.description
@@ -139,9 +162,21 @@ extension Document {
   public var xhtmlString: String {
     return self.prolog.xhtmlString + self.rootElement.xhtmlString + self.miscellanies.xhtmlString
   }
+
+  public var htmlString: String {
+    get throws {
+      return try prolog.htmlString + rootElement.htmlString + miscellanies.htmlString
+    }
+  }
   
   public var xhtmlData: Data? {
     return self.xhtmlString.data(using:self.prolog.stringEncoding)
+  }
+
+  public var htmlData: Data? {
+    get throws {
+      return try htmlString.data(using: prolog.stringEncoding)
+    }
   }
   
   public var prettyXHTMLLines: StringLines {
@@ -150,18 +185,46 @@ extension Document {
     result.append(contentsOf: self.miscellanies.prettyXHTMLLines)
     return result
   }
+
+  public var prettyHTMLLines: StringLines {
+    get throws {
+      var result = try prolog.prettyHTMLLines
+      result.append(contentsOf: try rootElement.prettyHTMLLines)
+      result.append(contentsOf: try miscellanies.prettyHTMLLines)
+      return result
+    }
+  }
   
   public func prettyXHTMLString(indent: String.Indent = .default,
                                 newline: Character.Newline = .lineFeed) -> String {
     return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
+
+  public func prettyHTMLString(
+    indent: String.Indent = .default,
+    newline: Character.Newline = .lineFeed
+  ) throws -> String {
+    return try prettyHTMLLines._description(indent: indent, newline: newline)
+  }
   
   public var prettyXHTMLString: String {
     return self.prettyXHTMLString()
   }
+
+  public var prettyHTMLString: String {
+    get throws {
+      return try prettyHTMLString()
+    }
+  }
   
   public var prettyXHTMLData: Data? {
     return self.prettyXHTMLLines.data(using: self.prolog.stringEncoding)
+  }
+
+  public var prettyHTMLData: Data? {
+    get throws {
+      return try prettyHTMLLines.data(using: self.prolog.stringEncoding)
+    }
   }
 }
 

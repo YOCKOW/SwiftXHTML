@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Errors.swift
-   © 2020 YOCKOW.
+   © 2020,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -32,4 +32,8 @@ public enum ElementError: LocalizedError, Equatable {
       return "Invalid parent: expected \(expected) but got \(actual)."
     }
   }
+}
+
+public enum XHTML2HTMLError: Error {
+  case disallowedInHTML
 }

@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  ElementTests.swift
-   © 2019,2021 YOCKOW.
+   © 2019,2021,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -12,14 +12,15 @@ import StringComposition
 import TestResources
 
 final class ElementTests: XCTestCase {
-  func test_xhtmlString() throws {
+  func test_xhtmlString_htmlString() throws {
     let element = try Element(name:"element")
     element.attributes = ["name":"value&value"]
     
     XCTAssertEqual(element.xhtmlString, "<element name=\"value&amp;value\" />")
+    XCTAssertEqual(try element.htmlString, "<element name=\"value&amp;value\" />")
   }
 
-  func test_xhtmlString_textInScript() throws {
+  func test_xhtmlString_htmlString_textInScript() throws {
     let script = try ScriptElement(children: [
       .text("""
 
@@ -38,9 +39,10 @@ final class ElementTests: XCTestCase {
     }
     </script>
     """)
+    XCTAssertEqual(script.xhtmlString, try script.htmlString)
   }
 
-  func test_xhtmlString_textInStyle() throws {
+  func test_xhtmlString_htmlString_textInStyle() throws {
     let style = try StyleElement(xhtmlString: """
     <style type="text/css">
     div {
@@ -62,6 +64,7 @@ final class ElementTests: XCTestCase {
     }\
     </style>
     """)
+    XCTAssertEqual(style.xhtmlString, try style.htmlString)
   }
 
   func test_classSelector() throws {
@@ -211,7 +214,7 @@ final class ElementTests: XCTestCase {
     XCTAssertEqual(text.text, "The identifier of this element is \"My ID\"")
   }
   
-  func test_prettyXHTMLString() throws {
+  func test_prettyXHTMLString_prettyHTMLString() throws {
     let indent = String.Indent.spaces(count: 2)
     
     let parent = try Element(name: "parent")
@@ -245,6 +248,16 @@ final class ElementTests: XCTestCase {
       \(indent)</child>
       </parent>
       
+      """
+    )
+    XCTAssertEqual(try parent.prettyHTMLString(indent: indent), """
+      <parent>
+      \(indent)<child>
+      \(indent)\(indent)<grandchild />
+      \(indent)\(indent)<grandchild2 />
+      \(indent)</child>
+      </parent>
+
       """
     )
   }
