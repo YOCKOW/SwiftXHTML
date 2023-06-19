@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Node.swift
-   © 2019,2021 YOCKOW.
+   © 2019,2021,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -12,6 +12,14 @@ import StringComposition
 open class Node: Equatable {
   /// The string representation as it would appear in an XHTML document.
   open var xhtmlString: String { return "<!-- `var xhtmlString: String` must be overridden. -->" }
+
+  /// The string representation as it would appear in an HTML document.
+  /// Returns `xhtmlString` in default.
+  open var htmlString: String {
+    get throws {
+      return xhtmlString
+    }
+  }
   
   /// An instance of `StringLines` (a.k.a. `String.Composition`) that represents a prettified
   /// XHTML String.
@@ -19,7 +27,16 @@ open class Node: Equatable {
   open var prettyXHTMLLines: StringLines {
     return .init("<!-- `var prettyXHTMLLines: StringLines` must be overridden. -->", detectIndent: false)
   }
-  
+
+  /// An instance of `StringLines` (a.k.a. `String.Composition`) that represents a prettified
+  /// HTML String.
+  /// This property is expected to be overridden by subclasses.
+  open var prettyHTMLLines: StringLines {
+    get throws {
+      return prettyXHTMLLines
+    }
+  }
+
   
   /// Returns prettified XHTML String.
   ///
@@ -28,10 +45,25 @@ open class Node: Equatable {
                                       newline: Character.Newline = .lineFeed) -> String {
     return self.prettyXHTMLLines._description(indent: indent, newline: newline)
   }
+
+  /// Returns prettified HTML String.
+  public final func prettyHTMLString(
+    indent: String.Indent = .default,
+    newline: Character.Newline = .lineFeed
+  ) throws -> String {
+    return try self.prettyHTMLLines._description(indent: indent, newline: newline)
+  }
   
   /// Returns prettified XHTML String.
   public final var prettyXHTMLString: String {
     return prettyXHTMLString()
+  }
+
+  /// Returns prettified HTML String.
+  public final var prettyHTMLString: String {
+    get throws {
+      return try prettyHTMLString()
+    }
   }
   
   /// The parent node.

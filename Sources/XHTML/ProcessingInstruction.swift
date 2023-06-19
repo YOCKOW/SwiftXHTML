@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  ProcessingInstruction.swift
-   © 2019 YOCKOW.
+   © 2019,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -26,9 +26,21 @@ open class ProcessingInstruction: Node {
   open override var xhtmlString: String {
     return "<?\(self.target.description) \(self.content ?? "")?>"
   }
+
+  open override var htmlString: String {
+    get throws {
+      throw XHTML2HTMLError.disallowedInHTML
+    }
+  }
   
   open override var prettyXHTMLLines: StringLines {
     return StringLines(self.xhtmlString, detectIndent: false)
+  }
+
+  open override var prettyHTMLLines: StringLines {
+    get throws {
+      throw XHTML2HTMLError.disallowedInHTML
+    }
   }
 }
 

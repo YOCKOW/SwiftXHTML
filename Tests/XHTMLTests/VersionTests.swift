@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  VersionTests.swift
-   © 2018 YOCKOW.
+   © 2018,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -32,7 +32,7 @@ final class VersionTests: XCTestCase {
       .v1_1
     )
     
-    XCTAssertEqual(Version(_documentType:"<!DOCTYPE\n    html>"), .v5_2)
+    XCTAssertEqual(Version(_documentType:"<!DOCTYPE\n    html>"), .unspecified)
     
   }
 }

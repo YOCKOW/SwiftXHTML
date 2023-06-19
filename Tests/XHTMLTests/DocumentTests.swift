@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  DocumentTests.swift
-   © 2017-2018 YOCKOW.
+   © 2017-2018,2023 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -17,7 +17,7 @@ private let xhtml5_utf16be_data = TestResources.shared.data(for:"XHTML/XHTML5.ut
 final class DocumentTests: XCTestCase {
   func test_detectXHTMLInfo() {
     let infoOfSimpleXHTML5 = simpleXHTML5_data.xhtmlInfo
-    XCTAssertTrue(infoOfSimpleXHTML5 == (xmlVersion:"1.0", stringEncoding:.utf8, version:.v5_2),
+    XCTAssertTrue(infoOfSimpleXHTML5 == (xmlVersion:"1.0", stringEncoding:.utf8, version: .unspecified),
                   "\(infoOfSimpleXHTML5)")
     
     
@@ -37,7 +37,7 @@ final class DocumentTests: XCTestCase {
       document.xhtmlString,
       """
       <?xml version="1.0" encoding="utf-8"?>
-      \(Version.v5._documentType!)
+      \(Version.v5._documentType)
       \(root.xhtmlString)
       """)
   }
@@ -80,6 +80,34 @@ final class DocumentTests: XCTestCase {
     let body = template.rootElement.body
     XCTAssertNotNil(body)
     XCTAssertTrue(body?.children.isEmpty == true)
+  }
+
+  func test_xhtmlToHTML() throws {
+    let xhtml = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xhtml:lang="ja">
+      <xhtml:head>
+        <xhtml:title xml:id="title">XHTML5</xhtml:title>
+        <xhtml:script>window.alert("XHTML5?")</xhtml:script>
+      </xhtml:head>
+      <xhtml:body>
+        <xhtml:div id="main" xml:id="xml-main">I am also XHTML5.</xhtml:div>
+      </xhtml:body>
+    </xhtml:html>
+    """
+
+    let document = try Parser.parse(Data(xhtml.utf8))
+    XCTAssertEqual(try document.prettyHTMLString, """
+    <!DOCTYPE html>
+    <html lang="ja">
+      <head>
+        <title>XHTML5</title>
+        <script>window.alert("XHTML5?")</script>
+      </head>
+      <body><div id="main">I am also XHTML5.</div></body>
+    </html>
+
+    """)
   }
 }
 
