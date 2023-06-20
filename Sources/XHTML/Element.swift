@@ -98,6 +98,9 @@ open class Element: Node {
   }
 
   private var _htmlTagName: String {
+    if name.prefix == .none {
+      return name.description
+    }
     if namespace(for: name) == ._xhtmlNamespace {
       return name.localName.description
     }
