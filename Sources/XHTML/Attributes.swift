@@ -42,6 +42,9 @@ extension Attributes {
       }
       return "\(name.description)=\"\(value._addingAmpersandEncoding())\""
     case .attributeName(let attrName):
+      if attrName.prefix == .none {
+        return "\(attrName.description)=\"\(value._addingAmpersandEncoding())\""
+      }
       if attrName.prefix == .namespace("xml") { // hmm...
         return nil
       }
