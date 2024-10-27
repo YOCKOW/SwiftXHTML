@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  TableElement+Calendar.swift
-   © 2020 YOCKOW.
+   © 2020,2024 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -8,7 +8,7 @@
 import Foundation
 
 extension TableElement {
-  public static let defaultDayCellContentGenerator: (TableDataCellElement, Int) -> Node = { _, day in
+  public static let defaultDayCellContentGenerator: @Sendable (TableDataCellElement, Int) -> Node = { _, day in
     return .text(String(day))
   }
   
