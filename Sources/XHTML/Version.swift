@@ -1,11 +1,11 @@
 /* *************************************************************************************************
  Version.swift
-   © 2018,2023 YOCKOW.
+   © 2018,2023-2024 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
 
-public enum HTML4_01Version: Hashable {
+public enum HTML4_01Version: Hashable, Sendable {
   /// Corresponding to strict HTML 4.01.
   case strict
   
@@ -17,7 +17,7 @@ public enum HTML4_01Version: Hashable {
 }
 
 /// The version of XHTML.
-public enum Version: Hashable {
+public enum Version: Hashable, Sendable {
   /// XHTML 1.0
   case v1_0(HTML4_01Version)
   

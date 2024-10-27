@@ -1,6 +1,6 @@
 /* *************************************************************************************************
  Names.swift
-   © 2018,2023 YOCKOW.
+   © 2018,2023-2024 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
@@ -18,8 +18,8 @@ public struct NoncolonizedName: CustomStringConvertible,
                                 RawRepresentable,
                                 ExpressibleByStringLiteral,
                                 Hashable,
-                                Comparable
-{
+                                Comparable,
+                                Sendable {
   public typealias RawValue = String
   public typealias StringLiteralType = String
   
@@ -49,10 +49,14 @@ public struct NoncolonizedName: CustomStringConvertible,
 
 
 /// Represents [QName](https://www.w3.org/TR/REC-xml-names/#NT-QName).
-public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral, Comparable {
+public struct QualifiedName: CustomStringConvertible,
+                             Hashable,
+                             ExpressibleByStringLiteral,
+                             Comparable,
+                             Sendable {
   public typealias StringLiteralType = String
   
-  public enum Prefix: Hashable, Comparable {
+  public enum Prefix: Hashable, Comparable, Sendable {
     case none
     case namespace(NoncolonizedName)
     public static let `default`: Prefix = .none
@@ -131,7 +135,11 @@ public struct QualifiedName: CustomStringConvertible, Hashable, ExpressibleByStr
 
 
 /// Represents the name of [Attribute](https://www.w3.org/TR/REC-xml-names/#NT-Attribute).
-public enum AttributeName: CustomStringConvertible, Hashable, ExpressibleByStringLiteral, Comparable {
+public enum AttributeName: CustomStringConvertible,
+                           Hashable,
+                           ExpressibleByStringLiteral,
+                           Comparable,
+                           Sendable {
   /// Namespace attribute
   case namespaceDeclaration(QualifiedName.Prefix)
   

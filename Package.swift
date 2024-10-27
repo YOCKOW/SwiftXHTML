@@ -17,32 +17,42 @@ let package = Package(
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
-    .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", "0.16.0"..<"2.0.0"),
-    .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.1.1"),
-    .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "2.0.4"),
-    .package(url:"https://github.com/YOCKOW/SwiftUnicodeSupplement.git", from: "1.2.0"),
-    .package(url:"https://github.com/YOCKOW/ySwiftExtensions.git", from: "1.7.5"),
+    .package(url:"https://github.com/YOCKOW/SwiftNetworkGear.git", "0.19.1"..<"2.0.0"),
+    .package(url:"https://github.com/YOCKOW/SwiftRanges.git", from: "3.2.1"),
+    .package(url:"https://github.com/YOCKOW/SwiftStringComposition.git", from: "2.1.0"),
+    .package(url:"https://github.com/YOCKOW/SwiftUnicodeSupplement.git", from: "1.5.0"),
+    .package(url:"https://github.com/YOCKOW/ySwiftExtensions.git", from: "1.11.1"),
   ],
   targets: [
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
     // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-    .target(name: "XHTML",
-            dependencies: [
-              "SwiftNetworkGear",
-              "SwiftRanges",
-              "SwiftStringComposition",
-              "SwiftUnicodeSupplement",
-              "ySwiftExtensions",
-            ]),
+    .target(
+      name: "XHTML",
+      dependencies: [
+        "SwiftNetworkGear",
+        "SwiftRanges",
+        "SwiftStringComposition",
+        "SwiftUnicodeSupplement",
+        "ySwiftExtensions",
+      ]
+    ),
     .target(
       name: "TestResources",
       dependencies: [],
       path: "Tests/TestResources",
       resources: [.process("Resources")]
     ),
-    .testTarget(name: "XHTMLTests",dependencies: ["XHTML", "TestResources"]),
+    .testTarget(
+      name: "XHTMLTests",
+      dependencies: [
+        "SwiftNetworkGear",
+        "SwiftStringComposition",
+        "XHTML",
+        "TestResources"
+      ]
+    ),
   ],
-  swiftLanguageVersions: [.v5]
+  swiftLanguageVersions: [.v5, .version("6")]
 )
 
 

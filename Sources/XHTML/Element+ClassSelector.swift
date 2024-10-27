@@ -1,19 +1,21 @@
 /* *************************************************************************************************
  Element+ClassSelector.swift
-   © 2019,2021 YOCKOW.
+   © 2019,2021,2024 YOCKOW.
      Licensed under MIT License.
      See "LICENSE.txt" for more information.
  ************************************************************************************************ */
+
+import Dispatch
 
 extension Element {
   /// The class to select a class that the parser will use to create element instances.
   /// The registered classes will not be used
   /// if the namespace of the QName of the element is not XHTML's.
-  public final class ClassSelector {
+  public final class ClassSelector: @unchecked Sendable {
     private init() {}
     public static let `default`: ClassSelector = .init()
     
-    private var _list:[NoncolonizedName:Element.Type] = [
+    private var _list: [NoncolonizedName: Element.Type] = [
       "a": AnchorElement.self,
       "abbr": AbbreviationElement.self,
       "address": AddressElement.self,
@@ -118,14 +120,23 @@ extension Element {
       "video": VideoElement.self,
       "wbr": WordBreakElement.self,
     ]
-    
+
+    private let _listQueue: DispatchQueue = .init(
+      label: "jp.YOCKOW.XHTML.Element.ClassSelector",
+      attributes: .concurrent
+    )
+
+    public func withList<T>(_ work: (inout [NoncolonizedName: Element.Type]) throws -> T) rethrows -> T {
+      return try _listQueue.sync(flags: .barrier) { try  work(&_list) }
+    }
+
     /// The type for `localName` that the parser uses when create an element instance.
     public subscript(_ localName: NoncolonizedName) -> Element.Type? {
       get {
-        return self._list[localName]
+        return withList({ $0[localName] })
       }
       set {
-        self._list[localName] = newValue
+        withList({ $0[localName] = newValue })
       }
     }
   }
